@@ -1,0 +1,4 @@
+gnome
+=====
+
+GNOME SlackBuild
