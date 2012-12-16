@@ -1,3 +1,11 @@
+   Mon Dec 17 00:04:25 2012 +0700
+
+    Add back README.TXT to have one line per package list.
+
+   Mon Dec 17 00:00:42 2012 +0700
+
+    Add ChangeLog.txt
+
    Sun Dec 16 23:40:46 2012 +0700
 
     Removing old README.TXT
