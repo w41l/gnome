@@ -1,0 +1,11 @@
+clutter
+clutter-gst
+clutter-gtk
+cogl
+gst-plugins-bad
+json-glib
+libpeas
+mx
+nautilus
+totem
+totem-pl-parser

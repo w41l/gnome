@@ -1,8 +1,3 @@
-gnome
-=====
-
-GNOME SlackBuild
-
 [ALREADY PROVIDED BY SLACKWARE]
 glib2
 gtk+2
@@ -37,6 +32,9 @@ mozilla-nss
 js185
 gucharmap
 [/ALREADY PROVIDED BY SLACKWARE]
+
+[BUILD TOOLKIT] (can be removed after GNOME3 building finished)
+[/BUILD TOOLKIT] (can be removed after GNOME3 building finished)
 
 [EXTERNAL LIBS]
 setuptools
@@ -76,11 +74,8 @@ webkitgtk
 itstool
 [/EXTERNAL LIBS]
 
-[BUILD TOOLKIT] (can be removed after GNOME3 building finished)
-gnome-common
-[/BUILD TOOLKIT] (can be removed after GNOME3 building finished)
-
 [GNOME LIBS]
+gnome-common
 json-glib
 dconf
 libdbusmenu
@@ -102,40 +97,40 @@ cantarell-fonts
 pygobject3
 gjs
 libgee
-libgweather
-libgnomekbd
-notification-daemon
-libgtop
-gtk-engines
-gtk3-engines
-gtk-murrine-engine
-gtk-unico-engine
-gnome-icon-theme-symbolic
-gnome-mime-data
-gnome-online-accounts
-evolution-data-server
-caribou
-accountsservice
-exempi
 [/GNOME LIBS]
 
 [GNOME BASE]
+gnome-mime-data
 gnome-menus
 gnome-desktop
 zenity
 mutter
 metacity
+libgweather
+libgnomekbd
+gnome-online-accounts
+evolution-data-server
 folks
+accountsservice
+caribou
 gnome-panel
 gnome-python
+exempi
 nautilus
 nautilus-sendto
 gnome-bluetooth
 gnome-video-effects
 cheese
 empathy
+gtk-engines
+gtk3-engines
+gtk-murrine-engine
+gtk-unico-engine
+gnome-icon-theme-symbolic
 gnome-themes-standard
 gnome-backgrounds
+notification-daemon
+libgtop
 gnome-settings-daemon
 gnome-applets
 gnome-control-center
@@ -178,6 +173,5 @@ at-spi2-core
 at-spi2-atk
 orca
 muffin
-lxml
 cinnamon
 vala
