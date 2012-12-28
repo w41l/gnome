@@ -3,181 +3,56 @@ gnome
 
 GNOME SlackBuild
 
-[ALREADY PROVIDED BY SLACKWARE]
-glib2
-gtk+2
-gtk+3
-gstreamer
-gst-plugins-base
-polkit
-polkit-gnome
-gobject-introspection
-pygobject
-gsettings-desktop-schemas
-libwnck
-libgnome-keyring
-gnome-keyring
-GConf
-sg3_utils
-libatasmart
-udisks
-libproxy
-glib-networking
-libsoup
-libtasn1
-upower
-gnome-keyring
-libcanberra
-gvfs
-seamonkey (Only for building, use seamonkey-solibs for runtime)
-pygtk
-icu4c
-gnome-icon-theme
-mozilla-nss
-js185
-gucharmap
-[/ALREADY PROVIDED BY SLACKWARE]
+Please read README.TXT for complete GNOME3 packages list.
 
-[EXTERNAL LIBS]
-setuptools
-rarian
-libdaemon
-avahi
-nss-mdns
-usbmuxd
-libimobiledevice
-ifuse
-json-c
-speex
-pulseaudio
-alsa-plugins
-orc
-libiec61883
-libdc1394
-libavc1394
-libdv
-libshout
-gst-plugins-good - add GConf and pulseaudio support
-gst-python
-liboauth
-python-isodate
-python-rdflib
-xapian-core
-heimdal-libraries
-libnice
-telepathy-glib
-telepathy-logger
-telepathy-mission-control
-farstream
-telepathy-farstream
-telepathy-gabble
-geoclue
-webkitgtk
-itstool
-[/EXTERNAL LIBS]
+These packages were provided by Slackware. Just make sure they're already
+installed:
+- glib2
+- gtk+2
+- gtk+3
+- gstreamer
+- gst-plugins-base
+- polkit
+- polkit-gnome
+- gobject-introspection
+- pygobject
+- gsettings-desktop-schemas
+- libwnck
+- libgnome-keyring
+- gnome-keyring
+- GConf
+- sg3_utils
+- libatasmart
+- udisks
+- libproxy
+- glib-networking
+- libsoup
+- libtasn1
+- upower
+- gnome-keyring
+- libcanberra
+- gvfs
+- seamonkey (Only for building, use seamonkey-solibs for runtime)
+- pygtk
+- icu4c
+- gnome-icon-theme
+- mozilla-nss
+- js185
+- gucharmap
 
-[BUILD TOOLKIT] (can be removed after GNOME3 building finished)
-gnome-common
-[/BUILD TOOLKIT] (can be removed after GNOME3 building finished)
+Next step is install the all GNOME3 external dependencies. You can find those at
+http://www.slackbuilds.org/
 
-[GNOME LIBS]
-json-glib
-dconf
-libdbusmenu
-libunique
-libwnck3 (Renamed to libwnck3 because slackware already have libwnck v2)
-librest
-zeitgeist
-libgdata
-cogl
-clutter
-clutter-gtk
-clutter-gst
-libchamplain
-mx
-libgusb
-colord
-libwacom
-cantarell-fonts
-pygobject3
-gjs
-libgee
-libgweather
-libgnomekbd
-notification-daemon
-libgtop
-gtk-engines
-gtk3-engines
-gtk-murrine-engine
-gtk-unico-engine
-gnome-icon-theme-symbolic
-gnome-mime-data
-gnome-online-accounts
-evolution-data-server
-caribou
-accountsservice
-exempi
-[/GNOME LIBS]
+After that you can build your GNOME 3.4 using my SlackBuild. The building
+procedure is simple. You can find which version and the download URL in .info
+file in every package directory. Just download the source tarball into the
+package directory. Then just run ./PKGNAME.SlackBuild.
 
-[GNOME BASE]
-gnome-menus
-gnome-desktop
-zenity
-mutter
-metacity
-folks
-gnome-panel
-gnome-python
-nautilus
-nautilus-sendto
-gnome-bluetooth
-gnome-video-effects
-cheese
-empathy
-gnome-themes-standard
-gnome-backgrounds
-gnome-settings-daemon
-gnome-applets
-gnome-control-center
-gnome-shell
-gnome-session
-[/GNOME BASE]
+You can find the .txz package in /tmp (if you're not change the $TMP variable).
+To install or upgrade already installed PKGNAME in you system, just run:
+upgradepkg --install-new --reinstall /tmp/PKGNAME-VERSION-ARCH-1_wls.txz
 
-[GNOME APPS - OPTIONAL]
-{vte} (Note: If you want you can upgrade it to match GNOME 3.4)
-gnome-terminal
-file-roller
-libburn
-libisofs
-libisoburn
-totem-pl-parser
-brasero
-evince
-gthumb
-libpeas
-gtksourceview
-gedit
-python-logilab-common
-python-logilab-astng
-pylint
-totem
-gnome-power-manager
-epiphany
-epiphany-extensions
-gmtk
-gnome-mplayer
-glade3
-gnome-media
-gnome-disk-utility
-pam (Only for gnome-screensaver and GDM)
-gnome-screensaver
-yelp-xsl
-yelp
-pyxdg
-at-spi2-core
-at-spi2-atk
-orca
-muffin
-lxml
-cinnamon
-vala
+After that you should reboot your system, and try login to GNOME.
+
+Feel free to contact me if you have problem on building GNOME3 using my
+SlackBuild.
