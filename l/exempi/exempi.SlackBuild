@@ -2,7 +2,7 @@
 
 # Slackware build script for exempi
 
-# Copyright 2011-2012  Widya Walesa <walecha99@gmail.com>
+# Copyright 2011-2013  Widya Walesa <walecha99@gmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -38,8 +38,8 @@ if [ -z "$ARCH" ]; then
 fi
 
 CWD=$(pwd)
-WRK=${WRK:-/tmp/wlsbuild}
-PKG=$WRK/package-$PRGNAM
+TMP=${TMP:-/tmp/wlsbuild}
+PKG=$TMP/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 DOCS="AUTHORS COPYING ChangeLog INSTALL NEWS README TODO"
 
@@ -60,8 +60,8 @@ fi
 set -e
 
 rm -rf $PKG
-mkdir -p $WRK $PKG $OUTPUT
-cd $WRK
+mkdir -p $TMP $PKG $OUTPUT
+cd $TMP
 rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.?z*
 cd $PRGNAM-$VERSION
@@ -103,4 +103,4 @@ cd $PKG
 /sbin/makepkg -p -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz
 
 echo "Cleaning up build directory"
-cd $WRK; rm -rf $PRGNAM-$VERSION $PKG
+cd $TMP; rm -rf $PRGNAM-$VERSION $PKG
