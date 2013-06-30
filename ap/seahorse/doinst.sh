@@ -17,5 +17,5 @@ if ps acx | grep -q gconfd-2 ; then
 fi
 
 if [ -x /usr/bin/glib-compile-schemas -a -d /usr/share/glib-2.0/schemas ]; then
-  /usr/bin/glib-compile-schemas /usr/share/glib-2.0/schemas
+  /usr/bin/glib-compile-schemas /usr/share/glib-2.0/schemas >/dev/null 2>&1
 fi

@@ -1,0 +1,38 @@
+diff -Naur a/mx/mx-deform-texture.c b/mx/mx-deform-texture.c
+--- a/mx/mx-deform-texture.c	2012-08-08 21:06:54.000000000 +0700
++++ b/mx/mx-deform-texture.c	2013-06-23 21:10:29.654931380 +0700
+@@ -493,9 +493,9 @@
+ static void
+ mx_deform_texture_init_arrays (MxDeformTexture *self)
+ {
+-  GLushort *idx, *bf_idx;
++  gushort *idx, *bf_idx;
+   gint x, y, direction;
+-  GLushort *static_indices, *static_bf_indices;
++  gushort *static_indices, *static_bf_indices;
+   MxDeformTexturePrivate *priv = self->priv;
+ 
+   mx_deform_texture_free_arrays (self);
+@@ -503,8 +503,8 @@
+   priv->n_indices = (2 + 2 * priv->tiles_x) *
+                     priv->tiles_y +
+                     (priv->tiles_y - 1);
+-  static_indices = g_new (GLushort, priv->n_indices);
+-  static_bf_indices = g_new (GLushort, priv->n_indices);
++  static_indices = g_new (gushort, priv->n_indices);
++  static_bf_indices = g_new (gushort, priv->n_indices);
+ 
+ #define MESH_INDEX(X, Y) (Y) * (priv->tiles_x + 1) + (X)
+ 
+diff -Naur a/mx/mx-texture-frame.c b/mx/mx-texture-frame.c
+--- a/mx/mx-texture-frame.c	2012-08-08 21:06:54.000000000 +0700
++++ b/mx/mx-texture-frame.c	2013-06-23 21:10:56.846930676 +0700
+@@ -200,7 +200,7 @@
+ 
+ 
+   {
+-    GLfloat rectangles[] =
++    gfloat rectangles[] =
+     {
+       /* top left corner */
+       0, 0,

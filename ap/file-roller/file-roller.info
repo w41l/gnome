@@ -1,4 +1,4 @@
 URL=http://git.gnome.org/browse/file-roller/
-SRC=http://kambing.ui.ac.id/gnome/sources/file-roller/3.4/file-roller-3.4.2.tar.xz
-MD5=1264798f38a87b4104734715f113fc0f
-SHA1=40c081fb5c300efcf5365f2ee177e9b22e1cbdd9
+SRC=http://ftp.gnome.org/pub/gnome/sources/file-roller/3.8/file-roller-3.8.2.tar.xz
+MD5=466a8789aeb1b14cc445f8d07ebf327b
+SHA1=97007560f91cd0e6322e3053c8a2f22ef88819f7

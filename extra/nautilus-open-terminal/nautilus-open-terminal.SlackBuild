@@ -2,7 +2,7 @@
 
 # Slackware build script for nautilus-open-terminal
 
-# Copyright 2011-2012  Widya Walesa <walecha99@gmail.com>
+# Copyright 2011-2013  Widya Walesa <walecha99@gmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -27,7 +27,7 @@ PRGNAM=nautilus-open-terminal
 VERSION=0.19
 BUILD=1
 TAG=${TAG:-_wls}
-NUMJOBS=${NUMJOBS:--j4}
+NUMJOBS=${NUMJOBS:--j1}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -75,7 +75,6 @@ find . \
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
 ./configure \
-  --build=$ARCH-slackware-linux --host=$ARCH-slackware-linux \
   --program-prefix= --program-suffix= \
   --prefix=/usr --exec-prefix=/usr \
   --bindir=/usr/bin --sbindir=/usr/sbin \
@@ -84,9 +83,8 @@ CXXFLAGS="$SLKCFLAGS" \
   --sysconfdir=/etc --docdir=/usr/doc/$PRGNAM-$VERSION \
   --localstatedir=/var --sharedstatedir=/var/lib \
   --disable-static --enable-shared \
-  --disable-schemas-compile \
 
-make V=1
+make V=1 $NUMJOBS
 make install DESTDIR=$PKG
 
 mkdir -p $PKG/etc/gnome
@@ -108,7 +106,7 @@ cat $CWD/slack-required > $PKG/install/slack-required
 cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
-/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz
+/sbin/makepkg -p -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz
 
 echo "Cleaning up build directory"
 cd $WRK; rm -rf $PRGNAM-$VERSION $PKG

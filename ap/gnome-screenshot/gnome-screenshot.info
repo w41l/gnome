@@ -1,4 +1,4 @@
 URL=http://git.gnome.org/browse/gnome-screenshot/
-SRC=http://kambing.ui.ac.id/gnome/sources/gnome-screenshot/3.4/gnome-screenshot-3.4.1.tar.xz
-MD5=765d74d798f9c23ffd8bae379449d3a9
-SHA1=f91ee2830c783659d30ddfd6be93c15477c06ab9
+SRC=http://ftp.gnome.org/pub/gnome/sources/gnome-screenshot/3.8/gnome-screenshot-3.8.2.tar.xz
+MD5=62972e201f8cfb501c33abcc94fd447b
+SHA1=e0809e7da4f2f15e033f37a825e1a1e781840f4d

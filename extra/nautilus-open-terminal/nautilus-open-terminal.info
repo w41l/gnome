@@ -1,4 +1,4 @@
 URL=http://git.gnome.org/browse/nautilus-open-terminal/
-SRC=http://kambing.ui.ac.id/gnome/sources/nautilus-open-terminal/0.19/nautilus-open-terminal-0.19.tar.bz2
-MD5=bbfe4958dfd43e4f31bf1d4a29e79cfe
-SHA1=172e0999e767dd2847f10a1886de9ad36aada45b
+SRC=http://ftp.gnome.org/pub/gnome/sources/nautilus-open-terminal/0.19/nautilus-open-terminal-0.20.tar.xz
+MD5=e4c0900f295ea04aa821fafb509bc7b1
+SHA1=f4f49826b8cafec221317d20fcb2f4629eddac64

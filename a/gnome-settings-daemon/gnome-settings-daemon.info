@@ -1,4 +1,4 @@
 URL=http://git.gnome.org/browse/gnome-settings-daemon/
-SRC=http://kambing.ui.ac.id/gnome/sources/gnome-settings-daemon/3.4/gnome-settings-daemon-3.4.2.tar.xz
-MD5=f8c985ce46c720cff28208ccb799c6b7
-SHA1=eecfdb1abc92f8ef6dd22c1b634cf0b7adc9b8d1
+SRC=http://ftp.gnome.org/gnome/sources/gnome-settings-daemon/3.8/gnome-settings-daemon-3.8.3.tar.xz
+MD5=fb783e7d118e4425b3bd94d439633899
+SHA1=86b4392f37738349035ab5c5a0c8a2c793006b65

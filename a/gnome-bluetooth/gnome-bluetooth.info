@@ -1,4 +1,4 @@
-URL=http://git.gnome.org/browse/gnome-bluetooth/
-SRC=http://kambing.ui.ac.id/gnome/sources/gnome-bluetooth/3.4/gnome-bluetooth-3.4.2.tar.xz
-MD5=ac7390b9fbfa1d2cc65e16a6a194fb95
-SHA1=e922ccf69cb111432bc34a24cbc99047d8a67796
+URL=https://wiki.gnome.org/GnomeBluetooth
+SRC=http://ftp.gnome.org/gnome/sources/gnome-bluetooth/3.8/gnome-bluetooth-3.8.1.tar.xz
+MD5=a45c401daa15937a31c59d49943c59db
+SHA1=c3c5521ba4e5428ee6d30fa3c049bcf7a7c0f345

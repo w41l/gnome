@@ -1,0 +1,19 @@
+# HOW TO EDIT THIS FILE:
+# The "handy ruler" below makes it easier to edit a package description.  Line
+# up the first '|' above the ':' following the base package name, and the '|' on
+# the right side marks the last column you can put a character in.  You must make
+# exactly 11 lines for the formatting to be correct.  It's also customary to
+# leave one space after the ':'.
+
+   |-----handy-ruler------------------------------------------------------|
+gdm: gdm (GNOME Display Manager)
+gdm:
+gdm: GDM (the GNOME Display Manager) provides an alternate display manager
+gdm: for the X Window System. The X Window System by default uses the XDM 
+gdm: display manager. However, resolving XDM configuration issues typically 
+gdm: involves editing a configuration file. GDM allows users to customize 
+gdm: or troubleshoot settings without having to resort to a command line. 
+gdm: Users can pick their session type on a per-login basis. GDM also 
+gdm: features easy customisation with themes.
+gdm:
+gdm:

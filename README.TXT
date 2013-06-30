@@ -7,6 +7,8 @@ GNOME SlackBuild
 glib2
 gtk+2
 gtk+3
+at-spi2-core
+at-spi2-atk
 gstreamer
 gst-plugins-base
 polkit
@@ -18,6 +20,7 @@ libwnck
 libgnome-keyring
 gnome-keyring
 GConf
+dconf
 sg3_utils
 libatasmart
 udisks
@@ -29,21 +32,28 @@ upower
 gnome-keyring
 libcanberra
 gvfs
-seamonkey (Only for building, use seamonkey-solibs for runtime)
+seamonkey (For building, seamonkey-solibs for runtime)
 pygtk
 icu4c
-gnome-icon-theme
+gnome-icon-theme (+ gnome-icon-theme-symbolic)
+gnome-themes-standard
 mozilla-nss
 js185
 gucharmap
-[/ALREADY PROVIDED BY SLACKWARE]
+sane
+bash-completion
+itstool
+
 
 [EXTERNAL LIBS]
 setuptools
 rarian
+gc
 libdaemon
 avahi
 nss-mdns
+python3
+orc
 usbmuxd
 libimobiledevice
 ifuse
@@ -51,19 +61,33 @@ json-c
 speex
 pulseaudio
 alsa-plugins
-orc
+libburn
+libisofs
+libisoburn
 libiec61883
 libdc1394
 libavc1394
 libdv
 libshout
-gst-plugins-good - add GConf and pulseaudio support
-gst-python
-liboauth
+libvpx
+vala
+gstreamer-1 (v 1.0.x, Not the 0.10)
+gst-plugins-base-1
+gst-plugins-good-1
+gst-plugins-ugly-1 - Optional
+gst-plugins-bad-1 - Optional
+gst-libav - Optional
+geoclue
+libwebp
+webkitgtk
 python-isodate
 python-rdflib
 xapian-core
-heimdal-libraries
+python-logilab-common
+python-logilab-astng
+pylint
+heimdal (For building, heimdal-libraries for runtime)
+liboauth
 libnice
 telepathy-glib
 telepathy-logger
@@ -71,113 +95,111 @@ telepathy-mission-control
 farstream
 telepathy-farstream
 telepathy-gabble
-geoclue
-webkitgtk
-itstool
-[/EXTERNAL LIBS]
 
-[BUILD TOOLKIT] (can be removed after GNOME3 building finished)
-gnome-common
-[/BUILD TOOLKIT] (can be removed after GNOME3 building finished)
 
 [GNOME LIBS]
+gnome-common
+network-manager-applet (Rebuild, Slackware version still using GTK+2, we need GTK+3)
 json-glib
-dconf
 libdbusmenu
 libunique
-libwnck3 (Renamed to libwnck3 because slackware already have libwnck v2)
-librest
-zeitgeist
-libgdata
+libwnck3 (Renamed to libwnck3, slackware already have libwnck v2)
+vte2 (VTE 2.90)
+gjs
 cogl
 clutter
 clutter-gtk
 clutter-gst
+librest
+libzeitgeist
+gnome-online-accounts
+libgdata
+libsocialweb
 libchamplain
 mx
 libgusb
 colord
+colord-gtk
 libwacom
 cantarell-fonts
 pygobject3
-gjs
 libgee
 libgweather
-libgnomekbd
-notification-daemon
 libgtop
-gtk-engines
-gtk3-engines
-gtk-murrine-engine
-gtk-unico-engine
-gnome-icon-theme-symbolic
-gnome-mime-data
-gnome-online-accounts
 evolution-data-server
 caribou
 accountsservice
 exempi
-[/GNOME LIBS]
+ibus
+cracklib
+libpwquality
+libpeas
+gtkhtml
+libpst
+gtksourceview
+grilo
+
 
 [GNOME BASE]
 gnome-menus
 gnome-desktop
 zenity
 mutter
-metacity
 folks
-gnome-panel
-gnome-python
 nautilus
 nautilus-sendto
 gnome-bluetooth
 gnome-video-effects
 cheese
 empathy
-gnome-themes-standard
 gnome-backgrounds
 gnome-settings-daemon
-gnome-applets
 gnome-control-center
-gnome-shell
 gnome-session
-[/GNOME BASE]
+gnome-shell
+gnome-shell-extensions
+pam (Only for GDM)
+gdm
+
 
 [GNOME APPS - OPTIONAL]
-{vte} (Note: If you want you can upgrade it to match GNOME 3.4)
 gnome-terminal
 file-roller
-libburn
-libisofs
-libisoburn
-totem-pl-parser
 brasero
 evince
 gthumb
-libpeas
-gtksourceview
 gedit
-python-logilab-common
-python-logilab-astng
-pylint
+totem-pl-parser
 totem
 gnome-power-manager
 epiphany
-epiphany-extensions
-gmtk
-gnome-mplayer
-glade3
-gnome-media
 gnome-disk-utility
-pam (Only for gnome-screensaver and GDM)
-gnome-screensaver
 yelp-xsl
 yelp
-pyxdg
-at-spi2-core
-at-spi2-atk
-orca
 muffin
 lxml
 cinnamon
-vala
+gtk-engines
+gtk-murrine-engine
+gtk-unico-engine
+
+
+[REMOVED]
+*orca
+*pyxdg
+*gnome-screensaver
+*gst-python
+*libgnomekbd
+*notification-daemon
+*gnome-mime-data
+*metacity
+*gnome-panel
+*gnome-python
+*gnome-applets
+*gtk3-engines
+*zeitgeist
+*epiphany-extensions
+*gnome-media
+*gmtk
+*gnome-mplayer
+*glade3

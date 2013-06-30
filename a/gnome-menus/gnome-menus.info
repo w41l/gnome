@@ -1,4 +1,4 @@
 URL=http://git.gnome.org/browse/gnome-menus/
-SRC=http://kambing.ui.ac.id/gnome/sources/gnome-menus/3.4/gnome-menus-3.4.2.tar.xz
-MD5=997c923d639d80185960185dcd250fc7
-SHA1=93edd01ce24fc68eec5fe16b95d9e34ba9688e38
+SRC=http://ftp.gnome.org/gnome/sources/gnome-menus/3.8/gnome-menus-3.8.0.tar.xz
+MD5=c1bf2752f3b8e2d0c1e519cc69441450
+SHA1=33f700b6fc9caff64f1056ea085a28e1aaaed0bd

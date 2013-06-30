@@ -1,15 +1,12 @@
 evolution-data-server
-GConf
 gnome-control-center
 gnome-desktop
+gnome-online-accounts
+gstreamer-1
 gtkhtml
-gtkimageview
-heimdal-libraries
-libcanberra
+heimdal | heimdal-libraries
 libgdata
 libgweather
-libproxy
 libpst
-libsoup
 libunique
-ORBit2
+webkigtk

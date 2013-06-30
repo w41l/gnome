@@ -1,4 +1,4 @@
 URL=http://linuxwacom.sourceforge.net/
-SRC=http://sourceforge.net/projects/linuxwacom/files/libwacom/libwacom-0.6.tar.bz2
-MD5=33dc2f4d8230754305c3f59525f04550
-SHA1=5117dfe67b7846f92248f2a7841f1acb1c30904d
+SRC=http://downloads.sourceforge.net/project/linuxwacom/libwacom/libwacom-0.7.1.tar.bz2
+MD5=d11981432144837a29ab2189a2fa0575
+SHA1=8e8a55c99f2880cf7efd6cdeab11d643c4af80a6

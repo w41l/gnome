@@ -1,4 +1,4 @@
 URL=http://git.gnome.org/browse/yelp-xsl/
-SRC=http://kambing.ui.ac.id/gnome/sources/yelp-xsl/3.4/yelp-xsl-3.4.2.tar.xz
-MD5=86e1b6fa8171baebf37e9e2492ccbf66
-SHA1=4b94e5302275ff75a1a3542185ef03307672a463
+SRC=http://ftp.gnome.org/pub/gnome/sources/yelp-xsl/3.8/yelp-xsl-3.8.1.tar.xz
+MD5=8f64d5abdd11067b675afe232b3ac6fa
+SHA1=6be682f13f9f0921978968ee1f46b488d19e8fc8

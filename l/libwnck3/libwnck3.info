@@ -1,4 +1,4 @@
 URL=http://git.gnome.org/browse/libwnck/
-SRC=http://kambing.ui.ac.id/gnome/sources/libwnck/3.4/libwnck-3.4.3.tar.xz
-MD5=a5cead3768ffcf672c5757b49c95e27b
-SHA1=2b80f865f7c37cfe5a49a8f19c3a6b2a2606e6d4
+SRC=http://ftp.gnome.org/pub/gnome/sources/libwnck/3.4/libwnck-3.4.5.tar.xz
+MD5=0f50bc70f37b9f3719885e93e4487d9a
+SHA1=955e7a2d33a4bcd7fe11b91a0948cdfcc6680fa2

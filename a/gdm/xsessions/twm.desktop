@@ -1,0 +1,6 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=TWM
+Comment=This session logs you into Tiny Window Manager
+Exec=/etc/X11/xinit/xinitrc.twm
+Type=Application

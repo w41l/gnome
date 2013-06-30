@@ -4,5 +4,5 @@ if [ -x /usr/bin/update-desktop-database ]; then
 fi
 
 if [ -x /usr/bin/glib-compile-schemas ]; then
-  /usr/bin/glib-compile-schemas /usr/share/glib-2.0/schemas >/dev/null 2>&!
+  /usr/bin/glib-compile-schemas /usr/share/glib-2.0/schemas >/dev/null 2>&1
 fi

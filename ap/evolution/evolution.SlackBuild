@@ -2,7 +2,7 @@
 
 # Slackware build script for evolution
 
-# Copyright 2011-2012  Widya Walesa <walecha99@gmail.com>
+# Copyright 2011-2013  Widya Walesa <walecha99@gmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -24,7 +24,7 @@
 # YOUR DATA IS DESTROYED, YOUR HOUSE BURNS DOWN OR YOUR DOG RUNS OFF.
 
 PRGNAM=evolution
-VERSION=3.4.4
+VERSION=3.8.3
 BUILD=1
 TAG=${TAG:-_wls}
 NUMJOBS=${NUMJOBS:--j1}
@@ -41,12 +41,7 @@ CWD=$(pwd)
 WRK=${WRK:-/tmp/wlsbuild}
 PKG=$WRK/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
-DOCS="AUTHORS COPY* ChangeLog HACKING MAINTAINERS NEWS* README"
-
-if [ "$(which NetworkManager)" != "" ]; then
-  echo "Remove/Uninstall NetworkManager first"
-  exit 1
-fi
+DOCS="AUTHORS COPY* ChangeLog HACKING MAINTAINERS NEWS README"
 
 if [ "$ARCH" = "i486" ]; then
   SLKCFLAGS="-O2 -pipe -march=i486 -mtune=i686"
@@ -70,7 +65,6 @@ cd $WRK
 rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.?z*
 cd $PRGNAM-$VERSION
-
 chown -R root:root .
 find . \
  \( -perm 777 -o -perm 775 -o -perm 711 -o -perm 555 -o -perm 511 \) \
@@ -81,7 +75,6 @@ find . \
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
 ./configure \
-  --build=$ARCH-slackware-linux --host=$ARCH-slackware-linux \
   --program-prefix= --program-suffix= \
   --prefix=/usr --exec-prefix=/usr \
   --bindir=/usr/bin --sbindir=/usr/sbin \
@@ -90,11 +83,10 @@ CXXFLAGS="$SLKCFLAGS" \
   --sysconfdir=/etc --docdir=/usr/doc/$PRGNAM-$VERSION \
   --localstatedir=/var --sharedstatedir=/var/lib \
   --disable-static --enable-shared \
-  --disable-scrollkeeper \
   --disable-gtk-doc \
   --disable-nm \
-  --disable-schemas-install \
-  --disable-schemas-compile \
+  --disable-spamassassin \
+  --disable-text-highlight \
   --with-krb5=$(pkg-config --variable=prefix heimdal-gssapi) \
   --enable-nss=yes \
   --enable-smime=yes \
@@ -105,7 +97,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --with-openldap=/usr \
   --enable-plugins=all
 
-make
+make V=1 $NUMJOBS
 make install DESTDIR=$PKG
 
 # Move xdg to /etc/gnome
@@ -125,7 +117,7 @@ cat $CWD/slack-required > $PKG/install/slack-required
 cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
-/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz
+/sbin/makepkg -p -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz
 
 echo "Cleaning up build directory"
 cd $WRK; rm -rf $PRGNAM-$VERSION $PKG

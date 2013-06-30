@@ -1,4 +1,4 @@
 URL=http://git.gnome.org/browse/caribou/
-SRC=http://kambing.ui.ac.id/gnome/sources/caribou/0.4/caribou-0.4.4.tar.xz
-MD5=6df53b3d9d2441ab763c9b55c01c8167
-SHA1=ce227f8f26b01fd21823aedcd6ddb2014ce516db
+SRC=http://ftp.gnome.org/pub/gnome/sources/caribou/0.4/caribou-0.4.4.tar.xz
+MD5=9ed54f0fc222c02a69589cf478dab8bb
+SHA1=83cc13ac3ff7f2bc657befcada94eccfd672204a
