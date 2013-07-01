@@ -35,7 +35,7 @@ gvfs
 seamonkey (For building, seamonkey-solibs for runtime)
 pygtk
 icu4c
-gnome-icon-theme (+ gnome-icon-theme-symbolic)
+gnome-icon-theme (already have gnome-icon-theme-symbolic)
 gnome-themes-standard
 mozilla-nss
 js185
@@ -122,7 +122,8 @@ colord
 colord-gtk
 libwacom
 cantarell-fonts
-pygobject3
+py2gobject
+py3gobject
 libgee
 libgweather
 libgtop

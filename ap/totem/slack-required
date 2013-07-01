@@ -10,7 +10,7 @@ gstreamer-1
 libpeas
 libzeitgeist
 nautilus
-pygobject3
+py2gobject
 pylint
 totem-pl-parser
 vala
