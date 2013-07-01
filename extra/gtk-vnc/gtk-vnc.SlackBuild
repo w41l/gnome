@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Slackware build script for vino
+# Slackware build script for gtk-vnc
 
 # Copyright 2013  Widya Walesa <walecha99@gmail.com>
 # All rights reserved.
@@ -23,8 +23,8 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. FURTHERMORE I AM NOT LIABLE IF
 # YOUR DATA IS DESTROYED, YOUR HOUSE BURNS DOWN OR YOUR DOG RUNS OFF.
 
-PRGNAM=vino
-VERSION=3.8.1
+PRGNAM=gtk-vnc
+VERSION=0.5.2
 BUILD=1
 TAG=${TAG:-_wls}
 NUMJOBS=${NUMJOBS:--j1}
@@ -41,7 +41,7 @@ CWD=$(pwd)
 WRK=${WRK:-/tmp/wlsbuild}
 PKG=$WRK/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
-DOCS="AUTHORS COPYING* ChangeLog HACKING INSTALL MAINTAINERS NEWS README* THANKS TODO"
+DOCS="AUTHORS COPYING.LIB ChangeLog INSTALL NEWS README"
 
 if [ "$ARCH" = "i486" ]; then
   SLKCFLAGS="-O2 -pipe -march=i486 -mtune=i686"
@@ -83,12 +83,16 @@ CXXFLAGS="$SLKCFLAGS" \
   --sysconfdir=/etc --docdir=/usr/doc/$PRGNAM-$VERSION \
   --localstatedir=/var --sharedstatedir=/var/lib \
   --disable-static --enable-shared \
+  --enable-introspection \
+  --enable-vala \
+  --with-gtk=3.0 \
+  --with-python \
+  --with-libview \
+  --with-pulseaudio \
+  --with-sasl \
 
 make V=1 $NUMJOBS
 make install DESTDIR=$PKG
-
-mkdir -p $PKG/etc/gnome
-mv $PKG/etc/xdg $PKG/etc/gnome/
 
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
@@ -103,7 +107,6 @@ cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 cat $CWD/slack-required > $PKG/install/slack-required
-cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
 /sbin/makepkg -p -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz

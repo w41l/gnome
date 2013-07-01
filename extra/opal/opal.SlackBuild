@@ -24,7 +24,7 @@
 # YOUR DATA IS DESTROYED, YOUR HOUSE BURNS DOWN OR YOUR DOG RUNS OFF.
 
 PRGNAM=opal
-VERSION=3.8.3
+VERSION=3.10.10
 BUILD=1
 TAG=${TAG:-_wls}
 NUMJOBS=${NUMJOBS:--j1}
@@ -41,7 +41,7 @@ CWD=$(pwd)
 WRK=${WRK:-/tmp/wlsbuild}
 PKG=$WRK/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
-DOCS="AUTHORS Change* COPY* HACKING INSTALL LICENSE NEWS NOTES README* THANKS TODO"
+DOCS="docs/* mpl-1.0.htm"
 
 if [ "$ARCH" = "i486" ]; then
   SLKCFLAGS="-O2 -pipe -march=i486 -mtune=i686"
@@ -65,6 +65,9 @@ cd $WRK
 rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.?z*
 cd $PRGNAM-$VERSION
+
+cat $CWD/$PRGNAM-$VERSION-ffmpeg-1.patch | patch -p1
+
 chown -R root:root .
 find . \
  \( -perm 777 -o -perm 775 -o -perm 711 -o -perm 555 -o -perm 511 \) \
@@ -86,16 +89,19 @@ CXXFLAGS="$SLKCFLAGS" \
   --disable-gtk-doc \
   --disable-samples \
   --disable-debug \
+  --enable-versioncheck \
   --enable-plugins \
 
 make V=1 $NUMJOBS
 make install DESTDIR=$PKG
 
+# Add symlinks to opal plugins dir
+( cd $PKG/usr/lib${LIBDIRSUFFIX};
+  ln -s $PRGNAM-$VERSION $PRGNAM;
+)
+
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
-
-find $PKG/usr/man -type f -exec gzip -9 {} \;
-for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a $DOCS $PKG/usr/doc/$PRGNAM-$VERSION

@@ -5,15 +5,15 @@
 # make exactly 11 lines for the formatting to be correct. It's also
 # customary to leave one space after the ':'.
 
-                      |-----handy-ruler-------------------------------------------------|
-nautilus-open-terminal: nautilus-open-terminal 
-nautilus-open-terminal:
-nautilus-open-terminal: This is a proof-of-concept Nautilus extension which 
-nautilus-open-terminal: allows you to open a terminal in arbitrary local 
-nautilus-open-terminal: folders.
-nautilus-open-terminal:
-nautilus-open-terminal:
-nautilus-open-terminal:
-nautilus-open-terminal:
-nautilus-open-terminal:
-nautilus-open-terminal:
+     |-----handy-ruler-------------------------------------------------|
+ekiga: ekiga
+ekiga:
+ekiga: Ekiga is a tool to communicate with video and audio over the
+ekiga: internet. It uses both SIP and H323 protocol and is compatible
+ekiga: with Microsoft Netmeeting. It used to be called GnomeMeeting
+ekiga:
+ekiga:
+ekiga:
+ekiga:
+ekiga:
+ekiga:

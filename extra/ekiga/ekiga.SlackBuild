@@ -41,7 +41,7 @@ CWD=$(pwd)
 WRK=${WRK:-/tmp/wlsbuild}
 PKG=$WRK/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
-DOCS="AUTHORS COPYING* ChangeLog HACKING INSTALL MAINTAINERS NEWS README* THANKS TODO"
+DOCS="AUTHORS COPYING ChangeLog FAQ INSTALL LICENSE MAINTAINERS NEWS README TODO"
 
 if [ "$ARCH" = "i486" ]; then
   SLKCFLAGS="-O2 -pipe -march=i486 -mtune=i686"
@@ -83,12 +83,10 @@ CXXFLAGS="$SLKCFLAGS" \
   --sysconfdir=/etc --docdir=/usr/doc/$PRGNAM-$VERSION \
   --localstatedir=/var --sharedstatedir=/var/lib \
   --disable-static --enable-shared \
+  --disable-schema-install \
 
 make V=1 $NUMJOBS
 make install DESTDIR=$PKG
-
-mkdir -p $PKG/etc/gnome
-mv $PKG/etc/xdg $PKG/etc/gnome/
 
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

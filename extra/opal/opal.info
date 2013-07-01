@@ -1,4 +1,4 @@
 URL=http://www.opalvoip.org/
-SRC=http://ftp.gnome.org/pub/gnome/sources/opal/3.8/opal-3.8.3.tar.bz2
-MD5=ff7bf6530af7d5113ba0a7604540c887
-SHA1=7d04530162338bf067f99271bb8bf5b37f05171f
+SRC=http://ftp.gnome.org/pub/gnome/sources/opal/3.10/opal-3.10.10.tar.xz
+MD5=6efa1b4c5e0ad6460019b4c6df0898d7
+SHA1=51cddcee0bdfe61dd0025ff6548d18e6aa0c255e

@@ -179,9 +179,15 @@ gnome-disk-utility
 gnome-color-manager
 gnome-contacts
 gnome-system-log
-gnome-photos
+gnome-font-viewer
 yelp-xsl
 yelp
+ptlib
+opal
+ekiga
+gtk-vnc
+vinagre
+vino
 
 
 [REMOVED]
