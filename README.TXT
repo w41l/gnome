@@ -138,7 +138,6 @@ gtkhtml
 libpst
 gtksourceview
 grilo
-zeitgeist
 
 
 [GNOME BASE]
@@ -172,7 +171,11 @@ gedit
 totem-pl-parser
 totem
 epiphany
+zeitgeist
 gedit
+libgit2
+libgit2-glib
+gedit-plugins
 gnome-terminal
 gnome-power-manager
 gnome-disk-utility
@@ -180,6 +183,7 @@ gnome-color-manager
 gnome-contacts
 gnome-system-log
 gnome-font-viewer
+gnome-calculator
 yelp-xsl
 yelp
 ptlib
