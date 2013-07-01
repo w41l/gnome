@@ -1,4 +1,4 @@
-URL=http://git.gnome.org/browse/gedit/
-SRC=http://ftp.gnome.org/pub/gnome/sources/gedit/3.4/gedit-3.4.2.tar.xz
+URL=https://wiki.gnome.org/Gedit
+SRC=http://ftp.gnome.org/pub/gnome/sources/gedit/3.8/gedit-3.8.2.tar.xz
 MD5=672031ade67a302000ce1c85d895ce72
 SHA1=cf088e9bfc3cc43b65570bb3cf4e3050f63d2c76

@@ -138,6 +138,7 @@ gtkhtml
 libpst
 gtksourceview
 grilo
+zeitgeist
 
 
 [GNOME BASE]
@@ -163,28 +164,28 @@ gdm
 
 
 [GNOME APPS - OPTIONAL]
-gnome-terminal
 file-roller
 brasero
 evince
-gthumb
+eog
 gedit
 totem-pl-parser
 totem
-gnome-power-manager
 epiphany
+gedit
+gnome-terminal
+gnome-power-manager
 gnome-disk-utility
+gnome-color-manager
+gnome-contacts
+gnome-system-log
+gnome-photos
 yelp-xsl
 yelp
-muffin
-lxml
-cinnamon
-gtk-engines
-gtk-murrine-engine
-gtk-unico-engine
 
 
 [REMOVED]
+*gthumb
 *orca
 *pyxdg
 *gnome-screensaver
@@ -197,9 +198,14 @@ gtk-unico-engine
 *gnome-python
 *gnome-applets
 *gtk3-engines
-*zeitgeist
 *epiphany-extensions
 *gnome-media
 *gmtk
 *gnome-mplayer
 *glade3
+*muffin
+*lxml
+*cinnamon
+*gtk-engines
+*gtk-murrine-engine
+*gtk-unico-engine

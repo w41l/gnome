@@ -1,8 +1,8 @@
 #!/bin/sh
 
-# Slackware build script for gedit
+# Slackware build script for vino
 
-# Copyright 2011-2013  Widya Walesa <walecha99@gmail.com>
+# Copyright 2013  Widya Walesa <walecha99@gmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -23,11 +23,11 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. FURTHERMORE I AM NOT LIABLE IF
 # YOUR DATA IS DESTROYED, YOUR HOUSE BURNS DOWN OR YOUR DOG RUNS OFF.
 
-PRGNAM=gedit
-VERSION=3.8.2
+PRGNAM=vino
+VERSION=3.8.1
 BUILD=1
 TAG=${TAG:-_wls}
-NUMJOBS=${NUMJOBS:--j2}
+NUMJOBS=${NUMJOBS:--j1}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -41,7 +41,7 @@ CWD=$(pwd)
 WRK=${WRK:-/tmp/wlsbuild}
 PKG=$WRK/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
-DOCS="AUTHORS BUGS COPYING ChangeLog HACKING INSTALL MAINTAINERS NEWS README"
+DOCS="AUTHORS COPYING* ChangeLog HACKING INSTALL MAINTAINERS NEWS README* THANKS TODO"
 
 if [ "$ARCH" = "i486" ]; then
   SLKCFLAGS="-O2 -pipe -march=i486 -mtune=i686"
@@ -83,14 +83,12 @@ CXXFLAGS="$SLKCFLAGS" \
   --sysconfdir=/etc --docdir=/usr/doc/$PRGNAM-$VERSION \
   --localstatedir=/var --sharedstatedir=/var/lib \
   --disable-static --enable-shared \
-  --disable-schemas-compile \
-  --enable-gvfs-metadata \
-  --enable-zeitgeist \
-  --enable-python=yes \
-  --enable-introspection=yes \
 
 make V=1 $NUMJOBS
 make install DESTDIR=$PKG
+
+mkdir -p $PKG/etc/gnome
+mv $PKG/etc/xdg $PKG/etc/gnome/
 
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
