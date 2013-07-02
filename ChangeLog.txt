@@ -1,6 +1,6 @@
 Tue Jul 2 16:27:53 2013 +0700
 
-    Fix wrong URL in the PKG.info files. My mistake :-P
+    GNOME 3.8.3 - Fix wrong URL in the PKG.info files. My mistake :-P
 
 Tue Jul 2 00:32:16 2013 +0700
 
