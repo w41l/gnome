@@ -1,32 +1,36 @@
-   Tue Jul 2 00:32:16 2013 +0700
+Tue Jul 2 16:27:53 2013 +0700
+
+    Fix wrong URL in the PKG.info files. My mistake :-P
+
+Tue Jul 2 00:32:16 2013 +0700
 
     Split pygobject3 into py2gobject (python2 binding) and py3gobject (python3 binding).
 
-   Mon Jul 1 22:34:59 2013 +0700
+Mon Jul 1 22:34:59 2013 +0700
 
     Additional packages for GNOME 3.8.3 in extra directory.
 
-   Sun Jun 30 15:25:18 2013 +0700
+Sun Jun 30 15:25:18 2013 +0700
 
     GNOME 3.8.3 for Slackware-current
 
-   Mon Dec 17 00:04:25 2012 +0700
+Mon Dec 17 00:04:25 2012 +0700
 
     Add back README.TXT to have one line per package list.
 
-   Mon Dec 17 00:00:42 2012 +0700
+Mon Dec 17 00:00:42 2012 +0700
 
     Add ChangeLog.txt
 
-   Sun Dec 16 23:40:46 2012 +0700
+Sun Dec 16 23:40:46 2012 +0700
 
     Removing old README.TXT
 
-   Sun Dec 16 23:21:27 2012 +0700
+Sun Dec 16 23:21:27 2012 +0700
 
     After some thought, it's best to move GNOME SlackBuild to separated tree
     from wlsbuild to ease maintenance. All external dependency libraries still
     in wlsbuild.
 
-   Sun Dec 16 07:40:24 2012 -0800
+Sun Dec 16 07:40:24 2012 -0800
 
