@@ -1,4 +1,4 @@
 URL=https://wiki.gnome.org/ControlCenter
-SRC=http://ftp.gnome.org/gnome/sources/gnome-control-center/3.8/gnome-control-center-3.8.3.tar.xz
+SRC=http://ftp.gnome.org/pub/gnome/sources/gnome-control-center/3.8/gnome-control-center-3.8.3.tar.xz
 MD5=0c8bc498c012e247894486b09838a34a
 SHA1=ba5eafe1a92a69312ae7bf1d34ec9cc772a365aa

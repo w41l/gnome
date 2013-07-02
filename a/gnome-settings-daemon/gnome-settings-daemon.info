@@ -1,4 +1,4 @@
 URL=http://git.gnome.org/browse/gnome-settings-daemon/
-SRC=http://ftp.gnome.org/gnome/sources/gnome-settings-daemon/3.8/gnome-settings-daemon-3.8.3.tar.xz
+SRC=http://ftp.gnome.org/pub/gnome/sources/gnome-settings-daemon/3.8/gnome-settings-daemon-3.8.3.tar.xz
 MD5=fb783e7d118e4425b3bd94d439633899
 SHA1=86b4392f37738349035ab5c5a0c8a2c793006b65

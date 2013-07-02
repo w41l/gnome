@@ -1,4 +1,4 @@
 URL=https://wiki.gnome.org/Empathy
-SRC=http://ftp.gnome.org/gnome/sources/empathy/3.8/empathy-3.8.3.tar.xz
+SRC=http://ftp.gnome.org/pub/gnome/sources/empathy/3.8/empathy-3.8.3.tar.xz
 MD5=ff5746248812b71898541db63207f385
 SHA1=c12d27ccdace7ff64186036f5cb63a65b9052979

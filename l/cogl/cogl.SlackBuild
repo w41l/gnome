@@ -29,6 +29,11 @@ BUILD=1
 TAG=${TAG:-_wls}
 NUMJOBS=${NUMJOBS:--j2}
 
+# Cogl bug on FGLRX
+# https://bugzilla.gnome.org/show_bug.cgi?id=701445
+# Comment if you're NOT using FGLRX (AMD CATALYST)
+#HAVE_FGLRX="--enable-cogl-gles2=no --enable-wayland-egl-platform=no --enable-wayland-egl-server=no"
+
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
     i?86) ARCH=i486 ;;
@@ -84,6 +89,10 @@ CXXFLAGS="$SLKCFLAGS" \
   --localstatedir=/var --sharedstatedir=/var/lib \
   --disable-static --enable-shared \
   --enable-introspection=yes \
+  $HAVE_FGLRX \
+
+# https://bugzilla.gnome.org/show_bug.cgi?id=655517
+sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
 
 make V=1 $NUMJOBS
 make DESTDIR=$PKG install

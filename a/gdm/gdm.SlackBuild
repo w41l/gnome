@@ -85,7 +85,9 @@ CXXFLAGS="$SLKCFLAGS" \
   --disable-static --enable-shared \
   --enable-introspection=yes \
   --enable-authentication-scheme=shadow \
-  --with-default-pam-config=none \
+  --with-pam-prefix=/usr
+
+#  --with-default-pam-config=/etc/pam.d/gdm \
 
 make V=1 $NUMJOBS
 make install DESTDIR=$PKG
@@ -94,6 +96,10 @@ make install DESTDIR=$PKG
 mkdir -p $PKG/usr/share/xsessions &&
 cp $CWD/xsessions/*.desktop $PKG/usr/share/xsessions &&
 chmod -x $PKG/usr/share/xsessions/*.desktop  || exit 1
+
+# Add pam.d configuration
+mkdir -p $PKG/etc/pam.d
+cat $CWD/$PRGNAM.pam > $PKG/etc/pam.d/$PRGNAM
 
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

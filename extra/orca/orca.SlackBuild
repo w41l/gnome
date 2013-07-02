@@ -1,8 +1,8 @@
 #!/bin/sh
 
-# Slackware build script for clutter
+# Slackware build script for orca
 
-# Copyright 2010-2013  Widya Walesa <walecha99@gmail.com>
+# Copyright 2012-2013  Widya Walesa <walecha99@gmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -23,16 +23,11 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. FURTHERMORE I AM NOT LIABLE IF
 # YOUR DATA IS DESTROYED, YOUR HOUSE BURNS DOWN OR YOUR DOG RUNS OFF.
 
-PRGNAM=clutter
-VERSION=1.14.4
+PRGNAM=orca
+VERSION=3.8.2
 BUILD=1
 TAG=${TAG:-_wls}
-NUMJOBS=${NUMJOBS:--j2}
-
-# Clutter bug on FGLRX
-# https://bugzilla.gnome.org/show_bug.cgi?id=701445
-# Comment if you're NOT using FGLRX (AMD CATALYST)
-#HAVE_FGLRX="--enable-wayland-backend --enable-wayland-compositor --enable-egl-backend"
+NUMJOBS=${NUMJOBS:--j1}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -46,7 +41,7 @@ CWD=$(pwd)
 WRK=${WRK:-/tmp/wlsbuild}
 PKG=$WRK/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
-DOCS="ABOUT-NLS COPY* ChangeLog NEWS README"
+DOCS="AUTHORS COPYING INSTALL NEWS README"
 
 if [ "$ARCH" = "i486" ]; then
   SLKCFLAGS="-O2 -pipe -march=i486 -mtune=i686"
@@ -87,29 +82,27 @@ CXXFLAGS="$SLKCFLAGS" \
   --mandir=/usr/man --infodir=/usr/info \
   --sysconfdir=/etc --docdir=/usr/doc/$PRGNAM-$VERSION \
   --localstatedir=/var --sharedstatedir=/var/lib \
-  --disable-static --enable-shared \
-  --enable-docs=no \
-  --enable-introspection=yes \
-  --enable-evdev-input \
-  $HAVE_FGLRX \
-
-# https://bugzilla.gnome.org/show_bug.cgi?id=655517
-sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
 
 make V=1 $NUMJOBS
-make DESTDIR=$PKG install
+make install DESTDIR=$PKG
+
+mkdir -p $PKG/etc/gnome
+mv $PKG/etc/xdg $PKG/etc/gnome/
 
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
+find $PKG/usr/man -type f -exec gzip -9 {} \;
+for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
+
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a $DOCS $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a doc/{CODING_STYLE,HACKING,HACKING.backends} $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 cat $CWD/slack-required > $PKG/install/slack-required
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
 /sbin/makepkg -p -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz
