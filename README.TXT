@@ -185,6 +185,7 @@ gnome-contacts
 gnome-system-log
 gnome-font-viewer
 gnome-calculator
+gthumb
 yelp-xsl
 yelp
 ptlib
