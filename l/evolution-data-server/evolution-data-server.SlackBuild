@@ -27,7 +27,7 @@ PRGNAM=evolution-data-server
 VERSION=3.8.3
 BUILD=1
 TAG=${TAG:-_wls}
-NUMJOBS=${NUMJOBS:--j1}
+NUMJOBS=${NUMJOBS:--j2}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -75,7 +75,7 @@ find . \
 LDFLAGS="-L/usr/lib${LIBDIRSUFFIX}" \
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
-./configure \
+./configure --build=$ARCH-slackware-linux \
   --program-prefix= --program-suffix= \
   --prefix=/usr --exec-prefix=/usr \
   --bindir=/usr/bin --sbindir=/usr/sbin \
@@ -98,7 +98,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --with-nss-includes=$(pkg-config --variable=includedir nss) \
   --with-nss-libs=$(pkg-config --variable=libdir nss) \
 
-make V=1 $NUMJOBS
+make $NUMJOBS
 make install DESTDIR=$PKG
 
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \

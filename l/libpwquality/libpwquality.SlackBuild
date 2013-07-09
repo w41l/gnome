@@ -24,10 +24,10 @@
 # YOUR DATA IS DESTROYED, YOUR HOUSE BURNS DOWN OR YOUR DOG RUNS OFF.
 
 PRGNAM=libpwquality
-VERSION=$(ls $PRGNAM-*.tar.?z* | rev | cut -d - -f 1 | cut -d . -f 3- | rev)
+VERSION=1.2.2
 BUILD=1
 TAG="_wls"
-NUMJOBS="-j2"
+NUMJOBS="${NUMJOBS:--j2}"
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -74,7 +74,7 @@ find . \
 
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
-./configure \
+./configure --build=$ARCH-slackware-linux \
   --program-prefix= --program-suffix= \
   --prefix=/usr --exec-prefix=/usr \
   --bindir=/usr/bin --sbindir=/usr/sbin \
@@ -85,7 +85,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --disable-static --enable-shared \
   --disable-python-bindings \
 
-make V=1 $NUMJOBS
+make $NUMJOBS
 make install DESTDIR=$PKG
 
 # Preserve old config

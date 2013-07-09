@@ -32,7 +32,18 @@ NUMJOBS=${NUMJOBS:--j2}
 # Cogl bug on FGLRX
 # https://bugzilla.gnome.org/show_bug.cgi?id=701445
 # Comment if you're NOT using FGLRX (AMD CATALYST)
-#HAVE_FGLRX="--enable-cogl-gles2=no --enable-wayland-egl-platform=no --enable-wayland-egl-server=no"
+case "$1" in
+  FGLRX) echo "FGLRX workaround enable!"
+         echo "$PRGNAM may not works properly in other VGA cards!"
+         sleep 10
+         FGLOPT="--enable-cogl-gles2=no --enable-wayland-egl-platform=no --enable-wayland-egl-server=no"
+         ;;
+      *) echo "Default build! Not using FGLRX workaround!"
+         echo "Use $0 FGLRX to enable FGLRX workaround!"
+         sleep 10
+         FGLOPT=""
+         ;;
+esac
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -79,7 +90,8 @@ find . \
 
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
-./configure \
+./configure --build=$ARCH-slackware-linux \
+  --build=$ARCH-slackware-linux \
   --program-prefix= --program-suffix= \
   --prefix=/usr --exec-prefix=/usr \
   --bindir=/usr/bin --sbindir=/usr/sbin \
@@ -89,12 +101,12 @@ CXXFLAGS="$SLKCFLAGS" \
   --localstatedir=/var --sharedstatedir=/var/lib \
   --disable-static --enable-shared \
   --enable-introspection=yes \
-  $HAVE_FGLRX \
+  $FGLOPT \
 
 # https://bugzilla.gnome.org/show_bug.cgi?id=655517
 sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
 
-make V=1 $NUMJOBS
+make $NUMJOBS
 make DESTDIR=$PKG install
 
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \

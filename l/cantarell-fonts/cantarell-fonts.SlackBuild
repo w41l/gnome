@@ -27,7 +27,7 @@ PRGNAM=cantarell-fonts
 VERSION=0.0.13
 BUILD=1
 TAG="_wls"
-ARCH="noarch"
+ARCH=noarch
 
 CWD=$(pwd)
 WRK=${WRK:-/tmp/wlsbuild}
@@ -55,9 +55,6 @@ CXXFLAGS="$SLKCFLAGS" \
 ./configure \
   --program-prefix= --program-suffix= \
   --prefix=/usr --exec-prefix=/usr \
-  --bindir=/usr/bin --sbindir=/usr/sbin \
-  --libdir=/usr/lib$LIBDIRSUFFIX --includedir=/usr/include \
-  --mandir=/usr/man --infodir=/usr/info \
   --sysconfdir=/etc --docdir=/usr/doc/$PRGNAM-$VERSION \
   --localstatedir=/var --sharedstatedir=/var/lib \
 

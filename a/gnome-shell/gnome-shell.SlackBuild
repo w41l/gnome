@@ -27,7 +27,7 @@ PRGNAM=gnome-shell
 VERSION=3.8.3
 BUILD=1
 TAG=${TAG:-_wls}
-NUMJOBS=${NUMJOBS:--j1}
+NUMJOBS=${NUMJOBS:--j2}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -79,7 +79,7 @@ find . \
 
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
-./configure \
+./configure --build=$ARCH-slackware-linux \
   --program-prefix= --program-suffix= \
   --prefix=/usr --exec-prefix=/usr \
   --bindir=/usr/bin --sbindir=/usr/sbin \
@@ -93,7 +93,7 @@ CXXFLAGS="$SLKCFLAGS" \
 # https://bugzilla.gnome.org/show_bug.cgi?id=655517
 sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
 
-make V=1 $NUMJOBS
+make $NUMJOBS
 make install DESTDIR=$PKG
 
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \

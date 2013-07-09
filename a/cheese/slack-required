@@ -3,9 +3,10 @@ clutter-gst
 clutter-gtk
 gnome-desktop
 gnome-video-effects
-gst-plugins-base-1
-gst-plugins-good-1
-gstreamer-1
+gst-plugins-bad1
+gst-plugins-base1
+gst-plugins-good1
+gstreamer1
 json-glib
 libgee
 mx
