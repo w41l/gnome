@@ -94,6 +94,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --enable-fd-fallback \
   --enable-reverse \
   --enable-examples \
+  --with-udevrulesdir=/etc/udev/rules.d \
 
 make $NUMJOBS
 make install DESTDIR=$PKG
