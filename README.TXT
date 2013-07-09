@@ -43,6 +43,12 @@ gucharmap
 sane
 bash-completion
 itstool
+gnupg
+gnupg2
+gcr
+libsecrect
+libcroco
+gnutls
 
 
 [EXTERNAL LIBS]
@@ -77,9 +83,6 @@ gst-plugins-good-1
 gst-plugins-ugly-1 - Optional
 gst-plugins-bad-1 - Optional
 gst-libav - Optional
-geoclue
-libwebp
-webkitgtk
 python-isodate
 python-rdflib
 xapian-core
@@ -89,17 +92,23 @@ pylint
 heimdal (For building, heimdal-libraries for runtime)
 liboauth
 libnice
+geoclue
+libwebp
+webkitgtk2
 telepathy-glib
 telepathy-logger
 telepathy-mission-control
 farstream
 telepathy-farstream
 telepathy-gabble
+cracklib
+py3cairo
+libwacom
+libgit2
 
 
 [GNOME LIBS]
 gnome-common
-network-manager-applet (Rebuild, Slackware version still using GTK+2, we need GTK+3)
 json-glib
 libdbusmenu
 libunique
@@ -120,7 +129,6 @@ mx
 libgusb
 colord
 colord-gtk
-libwacom
 cantarell-fonts
 py2gobject
 py3gobject
@@ -132,13 +140,16 @@ caribou
 accountsservice
 exempi
 ibus
-cracklib
 libpwquality
 libpeas
 gtkhtml
 libpst
 gtksourceview
 grilo
+zeitgeist
+libgit2-glib
+totem-pl-parser
+libgxps
 
 
 [GNOME BASE]
@@ -146,6 +157,7 @@ gnome-menus
 gnome-desktop
 zenity
 mutter
+network-manager-applet (Rebuild, Slackware version still using GTK+2, we need GTK+3)
 folks
 nautilus
 nautilus-sendto
@@ -163,29 +175,30 @@ pam (Only for GDM)
 gdm
 
 
-[GNOME APPS - OPTIONAL]
+[GNOME APPS - OPTIONAL, NO ORDERING REQUIRED]
+gnome-terminal
+gnome-power-manager
+gnome-disk-utility
+gnome-color-manager
+gnome-tweak-tool
+mousetweaks
 file-roller
 brasero
 evince
 eog
 gedit
-totem-pl-parser
 totem
 epiphany
-zeitgeist
 gedit
-libgit2
-libgit2-glib
 gedit-plugins
-gnome-terminal
-gnome-power-manager
-gnome-disk-utility
-gnome-color-manager
 gnome-contacts
 gnome-system-log
 gnome-font-viewer
 gnome-calculator
+gnome-screenshot
 gthumb
+seahorse
+evolution
 yelp-xsl
 yelp
 ptlib
@@ -194,10 +207,10 @@ ekiga
 gtk-vnc
 vinagre
 vino
+gitg
 
 
 [REMOVED]
-*gthumb
 *orca
 *pyxdg
 *gnome-screensaver
