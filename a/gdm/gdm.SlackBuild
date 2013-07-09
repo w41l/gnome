@@ -27,7 +27,7 @@ PRGNAM=gdm
 VERSION=3.8.3.1
 BUILD=1
 TAG=${TAG:-_wls}
-NUMJOBS=${NUMJOBS:--j1}
+NUMJOBS=${NUMJOBS:--j2}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -74,7 +74,7 @@ find . \
 
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
-./configure \
+./configure --build=$ARCH-slackware-linux \
   --program-prefix= --program-suffix= \
   --prefix=/usr --exec-prefix=/usr \
   --bindir=/usr/bin --sbindir=/usr/sbin \
@@ -85,11 +85,12 @@ CXXFLAGS="$SLKCFLAGS" \
   --disable-static --enable-shared \
   --enable-introspection=yes \
   --enable-authentication-scheme=shadow \
-  --with-pam-prefix=/usr
+  --with-user=gdm \
+  --with-group=gdm \
+  --with-default-pam-config=lfs \
+  --with-initial-vt=7 \
 
-#  --with-default-pam-config=/etc/pam.d/gdm \
-
-make V=1 $NUMJOBS
+make $NUMJOBS
 make install DESTDIR=$PKG
 
 # Fix gdm xsession file (in case it's replaced)
@@ -97,9 +98,12 @@ mkdir -p $PKG/usr/share/xsessions &&
 cp $CWD/xsessions/*.desktop $PKG/usr/share/xsessions &&
 chmod -x $PKG/usr/share/xsessions/*.desktop  || exit 1
 
-# Add pam.d configuration
+# Fix gdm runtime directory permission
+chown -R gdm:gdm $PKG/var/{cache,lib,run,log}/gdm
+
+# Add our own and additional pam.d configuration
 mkdir -p $PKG/etc/pam.d
-cat $CWD/$PRGNAM.pam > $PKG/etc/pam.d/$PRGNAM
+cp $CWD/pam.d/* $PKG/etc/pam.d/
 
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
