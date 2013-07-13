@@ -1,4 +1,4 @@
-URL=http://git.gnome.org/browse/gnome-terminal/
-SRC=http://ftp.gnome.org/pub/gnome/sources/gnome-terminal/3.4/gnome-terminal-3.4.1.1.tar.xz
-MD5=0f29fd0831ba142b11f9a9ec19533feb
-SHA1=64b570d85cba7bfb730adec0a18883d9f7dd66cd
+URL=https://wiki.gnome.org/Terminal
+SRC=http://ftp.gnome.org/pub/gnome/sources/gnome-terminal/3.8/gnome-terminal-3.8.4.tar.xz
+MD5=43fb1f084bc9c11c6d4a6158b246bede
+SHA1=45659ca39c17281f0771203c7eb5f2a84dcd009e

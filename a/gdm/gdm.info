@@ -1,5 +1,5 @@
-URL=http://git.gnome.org/browse/gnome-bluetooth/
-SRC=http://ftp.gnome.org/pub/gnome/sources/gnome-bluetooth/3.8/gnome-bluetooth-3.8.1.tar.xz
-MD5=a45c401daa15937a31c59d49943c59db
-SHA1=c3c5521ba4e5428ee6d30fa3c049bcf7a7c0f345
+URL=https://projects.gnome.org/gdm/
+SRC=http://ftp.gnome.org/pub/gnome/sources/gdm/3.8/gdm-3.8.3.1.tar.xz
+MD5=ad258058f3a2a1776f2b953111247347
+SHA1=dd49a50f0da46ad64e5de895cc230c568aa5cff0
 

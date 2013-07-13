@@ -1,4 +1,4 @@
 URL=https://wiki.gnome.org/Libgit2-glib
-SRC=http://ftp.gnome.org/pub/gnome/sources/libgit2-glib/1.4/libgit2-glib-0.0.4.tar.xz
-MD5=4895321891d1841a1b62b502d0480b23
-SHA1=929043cd29445efb4754bda3e472957066a18947
+SRC=http://ftp.gnome.org/pub/gnome/sources/libgit2-glib/0.0/libgit2-glib-0.0.4.tar.xz
+MD5=fd37364a741a8954df419e061f402e53
+SHA1=1702f71488bb332ea11f621dd465e42aa1d77aff

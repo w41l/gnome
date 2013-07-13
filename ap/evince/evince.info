@@ -1,4 +1,4 @@
-URL=http://git.gnome.org/browse/evince/
-SRC=http://ftp.gnome.org/pub/gnome/sources/evince/3.8/evince-3.8.2.tar.xz
-MD5=5792485f6cab925ebdf7ae7fd9d93028
-SHA1=6d36d6efa44cf26fd30eb18679f48165fd66def1
+URL=https://wiki.gnome.org/Evince
+SRC=http://ftp.gnome.org/pub/gnome/sources/evince/3.8/evince-3.8.3.tar.xz
+MD5=81a8b0ffc427f2e3bde4056286e3a27a
+SHA1=cc31bf06309634fa7b651811f9b94a549547712c
