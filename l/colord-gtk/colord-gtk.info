@@ -1,4 +1,10 @@
-URL=http://www.freedesktop.org/software/colord/
-SRC=http://www.freedesktop.org/software/colord/releases/colord-gtk-0.1.25.tar.xz
-MD5=f3ad262c060fc50c10805b744be7479d
-SHA1=ffb27568ff25860fbcc09cc32ba05469655b099d
+PRGNAM="colord-gtk"
+VERSION="0.1.26"
+HOMEPAGE="http://www.freedesktop.org/software/colord"
+DOWNLOAD="http://www.freedesktop.org/software/colord/releases/colord-gtk-0.1.26.tar.xz"
+MD5SUM="bb9d6f3c037152ad791003375aa6c16c"
+DOWNLOAD_x86_64=""
+MD5SUM_x86_64=""
+REQUIRES=""
+MAINTAINER="Widya Walesa"
+EMAIL="walecha99@gmail.com"

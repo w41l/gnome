@@ -1,4 +1,10 @@
-URL=http://git.gnome.org/browse/gnome-settings-daemon/
-SRC=http://ftp.gnome.org/pub/gnome/sources/gnome-settings-daemon/3.8/gnome-settings-daemon-3.8.3.tar.xz
-MD5=fb783e7d118e4425b3bd94d439633899
-SHA1=86b4392f37738349035ab5c5a0c8a2c793006b65
+PRGNAM="gnome-settings-daemon"
+VERSION="3.18.1"
+HOMEPAGE="http://gnome.org/"
+DOWNLOAD="http://download.gnome.org/sources/gnome-settings-daemon/3.18/gnome-settings-daemon-3.18.1.tar.xz"
+MD5SUM="5d54f498cd0bb70a87ec6c5e33b16c09"
+DOWNLOAD_x86_64=""
+MD5SUM_x86_64=""
+REQUIRES="colord geocode-glib geoclue2 gnome-desktop json-glib libgweather libwacom pulseaudio"
+MAINTAINER="Widya Walesa"
+EMAIL="walecha99@gmail.com"

@@ -1,4 +1,10 @@
-URL=http://git.gnome.org/browse/brasero/
-SRC=http://ftp.gnome.org/pub/gnome/sources/brasero/3.8/brasero-3.8.0.tar.xz
-MD5=0a380af9dc134084fb04f54f2a656e6f
-SHA1=5794044645470ddd68a6fdd738a1be750d52fcde
+PRGNAM="brasero"
+VERSION="3.12.1"
+HOMEPAGE="ttps://wiki.gnome.org/Apps/Brasero"
+DOWNLOAD="http://download.gnome.org/sources/brasero/3.12/brasero-3.12.1.tar.xz"
+MD5SUM="216691249053448a9f2b4ee5e118ce72"
+DOWNLOAD_x86_64=""
+MD5SUM_x86_64=""
+REQUIRES="libisofs libburn libisoburn"
+MAINTAINER="Widya Walesa"
+EMAIL="walecha99@gmail.com"

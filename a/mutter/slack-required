@@ -1,5 +1,4 @@
 clutter
 clutter-gtk
-cogl
-json-glib
-zenity
+gnome-desktop
+upower >= 0.99

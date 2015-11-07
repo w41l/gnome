@@ -1,4 +1,10 @@
-URL=http://git.gnome.org/browse/gnome-backgrounds/
-SRC=http://ftp.gnome.org/pub/gnome/sources/gnome-backgrounds/3.8/gnome-backgrounds-3.8.1.tar.xz
-MD5=977a4e2b79e10efa7cf4e1188e73ab3d
-SHA1=3cb0f21156c537836b00a984150fdb5a3db1584e
+PRGNAM="gnome-backgrounds"
+VERSION="3.18.0"
+HOMEPAGE="https://gnome.org/"
+DOWNLOAD="http://download.gnome.org/sources/gnome-backgrounds/3.18/gnome-backgrounds-3.18.0.tar.xz"
+MD5SUM="bdeed6923c9b929e8794f1f1183c4fa4"
+DOWNLOAD_x86_64=""
+MD5SUM_x86_64=""
+REQUIRES=""
+MAINTAINER="Widya Walesa"
+EMAIL="walecha99@gmail.com"

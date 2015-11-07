@@ -1,5 +1,4 @@
 accountsservice
-cheese
 clutter
 clutter-gst
 clutter-gtk
@@ -7,18 +6,15 @@ cogl
 colord
 colord-gtk
 cracklib
-evolution-data-server
-geoclue
+eudev
+geoclue2
 gnome-backgrounds
 gnome-bluetooth
 gnome-desktop
 gnome-menus
 gnome-online-accounts
 gnome-settings-daemon
-gst-plugins-bad-1
-gst-plugins-base-1
-gstreamer-1
-heimdal | heimdal-libraries
+grillo
 ibus
 json-c
 json-glib
@@ -26,9 +22,8 @@ libchamplain
 libgtop
 libpwquality
 librest
-libsocialweb
 libwacom
 network-manager-applet
-orc
 pulseaudio
-webkitgtk
+upower >= 0.99
+webkitgtk3

@@ -2,7 +2,7 @@
 
 # Slackware build script for mutter
 
-# Copyright 2012-2013  Widya Walesa <walecha99@gmail.com>
+# Copyright 2015  Widya Walesa <walecha99@gmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -24,14 +24,14 @@
 # YOUR DATA IS DESTROYED, YOUR HOUSE BURNS DOWN OR YOUR DOG RUNS OFF.
 
 PRGNAM=mutter
-VERSION=3.8.3
-BUILD=1
+VERSION=$(cat $PRGNAM.info | grep "VERSION" | cut -d = -f 2)
+BUILD=${BUILD:-1}
 TAG=${TAG:-_wls}
-NUMJOBS=${NUMJOBS:--j2}
+NUMJOBS=${NUMJOBS:--j7}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
-    i?86) ARCH=i486 ;;
+    i?86) ARCH=i586 ;;
     arm*) ARCH=arm ;;
        *) ARCH=$( uname -m ) ;;
   esac
@@ -41,16 +41,16 @@ CWD=$(pwd)
 WRK=${WRK:-/tmp/wlsbuild}
 PKG=$WRK/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
-DOCS="AUTHORS COPYING ChangeLog HACKING INSTALL MAINTAINERS NEWS README *.txt"
+DOCS="COPY* NEWS"
 
-if [ "$ARCH" = "i486" ]; then
-  SLKCFLAGS="-O2 -pipe -march=i486 -mtune=i686"
+if [ "$ARCH" = "i586" ]; then
+  SLKCFLAGS="-O2 -pipe -march=i586 -mtune=i686"
   LIBDIRSUFFIX=""
 elif [ "$ARCH" = "i686" ]; then
   SLKCFLAGS="-O2 -pipe -march=i686 -mtune=i686"
   LIBDIRSUFFIX=""
 elif [ "$ARCH" = "x86_64" ]; then
-  SLKCFLAGS="-O2 -m64 -pipe -fPIC"
+  SLKCFLAGS="-O2 -pipe -m64 -fPIC"
   LIBDIRSUFFIX="64"
 else
   SLKCFLAGS="-O2"
@@ -58,6 +58,10 @@ else
 fi
 
 set -e
+
+if [ ! -f $CWD/$PRGNAM-$VERSION.tar.xz ]; then
+  wget $(cat $PRGNAM.info | grep "DOWNLOAD=" | cut -d = -f 2 | sed 's/"//g')
+fi
 
 rm -rf $PKG
 mkdir -p $WRK $PKG $OUTPUT
@@ -73,7 +77,7 @@ find . \
  -exec chmod 644 {} \;
 
 CFLAGS="$SLKCFLAGS" \
-CPPFLAGS="$SLKCFLAGS" \
+CXXFLAGS="$SLKCFLAGS" \
 ./configure --build=$ARCH-slackware-linux \
   --program-prefix= --program-suffix= \
   --prefix=/usr --exec-prefix=/usr \
@@ -81,12 +85,15 @@ CPPFLAGS="$SLKCFLAGS" \
   --libdir=/usr/lib$LIBDIRSUFFIX --includedir=/usr/include \
   --mandir=/usr/man --infodir=/usr/info \
   --sysconfdir=/etc --docdir=/usr/doc/$PRGNAM-$VERSION \
-  --localstatedir=/var --sharedstatedir=/var/lib \
+  --localstatedir=/var \
   --disable-static --enable-shared \
-  --enable-compile-warnings=maximum \
+  --enable-introspection=yes \
+  --enable-compile-warnings=no \
+  --disable-wayland \
+  --disable-schemas-compile
 
-make $NUMJOBS
-make DESTDIR=$PKG install
+make
+make install DESTDIR=$PKG
 
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
@@ -96,7 +103,6 @@ for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; r
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a $DOCS $PKG/usr/doc/$PRGNAM-$VERSION
-head -n 1000 ChangeLog > $PKG/usr/doc/$PRGNAM-$VERSION/ChangeLog
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install

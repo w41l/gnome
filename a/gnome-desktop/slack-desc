@@ -1,12 +1,12 @@
              |-----handy-ruler------------------------------------------------------|
-gnome-desktop: gnome-desktop (GNOME core library and applications)
+gnome-desktop: gnome-desktop
 gnome-desktop:
-gnome-desktop: This package contains the libgnome-desktop library, some documents
-gnome-desktop: installed as part of the core GNOME distribution, GNOME's .desktop
-gnome-desktop: files, the gnome-about program, some manpages, and GNOME's core
-gnome-desktop: graphics files and icons.
+gnome-desktop: The GNOME Desktop package contains a library that provides an API
+gnome-desktop: shared by several applications on the GNOME Desktop. 
 gnome-desktop:
-gnome-desktop:
+gnome-desktop: Home: gnome.org
 gnome-desktop:
 gnome-desktop:
 gnome-desktop:
+gnome-desktop:
+gnome-desktop: Packaged by: Widya Walesa <walecha99@gmail.com>

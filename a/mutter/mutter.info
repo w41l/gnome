@@ -1,4 +1,10 @@
-URL=http://git.gnome.org/browse/mutter/
-SRC=http://ftp.gnome.org/pub/gnome/sources/mutter/3.8/mutter-3.8.3.tar.xz
-MD5=b4cbbb23312b71bcb4ac917647d6549c
-SHA1=a1998e79106eb676da01aa050e7e4d20965872b9
+PRGNAM="mutter"
+VERSION="3.18.1"
+HOMEPAGE="https://gnome.org/"
+DOWNLOAD="http://download.gnome.org/sources/mutter/3.18/mutter-3.18.1.tar.xz"
+MD5SUM="d5218fc0d0f46b1b959c488100ae3c88"
+DOWNLOAD_x86_64=""
+MD5SUM_x86_64=""
+REQUIRES="upower (>= 0.99) clutter clutter-gtk gnome-desktop"
+MAINTAINER="Widya Walesa"
+EMAIL="walecha99@gmail.com"

@@ -2,7 +2,7 @@
 
 # Slackware build script for gnome-backgrounds
 
-# Copyright 2011-2013  Widya Walesa <walecha99@gmail.com>
+# Copyright 2011-2015  Widya Walesa <walecha99@gmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -25,7 +25,7 @@
 
 PRGNAM=gnome-backgrounds
 VERSION=$(echo $PRGNAM-*.tar.?z* | rev | cut -d . -f 3- | cut -d - -f 1 | rev)
-BUILD=1
+BUILD=${BUILD:-1}
 TAG=${TAG:-_wls}
 ARCH=noarch
 
@@ -56,10 +56,12 @@ CXXFLAGS="$SLKCFLAGS" \
   --program-prefix= --program-suffix= \
   --prefix=/usr --exec-prefix=/usr \
   --sysconfdir=/etc --docdir=/usr/doc/$PRGNAM-$VERSION \
-  --localstatedir=/var --sharedstatedir=/var/lib
+  --localstatedir=/var\
+  --build=x86_64-slackware-linux \
+  || exit 1
 
-make
-make DESTDIR=$PKG install
+make || exit 1
+make DESTDIR=$PKG install || exit 1
 
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
@@ -71,7 +73,6 @@ cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
-cat $CWD/slack-required > $PKG/install/slack-required
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz
