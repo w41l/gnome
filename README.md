@@ -42,6 +42,13 @@ already installed:
 * bash-completion
 * itstool
 
+SBo Packages
+============
+
+Some GNOME package need packages from SBo, like gtkmm. Some of SBo packages has
+been imported, others still in testing. Maybe you can use ponce SBo git repo to
+get most current packages to satisfy GNOME dependency.
+
 BUILDING
 ========
 
