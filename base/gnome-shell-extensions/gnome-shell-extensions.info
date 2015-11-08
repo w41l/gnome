@@ -1,4 +1,10 @@
-URL=http://git.gnome.org/browse/gnome-shell-extensions/
-SRC=http://ftp.gnome.org/pub/gnome/sources/gnome-shell-extensions/3.8/gnome-shell-extensions-3.8.3.1.tar.xz
-MD5=69ea6492fe1c4f1245f1e62a73fe7ec9
-SHA1=a9363b771c2e629f562cd02b91ac5a7caaa9f2b3
+PRGNAM="gnome-shell-extensions"
+VERSION="3.18"
+HOMEPAGE="https://wiki.gnome.org/Projects/Clutter"
+DOWNLOAD="http://download.gnome.org/sources/gnome-shell-extensions/3.18/gnome-shell-extensions-3.18.1.tar.xz"
+MD5SUM="80fea85f241d77267388bedcc2bc98f3"
+DOWNLOAD_x86_64=""
+MD5SUM_x86_64=""
+REQUIRES="gnome-shell"
+MAINTAINER="Widya Walesa"
+EMAIL="walecha99@gmail.com"

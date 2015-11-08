@@ -29,6 +29,12 @@ BUILD=${BUILD:-1}
 TAG=${TAG:-_wls}
 NUMJOBS=${NUMJOBS:--j7}
 
+CWD=$(pwd)
+WRK=${WRK:-/tmp/wlsbuild}
+PKG=$WRK/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+DOCS="ABOUT-NLS AUTHORS COPYING ChangeLog MAINTAINERS NEWS README* TODO"
+
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
     i?86) ARCH=i586 ;;
@@ -36,12 +42,6 @@ if [ -z "$ARCH" ]; then
        *) ARCH=$( uname -m ) ;;
   esac
 fi
-
-CWD=$(pwd)
-WRK=${WRK:-/tmp/wlsbuild}
-PKG=$WRK/package-$PRGNAM
-OUTPUT=${OUTPUT:-/tmp}
-DOCS="ABOUT-NLS AUTHORS COPYING ChangeLog MAINTAINERS NEWS README* TODO"
 
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -pipe -march=i586 -mtune=i686"

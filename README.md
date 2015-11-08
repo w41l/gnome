@@ -76,8 +76,9 @@ The building procedure is simple:
 WARNING
 =======
 
-The build script will install eudev package which is needed by
-gnome-bluetooth, which is needed by gnome-control-center.
+The build will install eudev package, which is needed by gnome-bluetooth,
+and upower package which is needed by gnome-control-center.
+
 Eudev is systemd-compatible udev, developed by Gentoo. Eudev purpose is
 to provide compatible systemd API on system/distribution without systemd.
 This package will replace Slackware's default udev binaries.

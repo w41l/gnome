@@ -31,22 +31,19 @@ GNOMEROOT=$(pwd)
 #UPGRADE_PACKAGES="always"
 UPGRADE_PACKAGES=${UPGRADE_PACKAGES:-"yes"}
 
-set -e
-
-_prebuild() {
-  # Prebuild stage
-  mkdir -p $WRK $OUTPUT
-  # Create package build state
-  rm -f $WRK/${PRGNAM}.failed;
-  touch $WRK/${PRGNAM}.failed;
+_build() {
+  set -e
   # Clearing environment
   unset VERSION BUILD TAG ARCH;
-}
-
-_build() {
+  # Create package build state
+  mkdir -p $WRK $OUTPUT
+  rm -f $WRK/${PRGNAM}.failed;
+  touch $WRK/${PRGNAM}.failed;
   # Build the package
   cd $GNOMEROOT/$MODULES/$PRGNAM;
   . ./${PRGNAM}.SlackBuild;
+  # Delete package build state
+  rm -f $WRK/${PRGNAM}.failed;
 }
 
 _install() {
@@ -59,14 +56,12 @@ _install() {
 }
 
 _postbuild() {
-  # Delete package build state
-  rm -f $WRK/${PRGNAM}.failed;
+  # Back to SlackBuild ROOT directory
+  cd $GNOMEROOT;
   # Clearing environment
   unset VERSION BUILD TAG ARCH
   # Update libraries links
   /sbin/ldconfig;
-  # Back to SlackBuild ROOT directory
-  cd $GNOMEROOT;
 }
 
 if [ ! -z "$1" ]; then
@@ -76,33 +71,41 @@ if [ ! -z "$1" ]; then
       echo "$2" | sed 's/:/ /g' > /tmp/GNOME_PACKAGES.txt
       for PRGNAM in `cat /tmp/GNOME_PACKAGES.txt`; do
         echo "Building: $MODULES/$PRGNAM";
-        _prebuild; _build; _install; _postbuild;
+        _build;
+        _install;
+        _postbuild;
       done
       rm -f /tmp/GNOME_PACKAGES.txt
     else
       cat $GNOMEROOT/$MODULES/$MODULES.list | \
       while read PRGNAM; do
         echo "Building: $MODULES/$PRGNAM";
-        _prebuild; _build; _install; _postbuild;
+        _build;
+        _install;
+        _postbuild;
       shift
       done
     fi
   done
   rm -f /tmp/GNOME_MODULES.txt
 else
-  for MODULES in deps base apps extra; do
+  for MODULES in deps base flashback apps; do
     if [ ! -z "$2" ]; then
       echo "$2" | sed 's/:/ /g' > /tmp/GNOME_PACKAGES.txt
       for PRGNAM in `cat /tmp/GNOME_PACKAGES.txt`; do
         echo "Building: $MODULES/$PRGNAM";
-        _prebuild; _build; _install; _postbuild;
+        _build;
+        _install;
+        _postbuild;
       done
       rm -f /tmp/GNOME_PACKAGES.txt
     else
       cat $GNOMEROOT/$MODULES/$MODULES.list | \
       while read PRGNAM; do
         echo "Building: $MODULES/$PRGNAM";
-        _prebuild; _build; _install; _postbuild;
+        _build;
+        _install;
+        _postbuild;
       shift
       done
     fi

@@ -1,0 +1,12 @@
+        |-----handy-ruler------------------------------------------------------|
+metacity: metacity (GNOME Flashback Window Manager)
+metacity:
+metacity: The window manager of Gnome Flashback, optionally other window
+metacity: managers such as mutter can be used but Metacity is the one thats
+metacity: officially supported. Recently Metacity has been ported to GTK+3 and
+metacity: gained the side-by-side window tiling feature that is also available
+metacity: in Gnome Shell. 
+metacity:
+metacity: Part of the GNOME Flashback
+metacity:
+metacity:
