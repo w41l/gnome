@@ -42,21 +42,6 @@ already installed:
 * bash-completion
 * itstool
 
-WARNING
-=======
-
-The build script will install eudev package which is needed by
-gnome-bluetooth, which is needed by gnome-control-center.
-Eudev is systemd-compatible udev, developed by Gentoo. Eudev purpose is
-to provide compatible systemd API on system/distribution without systemd.
-This package will replace Slackware's default udev binaries.
-
-I have tested booting my Slackware64-current with eudev without
-any error or failure. But, even though my system is booted normally
-with eudev, still, I cannot guarantee that yours will be OK.
-
-You have been warned.
-
 BUILDING
 ========
 
@@ -88,5 +73,21 @@ The building procedure is simple:
 
 8. After that you should reboot your system, and try login to GNOME.
 
-Feel free to contact me if you have problem on building GNOME3 using my
+WARNING
+=======
+
+The build script will install eudev package which is needed by
+gnome-bluetooth, which is needed by gnome-control-center.
+Eudev is systemd-compatible udev, developed by Gentoo. Eudev purpose is
+to provide compatible systemd API on system/distribution without systemd.
+This package will replace Slackware's default udev binaries.
+
+I have tested booting my Slackware64-current with eudev without
+any error or failure. But, even though my system is booted normally
+with eudev, still, I cannot guarantee that yours will be OK.
+
+You have been warned.
+
+GNOME 3 WLSBuild is still in heavy development stage. Feel free to
+contact me if you have problem on building GNOME3 using my
 SlackBuild.
