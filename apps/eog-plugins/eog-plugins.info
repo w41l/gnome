@@ -1,4 +1,10 @@
-URL=https://wiki.gnome.org/Apps/EyeOfGnome/Plugins
-SRC=http://download.gnome.org/sources/eog-plugins/3.16/eog-plugins-3.16.2.tar.xz
-MD5=b35affa583bf851ee275249965ab069f
-SHA1=153cc829409a664d06310dcea92d5cd8a02bcd4a
+PRGNAM="oeg-plugins"
+VERSION="3.16.2"
+HOMEPAGE="https://wiki.gnome.org/Apps/EyeOfGnome/Plugins"
+DOWNLOAD="http://download.gnome.org/sources/eog-plugins/3.16/eog-plugins-3.16.2.tar.xz"
+MD5SUM="b35affa583bf851ee275249965ab069f"
+DOWNLOAD_x86_64=""
+MD5SUM_x86_64=""
+REQUIRES="eog libchamplain libgdata libpeas"
+MAINTAINER="Widya Walesa"
+EMAIL="walecha99@gmail.com"

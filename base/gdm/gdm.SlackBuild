@@ -111,7 +111,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --without-plymouth \
   || exit 1
 
-make
+make $NUMJOBS
 make install DESTDIR=$PKG
 
 # Fix gdm runtime directory permission
@@ -120,13 +120,6 @@ chown -R gdm:gdm $PKG/var/{cache,lib,run,log}/gdm
 # Preserve old config
 mv $PKG/etc/gdm/custom.conf $PKG/etc/gdm/custom.conf.new
 cat $CWD/locale.conf.in > $PKG/etc/gdm/locale.conf.new
-
-# Add our own and additional pam.d configuration
-#mv $PKG/etc/pam.d $PKG/etc/pam.d-dist
-#mkdir -p $PKG/etc/pam.d
-#cp -a $CWD/pam.d/* $PKG/etc/pam.d/
-chown root:root $PKG/etc/pam.d/*
-chmod 644 $PKG/etc/pam.d/*
 
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

@@ -24,24 +24,24 @@
 # YOUR DATA IS DESTROYED, YOUR HOUSE BURNS DOWN OR YOUR DOG RUNS OFF.
 
 PRGNAM=gnome-screenshot
-VERSION=${VERSION:-3.16.2}
+VERSION=$(cat $PRGNAM.info | grep "VERSION" | cut -d = -f 2 | sed 's/"//g')
 BUILD=${BUILD:-1}
 TAG=${TAG:-_wls}
 NUMJOBS=${NUMJOBS:--j7}
-
-if [ -z "$ARCH" ]; then
-  case "$( uname -m )" in
-    i?86) ARCH=i486 ;;
-    arm*) ARCH=arm ;;
-       *) ARCH=$( uname -m ) ;;
-  esac
-fi
 
 CWD=$(pwd)
 WRK=${WRK:-/tmp/wlsbuild}
 PKG=$WRK/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 DOCS="COPYING NEWS"
+
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i586 ;;
+    arm*) ARCH=arm ;;
+       *) ARCH=$( uname -m ) ;;
+  esac
+fi
 
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -pipe -march=i586 -mtune=i686"
@@ -59,8 +59,11 @@ fi
 
 set -e
 
-if [ ! -e "$PRGNAM-$VERSION.tar.xz" ]; then
-  wget -c http://download.gnome.org/sources/$PRGNAM/$(echo "$VERSION" | cut -d . -f -2)/$PRGNAM-$VERSION.tar.xz
+MD5SUM=`cat $PRGNAM.info | grep "MD5SUM=" | cut -d = -f 2 | sed 's/"//g'`
+MD5SRC=`echo "$MD5SUM $(basename $PRGNAM-$VERSION.tar.?z*)" | md5sum -c | tr -d [:blank:] | cut -d : -f 2`
+if [ ! "$MD5SRC" = "OK" ]; then
+  rm -f $PRGNAM-$VERSION.tar.*
+  wget $(cat $PRGNAM.info | grep "DOWNLOAD=" | cut -d = -f 2 | sed 's/"//g')
 fi
 
 rm -rf $PKG
@@ -91,7 +94,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --disable-schemas-compile \
   || exit 1
 
-make || exit 1
+make $NUMJOBS || exit 1
 make DESTDIR=$PKG install || exit 1
 
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \

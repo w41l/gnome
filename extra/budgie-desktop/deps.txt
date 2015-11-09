@@ -1,0 +1,18 @@
+[Slackware]
+intltool
+gtk+3 (>= 3.14.0)
+glib2 (>= 2.40.0)
+
+[WLS]
+upower (>= 0.99)
+mutter (>= 3.14.0)
+
+[SBo]
+pulseaudio
+gnome-menus (>= 3.10.1)
+libwnck3 (>= 3.4.7)
+libgee (not libgee1!)
+libpeas-1.0
+vala
+
+Budgie is the flagship desktop of the Solus Operating System, and is part of the Solus Project. Designed with the modern user in mind, it focuses on simplicity and elegance. A huge advantage for the Budgie desktop is that it is not a fork of another project, but rather one written from scratch with integration in mind.

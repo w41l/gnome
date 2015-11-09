@@ -93,7 +93,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --enable-session-selector \
   --enable-consolekit
 
-make
+make $NUMJOBS
 make DESTDIR=$PKG install
 
 # Add xinitrc script for gnome

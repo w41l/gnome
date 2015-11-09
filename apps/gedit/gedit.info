@@ -1,4 +1,10 @@
-URL=https://wiki.gnome.org/Gedit
-SRC=http://ftp.gnome.org/pub/gnome/sources/gedit/3.8/gedit-3.8.3.tar.xz
-MD5=dd81bffac9026854e33ded9e8ed9bf7c
-SHA1=cc4cd6e7cd7919abb38bbf45b61597a2904a1c2f
+PRGNAM="gedit"
+VERSION="3.18.1"
+HOMEPAGE="https://wiki.gnome.org/Apps/Gedit"
+DOWNLOAD="http://download.gnome.org/sources/gedit/3.18/gedit-3.18.1.tar.xz"
+MD5SUM="a61007048db22d0d55a41b5fa3c984f8"
+DOWNLOAD_x86_64=""
+MD5SUM_x86_64=""
+REQUIRES="gtksourceview3 libpeas python3 vala"
+MAINTAINER="Widya Walesa"
+EMAIL="walecha99@gmail.com"

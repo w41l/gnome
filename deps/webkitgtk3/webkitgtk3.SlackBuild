@@ -101,7 +101,7 @@ cmake \
   -DENABLE_GEOLOCATION=$GEOCLUE \
   -Wno-dev .. &&
 
-make
+make $NUMJOBS || make
 make install-strip DESTDIR=$PKG || make install DESTDIR=$PKG
 cd ..
 

@@ -41,6 +41,7 @@ _build() {
   touch $WRK/${PRGNAM}.failed;
   # Build the package
   cd $GNOMEROOT/$MODULES/$PRGNAM;
+  pwd;
   . ./${PRGNAM}.SlackBuild;
   # Delete package build state
   rm -f $WRK/${PRGNAM}.failed;
@@ -56,12 +57,13 @@ _install() {
 }
 
 _postbuild() {
-  # Back to SlackBuild ROOT directory
-  cd $GNOMEROOT;
   # Clearing environment
-  unset VERSION BUILD TAG ARCH
+  #unset VERSION BUILD TAG ARCH
   # Update libraries links
   /sbin/ldconfig;
+  # Back to SlackBuild ROOT directory
+  cd $GNOMEROOT;
+  pwd;
 }
 
 if [ ! -z "$1" ]; then
@@ -77,13 +79,11 @@ if [ ! -z "$1" ]; then
       done
       rm -f /tmp/GNOME_PACKAGES.txt
     else
-      cat $GNOMEROOT/$MODULES/$MODULES.list | \
-      while read PRGNAM; do
+      for PRGNAM in `cat $GNOMEROOT/$MODULES/$MODULES.list`; do
         echo "Building: $MODULES/$PRGNAM";
         _build;
         _install;
         _postbuild;
-      shift
       done
     fi
   done
@@ -100,13 +100,11 @@ else
       done
       rm -f /tmp/GNOME_PACKAGES.txt
     else
-      cat $GNOMEROOT/$MODULES/$MODULES.list | \
-      while read PRGNAM; do
+      for PRGNAM in `cat $GNOMEROOT/$MODULES/$MODULES.list`; do
         echo "Building: $MODULES/$PRGNAM";
         _build;
         _install;
         _postbuild;
-      shift
       done
     fi
   done

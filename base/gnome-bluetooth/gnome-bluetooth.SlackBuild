@@ -93,7 +93,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --enable-compile-warnings=no \
   || exit 1
 
-make || exit 1
+make $NUMJOBS || exit 1
 make install DESTDIR=$PKG || exit 1
 
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \

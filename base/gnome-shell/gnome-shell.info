@@ -5,6 +5,6 @@ DOWNLOAD="http://download.gnome.org/sources/gnome-shell/3.18/gnome-shell-3.18.1.
 MD5SUM="1277caf99765054fed947dd3418f9d48"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="accountsservice clutter clutter-gtk cogl evolution-data-server gjs gnome-bluetooth gnome-desktop gnome-menus gnome-themes-standard gst-plugins-bad json-c json-glib mutter pulseaudio"
+REQUIRES="python3 py3gobject3 accountsservice clutter clutter-gtk cogl evolution-data-server gjs gnome-bluetooth gnome-desktop gnome-menus gnome-themes-standard gst-plugins-bad json-c json-glib mutter pulseaudio"
 MAINTAINER="Widya Walesa"
 EMAIL="walecha99@gmail.com"

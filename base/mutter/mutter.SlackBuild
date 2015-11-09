@@ -93,7 +93,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --disable-wayland \
   --disable-schemas-compile
 
-make
+make $NUMJOBS
 make install DESTDIR=$PKG
 
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \

@@ -99,7 +99,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --enable-deprecated \
   --build=$TARGET
 
-make || exit 1
+make $NUMJOBS || exit 1
 make install DESTDIR=$PKG || exit 1
 
 # Preserve old library link

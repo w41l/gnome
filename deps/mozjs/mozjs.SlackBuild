@@ -104,7 +104,7 @@ LIBS="$(pkg-config --libs ncurses)" \
   --with-system-nspr \
   || exit 1
 
-make || exit 1
+make $NUMJOBS || exit 1
 make DESTDIR=$PKG install || exit 1
 
 rm -f $PKG/usr/lib${LIBDIRSUFFIX}/*.a

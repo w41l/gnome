@@ -94,11 +94,11 @@ CXXFLAGS="$SLKCFLAGS" \
   --enable-backend \
   --enable-google \
   --enable-owncloud \
-  --disable-kerberos \
+  --enable-kerberos \
   --disable-schemas-compile \
   || exit 1
 
-make || exit 1
+make $NUMJOBS || exit 1
 make install DESTDIR=$PKG
 
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
@@ -113,7 +113,6 @@ cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
-cat $CWD/slack-required > $PKG/install/slack-required
 cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG

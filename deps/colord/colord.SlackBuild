@@ -90,6 +90,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --sysconfdir=/etc --docdir=/usr/doc/$PRGNAM-$VERSION \
   --localstatedir=/var --sharedstatedir=/var/lib \
   --disable-static --enable-shared \
+  --disable-schemas-compile \
   --disable-argyllcms-sensor \
   --enable-gusb \
   --enable-bash-completion \
@@ -101,7 +102,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --with-udevrulesdir=/etc/udev/rules.d \
   --with-daemon-user=colord \
 
-make
+make $NUMJOBS
 make install DESTDIR=$PKG
 
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
