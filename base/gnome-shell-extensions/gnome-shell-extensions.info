@@ -1,5 +1,5 @@
 PRGNAM="gnome-shell-extensions"
-VERSION="3.18"
+VERSION="3.18.1"
 HOMEPAGE="https://wiki.gnome.org/Projects/Clutter"
 DOWNLOAD="http://download.gnome.org/sources/gnome-shell-extensions/3.18/gnome-shell-extensions-3.18.1.tar.xz"
 MD5SUM="80fea85f241d77267388bedcc2bc98f3"

@@ -1,0 +1,15 @@
+brasero
+clutter-gtk
+clutter
+cogl
+geoclue
+gst-plugins-base-1
+gst-plugins-good-1
+gstreamer-1
+json-glib
+liboauth
+libopenraw
+libwebp
+orc
+webkitgtk2
+

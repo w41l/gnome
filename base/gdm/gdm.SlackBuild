@@ -24,8 +24,8 @@
 # YOUR DATA IS DESTROYED, YOUR HOUSE BURNS DOWN OR YOUR DOG RUNS OFF.
 
 PRGNAM=gdm
-VERSION=$(cat $PRGNAM.info | grep "VERSION=" | cut -d = -f 2 | sed 's/"//g')
-BUILD=1
+VERSION=$(cat $PRGNAM.info | grep "VERSION" | cut -d = -f 2 | sed 's/"//g')
+BUILD=${BUILD:-1}
 TAG=${TAG:-_wls}
 NUMJOBS=${NUMJOBS:--j7}
 
@@ -59,6 +59,13 @@ fi
 
 set -e
 
+MD5SUM=`cat $PRGNAM.info | grep "MD5SUM=" | cut -d = -f 2 | sed 's/"//g'`
+MD5SRC=`echo "$MD5SUM $(basename $PRGNAM-$VERSION.tar.?z*)" | md5sum -c | tr -d [:blank:] | cut -d : -f 2`
+if [ ! "$MD5SRC" = "OK" ]; then
+  rm -f $PRGNAM-$VERSION.tar.?z*
+  wget $(cat $PRGNAM.info | grep "DOWNLOAD=" | cut -d = -f 2 | sed 's/"//g')
+fi
+
 rm -rf $PKG
 mkdir -p $WRK $PKG $OUTPUT
 cd $WRK
@@ -85,20 +92,24 @@ CXXFLAGS="$SLKCFLAGS" \
   --localstatedir=/var \
   --disable-static --enable-shared \
   --disable-schemas-compile \
+  --disable-wayland-support \
   --enable-introspection=yes \
   --enable-authentication-scheme=shadow \
   --enable-systemd-journal=no \
-  --enable-wayland-support=no \
   --enable-more-warnings=no \
   --enable-console-helper=yes \
-  --with-plymouth=no \
   --with-user=gdm \
   --with-group=gdm \
-  --with-default-pam-config=lfs \
   --with-initial-vt=7 \
   --with-systemd=no \
-  --with-systemdsystemunitdir=no \
-  --with-console-kit=yes
+  --with-console-kit=yes \
+  --with-sysconfsubdir=gdm \
+  --with-lang-file=/etc/gdm/locale.conf \
+  --with-dmconfdir=/usr/share/xsessions \
+  --with-dbus-sys=/etc/dbus-1/system.d \
+  --with-default-pam-config=lfs \
+  --without-plymouth \
+  || exit 1
 
 make
 make install DESTDIR=$PKG
@@ -108,10 +119,14 @@ chown -R gdm:gdm $PKG/var/{cache,lib,run,log}/gdm
 
 # Preserve old config
 mv $PKG/etc/gdm/custom.conf $PKG/etc/gdm/custom.conf.new
+cat $CWD/locale.conf.in > $PKG/etc/gdm/locale.conf.new
 
 # Add our own and additional pam.d configuration
+#mv $PKG/etc/pam.d $PKG/etc/pam.d-dist
 #mkdir -p $PKG/etc/pam.d
-#cp $CWD/pam.d/* $PKG/etc/pam.d/
+#cp -a $CWD/pam.d/* $PKG/etc/pam.d/
+chown root:root $PKG/etc/pam.d/*
+chmod 644 $PKG/etc/pam.d/*
 
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

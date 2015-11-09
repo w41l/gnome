@@ -13,6 +13,7 @@ config() {
 }
 
 config etc/gdm/custom.conf.new
+config etc/gdm/locale.conf.new
 
 if [ -d usr/share/help ]; then
   /usr/bin/rarian-sk-update >/dev/null 2>&1

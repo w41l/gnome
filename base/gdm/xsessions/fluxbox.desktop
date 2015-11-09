@@ -1,6 +1,0 @@
-[Desktop Entry]
-Encoding=UTF-8
-Name=Fluxbox
-Comment=This session logs you into Fluxbox
-Exec=/etc/X11/xinit/xinitrc.fluxbox
-Type=Application

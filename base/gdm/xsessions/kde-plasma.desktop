@@ -1,6 +1,0 @@
-[Desktop Entry]
-Encoding=UTF-8
-Name=KDE Plasma Desktop
-Comment=This session logs you into KDE Plasma Desktop
-Exec=/etc/X11/xinit/xinitrc.kde
-Type=Application

@@ -1,6 +1,0 @@
-[Desktop Entry]
-Encoding=UTF-8
-Name=BlackBox
-Comment=This session logs you into BlackBox
-Exec=/etc/X11/xinit/xinitrc.blackbox
-Type=Application

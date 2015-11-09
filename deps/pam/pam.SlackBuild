@@ -104,6 +104,10 @@ make install DESTDIR=$PKG
 chown root:shadow $PKG/sbin/unix_chkpwd
 chmod g+s $PKG/sbin/unix_chkpwd
 
+# Add default pam.d config
+mkdir -p $PKG/etc/pam.d
+cp $CWD/pam.d/* $PKG/etc/pam.d/
+
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 

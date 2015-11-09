@@ -89,7 +89,9 @@ CXXFLAGS="$SLKCFLAGS" \
   --localstatedir=/var \
   --disable-static --enable-shared \
   --disable-docbook-docs \
-  --enable-session-selector
+  --disable-systemd \
+  --enable-session-selector \
+  --enable-consolekit
 
 make
 make DESTDIR=$PKG install
@@ -99,14 +101,6 @@ mkdir -p $PKG/etc/X11/xinit &&
 cat $CWD/xinitrc.gnome | sed -e "s,@LIBDIR@,lib${LIBDIRSUFFIX},g" \
   > $PKG/etc/X11/xinit/xinitrc.gnome &&
 chmod 755 $PKG/etc/X11/xinit/xinitrc.gnome || exit 1
-
-# Add default `gnome` for gnome-session
-( cd $PKG/usr/bin ; ln -s gnome-session gnome );
-
-# Fix gdm session file (in case it's replaced)
-mkdir -p $PKG/usr/share/xsessions &&
-cp $CWD/gnome.desktop $PKG/usr/share/xsessions &&
-chmod -x $PKG/usr/share/xsessions/gnome.desktop  || exit 1
 
 # Add GNOME XDG profiles
 mkdir -p $PKG/etc/profile.d
@@ -127,7 +121,6 @@ cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
-cat $CWD/slack-required > $PKG/install/slack-required
 cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
