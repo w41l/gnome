@@ -26,3 +26,5 @@ gtkmm3
 libburn
 libisofs
 libisoburn
+libgksu
+gksu

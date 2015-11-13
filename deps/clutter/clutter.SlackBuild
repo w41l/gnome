@@ -29,6 +29,18 @@ BUILD=${BUILD:-1}
 TAG=${TAG:-_wls}
 NUMJOBS=${NUMJOBS:--j7}
 
+CWD=$(pwd)
+WRK=${WRK:-/tmp/wlsbuild}
+PKG=$WRK/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+DOCS="ABOUT-NLS COPY* ChangeLog NEWS README"
+
+# Build with wayland support or not (highly experimental)
+WAYLAND_SUPPORT=${WAYLAND_SUPPORT:-"no"}
+if [ "$WAYLAND_SUPPORT" = "yes" ]; then
+  WAYLAND_OPT="--enable-wayland-backend=yes --enable-wayland-compositor=yes"
+fi
+
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
     i?86) ARCH=i586 ;;
@@ -58,12 +70,6 @@ if [ ! "$MD5SRC" = "OK" ]; then
   wget $(cat $PRGNAM.info | grep "DOWNLOAD=" | cut -d = -f 2 | sed 's/"//g')
 fi
 
-CWD=$(pwd)
-WRK=${WRK:-/tmp/wlsbuild}
-PKG=$WRK/package-$PRGNAM
-OUTPUT=${OUTPUT:-/tmp}
-DOCS="ABOUT-NLS COPY* ChangeLog NEWS README"
-
 rm -rf $PKG
 mkdir -p $WRK $PKG $OUTPUT
 cd $WRK
@@ -91,7 +97,8 @@ CXXFLAGS="$SLKCFLAGS" \
   --disable-static --enable-shared \
   --enable-docs=no \
   --enable-introspection=yes \
-  --enable-evdev-input
+  --enable-evdev-input \
+  $WAYLAND_OPT
 
 make $NUMJOBS
 make DESTDIR=$PKG install

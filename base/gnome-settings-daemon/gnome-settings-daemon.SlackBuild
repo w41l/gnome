@@ -29,6 +29,18 @@ BUILD=${BUILD:-1}
 TAG=${TAG:-_wls}
 NUMJOBS=${NUMJOBS:--j7}
 
+CWD=$(pwd)
+WRK=${WRK:-/tmp/wlsbuild}
+PKG=$WRK/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+DOCS="AUTHORS COPYING COPYING.LIB ChangeLog INSTALL MAINTAINERS NEWS README"
+
+# Build with wayland support or not (highly experimental)
+WAYLAND_SUPPORT=${WAYLAND_SUPPORT:-"no"}
+if [ "$WAYLAND_SUPPORT" = "yes" ]; then
+  WAYLAND_OPT="--enable-wayland=yes"
+fi
+
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
     i?86) ARCH=i586 ;;
@@ -36,12 +48,6 @@ if [ -z "$ARCH" ]; then
        *) ARCH=$( uname -m ) ;;
   esac
 fi
-
-CWD=$(pwd)
-WRK=${WRK:-/tmp/wlsbuild}
-PKG=$WRK/package-$PRGNAM
-OUTPUT=${OUTPUT:-/tmp}
-DOCS="AUTHORS COPYING COPYING.LIB ChangeLog INSTALL MAINTAINERS NEWS README"
 
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -pipe -march=i586 -mtune=i686"
@@ -92,6 +98,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --disable-schemas-compile \
   --disable-wayland \
   --disable-rfkill \
+  $WAYLAND_OPT \
   || exit 1
 
 make $NUMJOBS || exit 1

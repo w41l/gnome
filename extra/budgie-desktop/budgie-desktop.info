@@ -5,6 +5,6 @@ DOWNLOAD="https://github.com/solus-project/budgie-desktop/releases/download/v8.3
 MD5SUM="83e31487c5f34528653db4ba07600884"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="upower mutter pulseaudio gnome-menus libwnck3 libgee libpeas vala"
+REQUIRES="upower mutter pulseaudio gnome-menus gnome-settings-daemon libwnck3 libgee libpeas vala"
 MAINTAINER="Widya Walesa"
 EMAIL="walecha99@gmail.com"

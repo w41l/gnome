@@ -34,14 +34,13 @@ UPGRADE_PACKAGES=${UPGRADE_PACKAGES:-"yes"}
 _build() {
   set -e
   # Clearing environment
-  unset VERSION BUILD TAG ARCH;
+  unset VERSION BUILD TAG;
   # Create package build state
-  mkdir -p $WRK $OUTPUT
+  mkdir -p $WRK $OUTPUT;
   rm -f $WRK/${PRGNAM}.failed;
   touch $WRK/${PRGNAM}.failed;
   # Build the package
   cd $GNOMEROOT/$MODULES/$PRGNAM;
-  pwd;
   . ./${PRGNAM}.SlackBuild;
   # Delete package build state
   rm -f $WRK/${PRGNAM}.failed;
@@ -57,10 +56,10 @@ _install() {
 }
 
 _postbuild() {
-  # Clearing environment
-  #unset VERSION BUILD TAG ARCH
   # Update libraries links
   /sbin/ldconfig;
+  # Clearing environment
+  unset VERSION BUILD TAG;
   # Back to SlackBuild ROOT directory
   cd $GNOMEROOT;
   pwd;
@@ -111,4 +110,4 @@ else
 fi
 
 # Clearing environment
-unset WRK OUTPUT GNOMEROOT UPGRADE_PACKAGES MODULES PRGNAM VERSION BUILD TAG ARCH
+unset WRK OUTPUT GNOMEROOT UPGRADE_PACKAGES MODULES PRGNAM VERSION BUILD TAG

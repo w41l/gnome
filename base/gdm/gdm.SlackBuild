@@ -35,6 +35,13 @@ PKG=$WRK/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 DOCS="AUTHORS COPYING* ChangeLog* INSTALL MAINTAINERS NEWS README TODO"
 
+# Build with wayland support or not (highly experimental)
+if $(pkg-config --exists --print-errors "libsystemd-login" >/dev/null); then
+  WAYLAND_OPT="--enable-wayland-support=yes"
+else
+  WAYLAND_OPT="--enable-wayland-support=no"
+fi
+
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
     i?86) ARCH=i586 ;;
@@ -109,6 +116,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --with-dbus-sys=/etc/dbus-1/system.d \
   --with-default-pam-config=lfs \
   --without-plymouth \
+  $WAYLAND_OPT \
   || exit 1
 
 make $NUMJOBS

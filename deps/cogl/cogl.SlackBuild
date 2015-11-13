@@ -29,6 +29,12 @@ BUILD=${BUILD:-1}
 TAG=${TAG:-_wls}
 NUMJOBS=${NUMJOBS:--j7}
 
+# Build with wayland support or not (highly experimental)
+WAYLAND_SUPPORT=${WAYLAND_SUPPORT:-"no"}
+if [ "$WAYLAND_SUPPORT" = "yes" ]; then
+  WAYLAND_OPT="--enable-wayland-egl-platform=yes --enable-wayland-egl-server=yes"
+fi
+
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
     i?86) ARCH=i586 ;;
@@ -89,8 +95,13 @@ CXXFLAGS="$SLKCFLAGS" \
   --sysconfdir=/etc --docdir=/usr/doc/$PRGNAM-$VERSION \
   --localstatedir=/var --sharedstatedir=/var/lib \
   --disable-static --enable-shared \
+  --disable-debug \
   --enable-introspection=yes \
-  --disable-debug
+  --enable-gles1 \
+  --enable-gles2 \
+  --enable-cogl-gles2=yes \
+  --enable-cogl-gst=yes \
+  $WAYLAND_OPT
 
 make $NUMJOBS
 make DESTDIR=$PKG install
