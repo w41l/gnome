@@ -78,7 +78,7 @@ if [ ! -z "$1" ]; then
       done
       rm -f /tmp/GNOME_PACKAGES.txt
     else
-      for PRGNAM in `cat $GNOMEROOT/$MODULES/$MODULES.list`; do
+      for PRGNAM in `cat $GNOMEROOT/$MODULES/$MODULES.list | sed '/#/d'`; do
         echo "Building: $MODULES/$PRGNAM";
         _build;
         _install;
@@ -99,7 +99,7 @@ else
       done
       rm -f /tmp/GNOME_PACKAGES.txt
     else
-      for PRGNAM in `cat $GNOMEROOT/$MODULES/$MODULES.list`; do
+      for PRGNAM in `cat $GNOMEROOT/$MODULES/$MODULES.list | sed '/#/d'`; do
         echo "Building: $MODULES/$PRGNAM";
         _build;
         _install;
