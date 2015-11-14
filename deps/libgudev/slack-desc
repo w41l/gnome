@@ -1,0 +1,12 @@
+        |-----handy-ruler------------------------------------------------------|
+libgudev: libgudev
+libgudev:
+libgudev: This library provides GObject bindings for libudev.
+libgudev: It was originally part of udev-extras, then udev, then systemd.
+libgudev: It's now a project on its own. 
+libgudev:
+libgudev:
+libgudev:
+libgudev:
+libgudev:
+libgudev: Packaged by: Widya Walesa <walecha99@gmail.com>

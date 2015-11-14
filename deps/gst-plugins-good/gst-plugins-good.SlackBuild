@@ -27,9 +27,15 @@
 
 
 PRGNAM=gst-plugins-good
-VERSION=$(cat $PRGNAM.info | grep "VERSION=" | cut -f 2 -d = | sed 's/"//g')
+VERSION=${VERSION:-$(cat $PRGNAM.info | grep "VERSION=" | cut -f 2 -d = | sed 's/"//g')}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_wls}
+NUMJOBS=${NUMJOBS:-" -j7 "}
+
+CWD=$(pwd)
+WRK=${WRK:-/tmp/wlsbuild}
+PKG=$WRK/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
 
 # Automatically determine the architecture we're building on:
 if [ -z "$ARCH" ]; then
@@ -40,12 +46,6 @@ if [ -z "$ARCH" ]; then
        *) export ARCH=$( uname -m ) ;;
   esac
 fi
-
-NUMJOBS=${NUMJOBS:-" -j7 "}
-
-CWD=$(pwd)
-WRK=${WRK:-/tmp}
-PKG=$WRK/package-$PRGNAM
 
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -march=i586 -mtune=i686"
@@ -64,7 +64,12 @@ else
   LIBDIRSUFFIX=""
 fi
 
-wget -c $(cat $PRGNAM.info | grep "DOWNLOAD=" | cut -f 2 -d = | sed 's/"//g')
+MD5SUM=`cat $PRGNAM.info | grep "MD5SUM=" | cut -d = -f 2 | sed 's/"//g'`
+MD5SRC=`echo "$MD5SUM $(basename $PRGNAM-$VERSION.tar.?z*)" | md5sum -c | tr -d [:blank:] | cut -d : -f 2`
+if [ ! "$MD5SRC" = "OK" ]; then
+  rm -f $PRGNAM-$VERSION.tar.*
+  curl -#OLJ -C - $(cat $PRGNAM.info | grep "DOWNLOAD=" | cut -d = -f 2 | sed 's/"//g')
+fi
 
 rm -rf $PKG
 mkdir -p $WRK $PKG
@@ -130,7 +135,7 @@ mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 
 cd $PKG
-/sbin/makepkg -l y -c n $WRK/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz
 
-cd $CWD
-rm -rf $WRK/$PRGNAM-$VERSION $PKG
+echo "Cleaning up build directory"
+cd $WRK; rm -rf $PRGNAM-$VERSION $PKG

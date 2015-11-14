@@ -1,0 +1,11 @@
+libxkbcommon: libxkbcommon
+libxkbcommon:
+libxkbcommon: libxkbcommon is part of X11.
+libxkbcommon:
+libxkbcommon: For more information about the X.Org Foundation (the providers of the
+libxkbcommon: X.Org implementation of the X Window System), see their website:
+libxkbcommon:
+libxkbcommon: http://www.x.org
+libxkbcommon:
+libxkbcommon:
+libxkbcommon: packaged by: Widya Walesa <walecha99@gmail.com>
