@@ -54,19 +54,19 @@ BUILDING
 
 The building procedure is simple:
 
-1. Clone this repository
+Clone this repository
 
 ```
 git clone https://github.com/w41l/gnome.git
 ```
 
-2. Change into gnome and run:
+Change directory into gnome and run:
 
 ```
 ./gnome3.SlackBuild
 ```
 
-3. By default the build script WILL NOT upgrade already installed
+By default the build script WILL NOT upgrade already installed
    packages with same name. To "ALWAYS" install or upgrade the package,
    run the build script with environment variable:
 
@@ -74,13 +74,13 @@ git clone https://github.com/w41l/gnome.git
 UPGRADE_PACKAGES="always" ./gnome3.SlackBuild
 ```
 
-4. To install/upgrade single module (ie. just the 'deps'), run:
+To install/upgrade single module (ie. just the 'deps'), run:
 
 ```
 ./gnome3.SlackBuild deps
 ```
 
-5. To install/upgrade two or more modules, run:
+To install/upgrade two or more modules, run:
 
 ```
 ./gnome3.SlackBuild deps,base
@@ -96,9 +96,9 @@ cd deps/pkg1 && ./pkg1.SlackBuild
 ./gnome3.SlackBuild deps pkg1:pkg2:pkg3
 ```
 
-7. Use 'xwmconfig' to use GNOME session for startx.
+Use 'xwmconfig' to use GNOME session for startx.
 
-8. After that you should reboot your system, and try login to GNOME.
+After that you should reboot your system, and try login to GNOME.
 
 WARNING
 =======
