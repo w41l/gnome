@@ -55,11 +55,13 @@ BUILDING
 The building procedure is simple:
 
 1. Clone this repository
+
 ```
 git clone https://github.com/w41l/gnome.git
 ```
 
 2. Change into gnome and run:
+
 ```
 ./gnome3.SlackBuild
 ```
@@ -67,21 +69,25 @@ git clone https://github.com/w41l/gnome.git
 3. By default the build script WILL NOT upgrade already installed
    packages with same name. To "ALWAYS" install or upgrade the package,
    run the build script with environment variable:
+
 ```
 UPGRADE_PACKAGES="always" ./gnome3.SlackBuild
 ```
 
 4. To install/upgrade single module (ie. just the 'deps'), run:
+
 ```
 ./gnome3.SlackBuild deps
 ```
 
 5. To install/upgrade two or more modules, run:
+
 ```
 ./gnome3.SlackBuild deps,base
 ```
 
 6. To install/upgrade single package or several packages, run:
+
 ```
 ./gnome3.SlackBuild deps pkg1
 (or)
