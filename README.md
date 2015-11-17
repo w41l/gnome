@@ -33,7 +33,7 @@ already installed:
 * gvfs
 * pygtk
 * icu4c
-* gnome-icon-theme (+ gnome-icon-theme-symbolic)
+* gnome-icon-theme
 * gnome-themes-standard
 * mozilla-nss
 * js185
@@ -54,31 +54,51 @@ BUILDING
 
 The building procedure is simple:
 
-1. Clone this repository
-   git clone https://github.com/w41l/gnome.git
+Clone this repository
 
-2. Change into gnome and run:
-   ./gnome3.SlackBuild
+```
+git clone https://github.com/w41l/gnome.git
+```
 
-3. By default the build script WILL NOT upgrade already installed
+Change directory into gnome and run:
+
+```
+./gnome3.SlackBuild
+```
+
+By default the build script WILL NOT upgrade already installed
    packages with same name. To "ALWAYS" install or upgrade the package,
    run the build script with environment variable:
-   UPGRADE_PACKAGES="always" ./gnome3.SlackBuild
 
-4. To install/upgrade single module (ie. just the 'deps'), run:
-   ./gnome3.SlackBuild deps
-   
-5. To install/upgrade two or more modules, run:
-   ./gnome3.SlackBuild deps,base
+```
+UPGRADE_PACKAGES="always" ./gnome3.SlackBuild
+```
+
+To install/upgrade single module (ie. just the 'deps'), run:
+
+```
+./gnome3.SlackBuild deps
+```
+
+To install/upgrade two or more modules, run:
+
+```
+./gnome3.SlackBuild deps,base
+```
 
 6. To install/upgrade single package or several packages, run:
-   ./gnome3.SlackBuild deps pkg1
-   (or)
-   ./gnome3.SlackBuild deps pkg1:pkg2:pkg3
 
-7. Use 'xwmconfig' to use GNOME session for startx.
+```
+./gnome3.SlackBuild deps pkg1
+(or)
+cd deps/pkg1 && ./pkg1.SlackBuild
+(or)
+./gnome3.SlackBuild deps pkg1:pkg2:pkg3
+```
 
-8. After that you should reboot your system, and try login to GNOME.
+Use 'xwmconfig' to use GNOME session for startx.
+
+After that you should reboot your system, and try login to GNOME.
 
 WARNING
 =======
