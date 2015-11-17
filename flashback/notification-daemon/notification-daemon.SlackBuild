@@ -88,7 +88,9 @@ CXXFLAGS="$SLKCFLAGS" \
   --sysconfdir=/etc --docdir=/usr/doc/$PRGNAM-$VERSION \
   --localstatedir=/var \
   --disable-static --enable-shared \
-  --enable-compile-warnings=no
+  --enable-compile-warnings=no \
+  --disable-gtk-doc \
+  || exit 1
 
 make
 make install DESTDIR=$PKG

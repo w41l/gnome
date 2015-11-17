@@ -91,6 +91,8 @@ CXXFLAGS="$SLKCFLAGS" \
   --disable-static --enable-shared \
   --disable-gtk-doc \
   --enable-introspection=yes \
+  --disable-gtk-doc \
+  || exit 1
 
 make $NUMJOBS
 make install DESTDIR=$PKG

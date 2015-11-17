@@ -89,7 +89,9 @@ CXXFLAGS="$SLKCFLAGS" \
   --mandir=/usr/man --infodir=/usr/info \
   --sysconfdir=/etc --docdir=/usr/doc/$PRGNAM-$VERSION \
   --localstatedir=/var \
-  --enable-compile-warnings=no
+  --enable-compile-warnings=no \
+  --disable-gtk-doc \
+  || exit 1
 
 make $NUMJOBS
 make install DESTDIR=$PKG

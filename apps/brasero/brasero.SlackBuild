@@ -94,6 +94,8 @@ CXXFLAGS="$SLKCFLAGS" \
   --enable-libburnia \
   --enable-preview \
   --enable-introspection=yes \
+  --disable-gtk-doc \
+  || exit 1
 
 make
 make DESTDIR=$PKG install

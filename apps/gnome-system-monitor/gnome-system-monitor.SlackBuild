@@ -87,11 +87,12 @@ CXXFLAGS="$SLKCFLAGS" \
   --libdir=/usr/lib$LIBDIRSUFFIX --includedir=/usr/include \
   --mandir=/usr/man --infodir=/usr/info \
   --sysconfdir=/etc --docdir=/usr/doc/$PRGNAM-$VERSION \
-  --localstatedir=/var --sharedstatedir=/var/lib \
+  --localstatedir=/var \
   --build=$ARCH-slackware-linux \
   --disable-static --enable-shared \
   --disable-schemas-compile \
   --enable-wnck \
+  --disable-gtk-doc \
   || exit 1
 
 make || exit 1

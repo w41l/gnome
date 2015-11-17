@@ -90,7 +90,9 @@ CXXFLAGS="$SLKCFLAGS" \
   --sysconfdir=/etc --docdir=/usr/doc/$PRGNAM-$VERSION \
   --localstatedir=/var --sharedstatedir=/var/lib \
   --disable-static --enable-shared \
-  --with-python=/usr/bin/python3
+  --with-python=/usr/bin/python3 \
+  --disable-gtk-doc \
+  || exit 1
 
 make $NUMJOBS
 make DESTDIR=$PKG install

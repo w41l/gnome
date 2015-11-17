@@ -96,6 +96,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --localstatedir=/var --sharedstatedir=/var/lib \
   --disable-static --enable-shared \
   --disable-debug \
+  --disable-gtk-doc \
   --enable-introspection=yes \
   --enable-gles1 \
   --enable-gles2 \

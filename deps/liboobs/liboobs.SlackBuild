@@ -91,7 +91,8 @@ CXXFLAGS="$SLKCFLAGS" \
   --localstatedir=/var --sharedstatedir=/var/lib \
   --disable-static --enable-shared \
   --disable-gtk-doc \
-  --build=$ARCH-slackware-linux
+  --build=$ARCH-slackware-linux \
+  || exit 1
 
 make $NUMJOBS
 make DESTDIR=$PKG install

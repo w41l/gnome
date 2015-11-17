@@ -96,6 +96,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --enable-introspection=yes \
   --enable-compile-warnings=no \
   --disable-schemas-compile \
+  --disable-gtk-doc \
   $WAYLAND_OPT
 
 make $NUMJOBS

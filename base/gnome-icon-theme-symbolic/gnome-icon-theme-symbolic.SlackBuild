@@ -68,6 +68,8 @@ CXXFLAGS="$SLKCFLAGS" \
   --mandir=/usr/man --infodir=/usr/info \
   --sysconfdir=/etc --docdir=/usr/doc/$PRGNAM-$VERSION \
   --localstatedir=/var \
+  --disable-gtk-doc \
+  || exit 1
 
 make
 make DESTDIR=$PKG install

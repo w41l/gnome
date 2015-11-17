@@ -85,7 +85,9 @@ CXXFLAGS="$SLKCFLAGS" \
   --localstatedir=/var \
   --disable-static --enable-shared \
   --enable-introspection=yes \
-  --disable-schemas-compile
+  --disable-schemas-compile \
+  --disable-gtk-doc \
+  || exit 1
 
 make
 make install DESTDIR=$PKG

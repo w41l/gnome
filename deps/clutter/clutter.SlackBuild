@@ -98,6 +98,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --enable-docs=no \
   --enable-introspection=yes \
   --enable-evdev-input \
+  --disable-gtk-doc \
   $WAYLAND_OPT
 
 make $NUMJOBS

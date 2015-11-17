@@ -91,7 +91,9 @@ CXXFLAGS="$SLKCFLAGS" \
   --sysconfdir=/etc --docdir=/usr/doc/$PRGNAM-$VERSION \
   --localstatedir=/var \
   --enable-extensions=all \
-  --disable-schemas-compile
+  --disable-schemas-compile \
+  --disable-gtk-doc \
+  || exit 1
 
 make $NUMJOBS
 make install DESTDIR=$PKG

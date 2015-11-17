@@ -96,8 +96,8 @@ CXXFLAGS="$SLKCFLAGS" \
   --build=$ARCH-slackware-linux \
   --disable-static --enable-shared \
   --disable-schemas-compile \
-  --disable-wayland \
   --disable-rfkill \
+  --disable-gtk-doc \
   $WAYLAND_OPT \
   || exit 1
 

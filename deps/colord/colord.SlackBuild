@@ -92,6 +92,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --disable-static --enable-shared \
   --disable-schemas-compile \
   --disable-argyllcms-sensor \
+  --disable-gtk-doc \
   --enable-gusb \
   --enable-bash-completion \
   --enable-polkit \

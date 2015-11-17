@@ -31,7 +31,7 @@ NUMJOBS=${NUMJOBS:--j7}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
-    i?86) ARCH=i486 ;;
+    i?86) ARCH=i586 ;;
     arm*) ARCH=arm ;;
        *) ARCH=$( uname -m ) ;;
   esac
@@ -90,6 +90,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --build=$ARCH-slackware-linux \
   --disable-static --enable-shared \
   --with-gnome-distributor=WLSBUILD \
+  --disable-gtk-doc \
   || exit 1
 
 make $NUMJOBS || exit 1

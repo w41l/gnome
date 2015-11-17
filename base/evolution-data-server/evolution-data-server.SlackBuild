@@ -95,6 +95,8 @@ CXXFLAGS="$SLKCFLAGS" \
   --enable-smime=yes \
   --with-openldap \
   --with-krb5=/usr/kerberos \
+  --disable-gtk-doc \
+  || exit 1
 
 make $NUMJOBS
 make install DESTDIR=$PKG

@@ -65,6 +65,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --sysconfdir=/etc --docdir=/usr/doc/$PRGNAM-$VERSION \
   --localstatedir=/var\
   --build=x86_64-slackware-linux \
+  --disable-gtk-doc \
   || exit 1
 
 make || exit 1

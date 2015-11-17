@@ -89,6 +89,8 @@ CXXFLAGS="$SLKCFLAGS" \
   --localstatedir=/var --sharedstatedir=/var/lib \
   --disable-static --enable-shared \
   --disable-debug \
+  --disable-gtk-doc \
+  || exit 1
 
 make $NUMJOBS
 make install DESTDIR=$PKG

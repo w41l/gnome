@@ -99,7 +99,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --localstatedir=/var \
   --disable-static --enable-shared \
   --disable-schemas-compile \
-  --disable-wayland-support \
+  --disable-gtk-doc \
   --enable-introspection=yes \
   --enable-authentication-scheme=shadow \
   --enable-systemd-journal=no \
