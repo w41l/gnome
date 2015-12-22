@@ -95,7 +95,10 @@ CXXFLAGS="$SLKCFLAGS" \
   --mandir=/usr/man \
   --disable-static \
   --disable-debug \
-  --build=$ARCH-slackware-linux || exit 1
+  --build=$ARCH-slackware-linux \
+  --with-package-name="GStreamer Good Plugins 1.6.2 WLSBUILD" \
+  --with-package-origin="http://www.walecha.web.id/" \
+  || exit 1
 
 make $NUMJOBS || make || exit 1
 make install DESTDIR=$PKG || exit 1
@@ -135,7 +138,7 @@ mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 
 cd $PKG
-/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz
+/sbin/makepkg -p -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz
 
 echo "Cleaning up build directory"
 cd $WRK; rm -rf $PRGNAM-$VERSION $PKG

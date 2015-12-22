@@ -23,9 +23,10 @@
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 PRGNAM=gst-plugins-ugly
-VERSION=${VERSION:-1.6.1}
+VERSION=${VERSION:-$(cat $PRGNAM.info | grep "VERSION=" | cut -f 2 -d = | sed 's/"//g')}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
+NUMJOBS=${NUMJOBS:-"-j7"}
 
 CWD=$(pwd)
 WRK=${WRK:-/tmp/SBo}
@@ -85,10 +86,13 @@ CXXFLAGS="$SLKCFLAGS" \
   --localstatedir=/var \
   --mandir=/usr/man \
   --docdir=/usr/doc/$PRGNAM-$VERSION \
-  --build=$ARCH-slackware-linux
+  --build=$ARCH-slackware-linux \
+  --with-package-name="GStreamer Good Plugins 1.6.2 WLSBUILD" \
+  --with-package-origin="http://www.walecha.web.id/" \
+  || exit 1
 
-make
-make install DESTDIR=$PKG
+make $NUMJOBS || make || exit 1
+make install DESTDIR=$PKG || exit 1
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | \
   grep ELF | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
@@ -103,7 +107,7 @@ mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 
 cd $PKG
-/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz
+/sbin/makepkg -p -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz
 
 echo "Cleaning up build directory"
 cd $WRK; rm -rf $PRGNAM-$VERSION $PKG
