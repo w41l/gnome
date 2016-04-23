@@ -7,10 +7,18 @@ already installed:
 * glib2
 * gtk+2
 * gtk+3
+* libsigc++
+* glibmm
+* cairomm
+* pangomm
+* atkmm
+* gtkmm3
 * at-spi2-core
 * at-spi2-atk
+* pulseaudio
 * gstreamer
 * gst-plugins-base
+* gst-plugins-good
 * polkit
 * polkit-gnome
 * gobject-introspection
@@ -24,6 +32,8 @@ already installed:
 * sg3_utils
 * libatasmart
 * udisks
+* eudev
+* libgudev
 * libproxy
 * glib-networking
 * libsoup
@@ -45,9 +55,42 @@ already installed:
 SBo Packages
 ============
 
-Some GNOME package need packages from SBo, like gtkmm. Some of SBo packages has
+Some GNOME package need packages from SBo. Some of SBo packages has
 been imported, others still in testing. Maybe you can use ponce SBo git repo to
 get most current packages to satisfy GNOME dependency.
+
+* avahi
+* colord
+* colord-gtk
+* cracklib
+* exempi
+* farstream
+* gnome-common
+* gnome-menus
+* gsssdp
+* gst-plugins-ugly
+* gst-plugins-bad
+* json-glib
+* krb5
+* libdaemon
+* libgee
+* libgusb
+* libnice
+* liboauth
+* libpeas
+* libpwquality
+* libxkbcommon
+* python3
+* py3cairo
+* pygobject3-python3
+* pyxdg
+* rest
+* telepathy-glib
+* vte3
+* webkit2gtk
+* yelp-xsl
+* yelp-tools
+* zenity
 
 BUILDING
 ========
@@ -103,16 +146,7 @@ After that you should reboot your system, and try login to GNOME.
 WARNING
 =======
 
-The build will install eudev package, which is needed by gnome-bluetooth,
-and upower package which is needed by gnome-control-center.
-
-Eudev is systemd-compatible udev, developed by Gentoo. Eudev purpose is
-to provide compatible systemd API on system/distribution without systemd.
-This package will replace Slackware's default udev binaries.
-
-I have tested booting my Slackware64-current with eudev without
-any error or failure. But, even though my system is booted normally
-with eudev, still, I cannot guarantee that yours will be OK.
+The build will replace/upgrade Slackware upower with newer version.
 
 You have been warned.
 
