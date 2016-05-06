@@ -24,7 +24,7 @@
 # YOUR DATA IS DESTROYED, YOUR HOUSE BURNS DOWN OR YOUR DOG RUNS OFF.
 
 WRK=/tmp/wlsbuild
-OUTPUT=/tmp
+OUTPUT=${OUTPUT:-/tmp}
 GNOMEROOT=$(pwd)
 
 # To always upgrade package, use

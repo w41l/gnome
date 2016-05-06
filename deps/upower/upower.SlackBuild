@@ -23,7 +23,7 @@
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 # Modified 2012 by Eric Hameleers <alien at slackware.com> for ARM port.
-# Modified 2015 by Widya Walesa <walecha99@gmail.com> for GNOME 3 WLSBUILD.
+# Modified 2015-2016 by Widya Walesa <walecha99@gmail.com> for GNOME 3 WLSBUILD.
 
 PRGNAM=upower
 VERSION=$(cat $PRGNAM.info | grep "VERSION" | cut -d = -f 2 | sed 's/"//g')

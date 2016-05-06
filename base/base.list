@@ -1,18 +1,15 @@
 gnome-online-accounts
 libgdata
 evolution-data-server
-accountsservice
 gnome-desktop
 nautilus
 nautilus-sendto
 gnome-bluetooth
 gnome-color-manager
 gnome-tweak-tool
-gnome-menus
 gnome-backgrounds
 gnome-power-manager
 gnome-icon-theme-symbolic
-gnome-common
 totem-pl-parser
 grilo
 gnome-video-effects
@@ -20,9 +17,9 @@ cheese
 gnome-session
 mutter
 mousetweaks
-gnome-packagekit
-gdm
-libgee
+## PackageKit
+## gnome-packagekit
+## gdm
 caribou
 orca
 yelp

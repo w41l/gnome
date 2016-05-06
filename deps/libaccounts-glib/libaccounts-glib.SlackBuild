@@ -1,8 +1,8 @@
 #!/bin/sh
 
-# Slackware build script for rest
+# Slackware build script for libaccounts-glib
 
-# Copyright 2010-2015  Widya Walesa <walecha99@gmail.com>
+# Copyright 2016  Widya Walesa <walecha99@gmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -23,11 +23,17 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. FURTHERMORE I AM NOT LIABLE IF
 # YOUR DATA IS DESTROYED, YOUR HOUSE BURNS DOWN OR YOUR DOG RUNS OFF.
 
-PRGNAM=rest
+PRGNAM=libaccounts-glib
 VERSION=$(cat $PRGNAM.info | grep "VERSION" | cut -d = -f 2 | sed 's/"//g')
 BUILD=${BUILD:-1}
 TAG=${TAG:-_wls}
 NUMJOBS=${NUMJOBS:--j7}
+
+CWD=$(pwd)
+WRK=${WRK:-/tmp/wlsbuild}
+PKG=$WRK/package-$PRGNAM
+OUTPUT=${OUTPUT:-/tmp}
+DOCS="AUTHORS COPYING* ChangeLog NEWS README"
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -51,25 +57,21 @@ else
   LIBDIRSUFFIX=""
 fi
 
+set -e
+
 MD5SUM=`cat $PRGNAM.info | grep "MD5SUM=" | cut -d = -f 2 | sed 's/"//g'`
 MD5SRC=`echo "$MD5SUM $(basename $PRGNAM-$VERSION.tar.?z*)" | md5sum -c | tr -d [:blank:] | cut -d : -f 2`
 if [ ! "$MD5SRC" = "OK" ]; then
-  rm -f $PRGNAM-$VERSION.tar.?z*
-  wget $(cat $PRGNAM.info | grep "DOWNLOAD=" | cut -d = -f 2 | sed 's/"//g')
+  rm -f $PRGNAM-$VERSION.tar.*
+  curl -#OLJ -C - $(cat $PRGNAM.info | grep "DOWNLOAD=" | cut -d = -f 2 | sed 's/"//g')
 fi
-
-CWD=$(pwd)
-WRK=${WRK:-/tmp/wlsbuild}
-PKG=$WRK/package-$PRGNAM
-OUTPUT=${OUTPUT:-/tmp}
-DOCS="AUTHORS COPYING ChangeLog INSTALL README"
 
 rm -rf $PKG
 mkdir -p $WRK $PKG $OUTPUT
 cd $WRK
-rm -rf rest-$VERSION
-tar xvf $CWD/rest-$VERSION.tar.?z*
-cd rest-$VERSION
+rm -rf $PRGNAM-VERSION_${VERSION}-*
+tar xvf $CWD/$PRGNAM-$VERSION.tar.?z*
+cd $PRGNAM-VERSION_${VERSION}-*
 chown -R root:root .
 find . \
  \( -perm 777 -o -perm 775 -o -perm 711 -o -perm 555 -o -perm 511 \) \
@@ -78,24 +80,21 @@ find . \
  -exec chmod 644 {} \;
 
 CFLAGS="$SLKCFLAGS" \
-CXXFLAGS="$SLKCFLAGS" \
-./configure --build=$ARCH-slackware-linux \
-  --build=$ARCH-slackware-linux \
+CPPFLAGS="$SLKCFLAGS" \
+./autogen.sh --build=$ARCH-slackware-linux \
   --program-prefix= --program-suffix= \
   --prefix=/usr --exec-prefix=/usr \
   --bindir=/usr/bin --sbindir=/usr/sbin \
   --libdir=/usr/lib$LIBDIRSUFFIX --includedir=/usr/include \
   --mandir=/usr/man --infodir=/usr/info \
   --sysconfdir=/etc --docdir=/usr/doc/$PRGNAM-$VERSION \
-  --localstatedir=/var \
+  --localstatedir=/var --sharedstatedir=/var/lib \
   --disable-static --enable-shared \
-  --disable-gtk-doc \
-  --enable-introspection=yes \
   --disable-gtk-doc \
   || exit 1
 
 make $NUMJOBS
-make install DESTDIR=$PKG
+make DESTDIR=$PKG install
 
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
@@ -106,9 +105,10 @@ cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
 /sbin/makepkg -p -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz
 
 echo "Cleaning up build directory"
-cd $WRK ; rm -rf rest-$VERSION $PKG
+cd $WRK; rm -rf $PRGNAM-VERSION_${VERSION}-* $PKG

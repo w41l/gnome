@@ -3,10 +3,6 @@ py3cairo
 krb5
 cracklib
 libpwquality
-json-c
-speex
-pulseaudio
-alsa-plugins
 avahi
 gssdp
 rarian
@@ -20,12 +16,6 @@ vala
 glade
 gtksourceview3
 libsigc++
-glibmm
-cairomm
-pangomm
-atkmm
-mm-common
-gtkmm3
 libburn
 libisofs
 libisoburn
