@@ -5,6 +5,6 @@ DOWNLOAD="http://download.gnome.org/sources/gnome-system-monitor/3.18/gnome-syst
 MD5SUM="7979c3d773aa72924dd539f6bcedf367"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="gtkmm3 libgtop libwnck3"
+REQUIRES="libgtop libwnck3"
 MAINTAINER="Widya Walesa"
 EMAIL="walecha99@gmail.com"

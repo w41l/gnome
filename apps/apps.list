@@ -1,11 +1,11 @@
 gnome-terminal
 file-roller
-libgxps
-evince
+## libgxps
+## evince
 gedit
 brasero
 eog
 eog-plugins
 gnome-screenshot
 gnome-system-monitor
-seahorse
+## seahorse

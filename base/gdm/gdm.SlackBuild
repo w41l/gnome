@@ -2,7 +2,7 @@
 
 # Slackware build script for gdm
 
-# Copyright 2013  Widya Walesa <walecha99@gmail.com>
+# Copyright 2013-2016  Widya Walesa <walecha99@gmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -79,6 +79,11 @@ cd $WRK
 rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.?z*
 cd $PRGNAM-$VERSION
+
+# Use elogind
+cat $CWD/patches/gdm_use_elogind.patch | patch -p1 --verbose || exit 1
+sed 's/libsystemd/libelogind/g' -i configure.ac
+
 chown -R root:root .
 find . \
  \( -perm 777 -o -perm 775 -o -perm 711 -o -perm 555 -o -perm 511 \) \
@@ -86,6 +91,10 @@ find . \
  \( -perm 666 -o -perm 664 -o -perm 600 -o -perm 444 -o -perm 440 -o -perm 400 \) \
  -exec chmod 644 {} \;
 
+autoreconf -ivsf
+
+SYSTEMD_CFLAGS="`pkg-config --cflags libelogind`" \
+SYSTEMD_LIBS="`pkg-config --libs libelogind`" \
 LDFLAGS="-L/lib${LIBDIRSUFFIX} -L/usr/lib${LIBDIRSUFFIX}" \
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
@@ -99,7 +108,6 @@ CXXFLAGS="$SLKCFLAGS" \
   --localstatedir=/var \
   --disable-static --enable-shared \
   --disable-schemas-compile \
-  --disable-gtk-doc \
   --enable-introspection=yes \
   --enable-authentication-scheme=shadow \
   --enable-systemd-journal=no \
@@ -108,8 +116,6 @@ CXXFLAGS="$SLKCFLAGS" \
   --with-user=gdm \
   --with-group=gdm \
   --with-initial-vt=7 \
-  --with-systemd=no \
-  --with-console-kit=yes \
   --with-sysconfsubdir=gdm \
   --with-lang-file=/etc/gdm/locale.conf \
   --with-dmconfdir=/usr/share/xsessions \
@@ -119,7 +125,7 @@ CXXFLAGS="$SLKCFLAGS" \
   $WAYLAND_OPT \
   || exit 1
 
-make $NUMJOBS
+make $NUMJOBS V=1
 make install DESTDIR=$PKG
 
 # Fix gdm runtime directory permission

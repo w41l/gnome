@@ -1,8 +1,8 @@
 #!/bin/sh
 
-# Slackware build script for libwnck3
+# Slackware build script for ibus-chewing
 
-# Copyright 2012-2015  Widya Walesa <walecha99@gmail.com>
+# Copyright 2010-2012  Guan-Zhong Huang, Taiwan <imprazaguy@gmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -20,38 +20,37 @@
 # OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
 # WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. FURTHERMORE I AM NOT LIABLE IF
-# YOUR DATA IS DESTROYED, YOUR HOUSE BURNS DOWN OR YOUR DOG RUNS OFF.
+# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+# Modified 2016 by Widya Walesa for gnome3 wlsbuild
 
-SRCNAM=libwnck
-PRGNAM=libwnck3
-VERSION=$(cat $PRGNAM.info | grep "VERSION" | cut -d = -f 2 | sed 's/"//g')
+PRGNAM=ibus-chewing
+VERSION=${VERSION:-1.5.1}
+VERSION2=${VERSION2:-2.6.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_wls}
-NUMJOBS=${NUMJOBS:--j7}
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
-    i?86) ARCH=i586 ;;
+    i?86) ARCH=i486 ;;
     arm*) ARCH=arm ;;
        *) ARCH=$( uname -m ) ;;
   esac
 fi
 
 CWD=$(pwd)
-WRK=${WRK:-/tmp/wlsbuild}
+WRK=${WRK:-/tmp/SBo}
 PKG=$WRK/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
-DOCS="AUTHORS COPYING ChangeLog HACKING INSTALL MAINTAINERS NEWS README"
 
-if [ "$ARCH" = "i586" ]; then
-  SLKCFLAGS="-O2 -pipe -march=i586 -mtune=i686"
+if [ "$ARCH" = "i486" ]; then
+  SLKCFLAGS="-O2 -march=i486 -mtune=i686"
   LIBDIRSUFFIX=""
 elif [ "$ARCH" = "i686" ]; then
-  SLKCFLAGS="-O2 -pipe -march=i686 -mtune=i686"
+  SLKCFLAGS="-O2 -march=i686 -mtune=i686"
   LIBDIRSUFFIX=""
 elif [ "$ARCH" = "x86_64" ]; then
-  SLKCFLAGS="-O2 -m64 -pipe -fPIC"
+  SLKCFLAGS="-O2 -fPIC"
   LIBDIRSUFFIX="64"
 else
   SLKCFLAGS="-O2"
@@ -60,56 +59,57 @@ fi
 
 set -e
 
-MD5SUM=`cat $PRGNAM.info | grep "MD5SUM=" | cut -d = -f 2 | sed 's/"//g'`
-MD5SRC=`echo "$MD5SUM $(basename $SRCNAM-$VERSION.tar.?z*)" | md5sum -c | tr -d [:blank:] | cut -d : -f 2`
+MD5SUM=`cat $PRGNAM.info | grep "MD5SUM1=" | cut -d = -f 2 | sed 's/"//g'`
+MD5SRC=`echo "$MD5SUM $(basename $PRGNAM-$VERSION-Source.tar.?z*)" | md5sum -c | tr -d [:blank:] | cut -d : -f 2`
 if [ ! "$MD5SRC" = "OK" ]; then
-  rm -f $SRCNAM-$VERSION.tar.?z*
-  wget $(cat $PRGNAM.info | grep "DOWNLOAD=" | cut -d = -f 2 | sed 's/"//g')
+  rm -f $PRGNAM-$VERSION-Source.tar.?z*
+  curl -#OLJ -C - $(cat $PRGNAM.info | grep "DOWNLOAD1=" | cut -d = -f 2 | sed 's/"//g')
+fi
+
+MD5SUM=`cat $PRGNAM.info | grep "MD5SUM2=" | cut -d = -f 2 | sed 's/"//g'`
+MD5SRC=`echo "$MD5SUM cmake-fedora-$VERSION2-modules-only.tar.gz" | md5sum -c | tr -d [:blank:] | cut -d : -f 2`
+if [ ! "$MD5SRC" = "OK" ]; then
+  rm -f cmake-fedora-$VERSION2-modules-only.tar.gz
+  curl -#OLJ -C - $(cat $PRGNAM.info | grep "DOWNLOAD2=" | cut -d = -f 2 | sed 's/"//g')
 fi
 
 rm -rf $PKG
 mkdir -p $WRK $PKG $OUTPUT
 cd $WRK
-rm -rf $SRCNAM-$VERSION
-tar xvf $CWD/$SRCNAM-$VERSION.tar.?z*
-cd $SRCNAM-$VERSION
+rm -rf $PRGNAM-$VERSION-Source
+tar xvf $CWD/$PRGNAM-$VERSION-Source.tar.gz
+cd $PRGNAM-$VERSION-Source
+tar xvf $CWD/cmake-fedora-$VERSION2-modules-only.tar.gz
 chown -R root:root .
-find . \
- \( -perm 777 -o -perm 775 -o -perm 711 -o -perm 555 -o -perm 511 \) \
+find -L . \
+ \( -perm 777 -o -perm 775 -o -perm 750 -o -perm 711 -o -perm 555 -o -perm 511 \) \
  -exec chmod 755 {} \; -o \
  \( -perm 666 -o -perm 664 -o -perm 600 -o -perm 444 -o -perm 440 -o -perm 400 \) \
  -exec chmod 644 {} \;
 
-CFLAGS="$SLKCFLAGS" \
-CXXFLAGS="$SLKCFLAGS" \
-./configure --build=$ARCH-slackware-linux \
-  --program-prefix= --program-suffix= \
-  --prefix=/usr --exec-prefix=/usr \
-  --bindir=/usr/bin --sbindir=/usr/sbin \
-  --libdir=/usr/lib$LIBDIRSUFFIX --includedir=/usr/include \
-  --mandir=/usr/man --infodir=/usr/info \
-  --sysconfdir=/etc --docdir=/usr/doc/$PRGNAM-$VERSION \
-  --localstatedir=/var --sharedstatedir=/var/lib \
-  --disable-static --enable-shared \
-  --disable-gtk-doc \
-  || exit 1
+# This cmake script doesn't support out-of-source build
+cmake \
+    -DCMAKE_C_FLAGS_RELEASE:STRING="$SLKCFLAGS" \
+    -DCMAKE_CXX_FLAGS_RELEASE:STRING="$SLKCFLAGS" \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DSYSCONF_INSTALL_DIR=/etc \
+    -DDOC_DIR=/usr/doc \
+    -DCMAKE_BUILD_TYPE=Release
 
-make $NUMJOBS
+make
 make install DESTDIR=$PKG
 
-find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
+find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
-cp -a $DOCS $PKG/usr/doc/$PRGNAM-$VERSION
-head -n 1000 ChangeLog > $PKG/usr/doc/$PRGNAM-$VERSION/ChangeLog
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 
 cd $PKG
-/sbin/makepkg -p -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz
+/sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz
 
 echo "Cleaning up build directory"
-cd $WRK; rm -rf $SRCNAM-$VERSION $PKG
+cd $WRK; rm -rf $PRGNAM-$VERSION $PKG

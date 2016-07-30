@@ -1,9 +1,10 @@
+wayland
 upower
 libwacom
 libinput
 pam
 pam_unix2
-gupnp
+## gupnp
 mozjs
 ## PackageKit
 uhttpmock
@@ -22,3 +23,9 @@ libaccounts-glib
 telepathy-mission-control
 telepathy-logger
 accountsservice
+elogind
+ibus
+ibus-anthy
+ibus-chewing
+ibus-hangul
+ibus-pinyin

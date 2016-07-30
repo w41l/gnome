@@ -1,8 +1,8 @@
 #!/bin/sh
 
-# Slackware build script for gupnp
+# Slackware build script for epiphany
 
-# Copyright 2015  Widya Walesa <walecha99@gmail.com>
+# Copyright 2016  Widya Walesa <walecha99@gmail.com>
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -23,7 +23,7 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. FURTHERMORE I AM NOT LIABLE IF
 # YOUR DATA IS DESTROYED, YOUR HOUSE BURNS DOWN OR YOUR DOG RUNS OFF.
 
-PRGNAM=gupnp
+PRGNAM=epiphany
 VERSION=$(cat $PRGNAM.info | grep "VERSION" | cut -d = -f 2 | sed 's/"//g')
 BUILD=${BUILD:-1}
 TAG=${TAG:-_wls}
@@ -33,7 +33,7 @@ CWD=$(pwd)
 WRK=${WRK:-/tmp/wlsbuild}
 PKG=$WRK/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
-DOCS="AUTHORS COPYING INSTALL NEWS README doc/html/*"
+DOCS="AUTHORS ChangeLog COPYING NEWS README TODO"
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -60,10 +60,10 @@ fi
 set -e
 
 MD5SUM=`cat $PRGNAM.info | grep "MD5SUM=" | cut -d = -f 2 | sed 's/"//g'`
-MD5SRC=`echo "$MD5SUM $PRGNAM-$VERSION.tar.xz" | md5sum -c | tr -d [:blank:] | cut -d : -f 2`
+MD5SRC=`echo "$MD5SUM $(basename $PRGNAM-$VERSION.tar.?z*)" | md5sum -c | tr -d [:blank:] | cut -d : -f 2`
 if [ ! "$MD5SRC" = "OK" ]; then
-  rm -f $PRGNAM-$VERSION.tar.xz
-  curl -#OLJ -C - $(cat $PRGNAM.info | grep "DOWNLOAD=" | cut -d = -f 2 | sed 's/"//g')
+  rm -f $PRGNAM-$VERSION.tar.*
+  wget $(cat $PRGNAM.info | grep "DOWNLOAD=" | cut -d = -f 2 | sed 's/"//g')
 fi
 
 rm -rf $PKG
@@ -88,23 +88,29 @@ CXXFLAGS="$SLKCFLAGS" \
   --libdir=/usr/lib$LIBDIRSUFFIX --includedir=/usr/include \
   --mandir=/usr/man --infodir=/usr/info \
   --sysconfdir=/etc --docdir=/usr/doc/$PRGNAM-$VERSION \
-  --localstatedir=/var \
+  --localstatedir=/var --sharedstatedir=/var/lib \
   --disable-static --enable-shared \
+  --enable-introspection=yes \
   --disable-gtk-doc \
   || exit 1
 
-make $NUMJOBS
-make install DESTDIR=$PKG
+make
+make DESTDIR=$PKG install
 
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
+find $PKG/usr/man -type f -exec gzip -9 {} \;
+for i in $( find $PKG/usr/man -type l ) ; do ln -s $( readlink $i ).gz $i.gz ; rm $i ; done
+
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cp -a $DOCS $PKG/usr/doc/$PRGNAM-$VERSION
+head -n 1000 ChangeLog > $PKG/usr/doc/$PRGNAM-$VERSION/ChangeLog
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
 /sbin/makepkg -p -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz
