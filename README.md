@@ -59,38 +59,61 @@ Some GNOME package need packages from SBo. Some of SBo packages has
 been imported, others still in testing. Maybe you can use ponce SBo git repo to
 get most current packages to satisfy GNOME dependency.
 
-* avahi
-* colord
-* colord-gtk
-* cracklib
-* exempi
-* farstream
-* gnome-common
-* gnome-menus
-* gsssdp
-* gst-plugins-ugly
-* gst-plugins-bad
-* json-glib
-* krb5
-* libdaemon
-* libgee
-* libgusb
-* libnice
-* liboauth
-* libpeas
-* libpwquality
-* libxkbcommon
 * python3
 * py3cairo
-* pygobject3-python3
-* pyxdg
-* rest
-* telepathy-glib
+* krb5
+* cracklib
+* libpwquality
+* avahi
+* gssdp
+* gupnp
+* rarian
+* exempi
+* liboauth
+* perl-xml-twig
+* perl-net-dbus
+* libunique3
+* libgtop
+* vala
 * vte3
+* colord
+* colord-gtk
+* glade
+* gtksourceview3
+* libburn
+* libisofs
+* libisoburn
+* libgksu
+* gksu
+* gob2
+* libchewing
+* gnome-commmon
+* libgee1
+* json-glib
+* libskk
+* ibus-skk
+* libsunpinyin
+* ibus-sunpinyin
+* ibus-unikey
+* libnice
+* farstream
+* telepathy-glib
+* telepathy-farstream
+* cantarell-fonts
+* rest
 * webkit2gtk
 * yelp-xsl
 * yelp-tools
-* zenity
+* yelp
+* evince
+* seahorse
+
+WAYLAND
+=======
+
+Wayland package currently just for build dependency. Slackware still
+using Xorg as default display server. I'm still testing out running
+GNOME 3 in wayland. Please wait for the good news.
 
 BUILDING
 ========
