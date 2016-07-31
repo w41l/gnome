@@ -1,0 +1,11 @@
+--- a/src/libaccountsservice/act-user-manager.c	2016-07-31 18:36:51.540011222 +0700
++++ b/src/libaccountsservice/act-user-manager.c	2016-07-31 18:37:29.186051293 +0700
+@@ -42,7 +42,7 @@
+ #include <gio/gunixinputstream.h>
+ 
+ #ifdef WITH_SYSTEMD
+-#include <systemd/sd-login.h>
++#include <elogind/sd-login.h>
+ 
+ /* check if logind is running */
+ #define LOGIND_RUNNING() (access("/run/systemd/seats/", F_OK) >= 0)

@@ -136,6 +136,11 @@ make install DESTDIR=$PKG
 # Fix gdm runtime directory permission
 chown -R gdm:gdm $PKG/var/{cache,lib,run,log}/gdm
 
+# Use our own pam.d
+for P in $CWD/pam.d/*; do
+    cat $P > $PKG/etc/pam.d/$(basename $P);
+done
+
 # Preserve old config
 mv $PKG/etc/gdm/custom.conf $PKG/etc/gdm/custom.conf.new
 cat $CWD/locale.conf.in > $PKG/etc/gdm/locale.conf.new
