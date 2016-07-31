@@ -1,4 +1,4 @@
-PRGNAM="watland"
+PRGNAM="wayland"
 VERSION="1.9.0"
 HOMEPAGE="https://wayland.freedesktop.org/"
 DOWNLOAD="http://wayland.freedesktop.org/releases/wayland-1.9.0.tar.xz"

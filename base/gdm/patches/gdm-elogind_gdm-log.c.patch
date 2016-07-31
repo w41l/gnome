@@ -1,0 +1,10 @@
+--- a/common/gdm-log.c	2016-07-31 17:50:09.411209249 +0700
++++ b/common/gdm-log.c	2016-07-31 17:50:32.975231132 +0700
+@@ -30,7 +30,6 @@
+ #include <unistd.h>
+ 
+ #include <syslog.h>
+-#include <systemd/sd-daemon.h>
+ 
+ #include <glib.h>
+ #include <glib/gstdio.h>

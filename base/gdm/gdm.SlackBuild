@@ -35,13 +35,6 @@ PKG=$WRK/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 DOCS="AUTHORS COPYING* ChangeLog* INSTALL MAINTAINERS NEWS README TODO"
 
-# Build with wayland support or not (highly experimental)
-if $(pkg-config --exists --print-errors "libsystemd-login" >/dev/null); then
-  WAYLAND_OPT="--enable-wayland-support=yes"
-else
-  WAYLAND_OPT="--enable-wayland-support=no"
-fi
-
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
     i?86) ARCH=i586 ;;
@@ -81,8 +74,14 @@ tar xvf $CWD/$PRGNAM-$VERSION.tar.?z*
 cd $PRGNAM-$VERSION
 
 # Use elogind
-cat $CWD/patches/gdm_use_elogind.patch | patch -p1 --verbose || exit 1
-sed 's/libsystemd/libelogind/g' -i configure.ac
+cat $CWD/patches/gdm-elogind_gdm-common.c.patch | patch -p1 || exit 1
+cat $CWD/patches/gdm-elogind_gdm-log.c.patch | patch -p1 || exit 1
+cat $CWD/patches/gdm-elogind_gdm-manager.c.patch | patch -p1 || exit 1
+cat $CWD/patches/gdm-elogind_gdm-server.c.patch | patch -p1 || exit 1
+cat $CWD/patches/gdm-elogind_gdm-session-worker.c.patch | patch -p1 || exit 1
+cat $CWD/patches/gdm-elogind_gdm-session-worker-job.c.patch | patch -p1 || exit 1
+cat $CWD/patches/gdm-elogind_gdm-user-switching.c.patch | patch -p1 || exit 1
+sed 's/libsystemd/libelogind/g' -i configure
 
 chown -R root:root .
 find . \
@@ -91,7 +90,12 @@ find . \
  \( -perm 666 -o -perm 664 -o -perm 600 -o -perm 444 -o -perm 440 -o -perm 400 \) \
  -exec chmod 644 {} \;
 
-autoreconf -ivsf
+# Build with wayland support or not (highly experimental)
+if $(pkg-config --exists --print-errors "libelogind" >/dev/null); then
+  WAYLAND_OPT="yes"
+else
+  WAYLAND_OPT="no"
+fi
 
 SYSTEMD_CFLAGS="`pkg-config --cflags libelogind`" \
 SYSTEMD_LIBS="`pkg-config --libs libelogind`" \
@@ -110,9 +114,11 @@ CXXFLAGS="$SLKCFLAGS" \
   --disable-schemas-compile \
   --enable-introspection=yes \
   --enable-authentication-scheme=shadow \
-  --enable-systemd-journal=no \
   --enable-more-warnings=no \
   --enable-console-helper=yes \
+  --enable-gdm-xsession \
+  --enable-wayland-support=$WAYLAND_OPT \
+  --enable-systemd-journal=no \
   --with-user=gdm \
   --with-group=gdm \
   --with-initial-vt=7 \
@@ -122,7 +128,6 @@ CXXFLAGS="$SLKCFLAGS" \
   --with-dbus-sys=/etc/dbus-1/system.d \
   --with-default-pam-config=lfs \
   --without-plymouth \
-  $WAYLAND_OPT \
   || exit 1
 
 make $NUMJOBS V=1

@@ -1,0 +1,31 @@
+--- a/gnome-session/main.c	2016-07-31 17:13:20.877159079 +0700
++++ b/gnome-session/main.c	2016-07-31 17:22:01.596584668 +0700
+@@ -40,10 +40,6 @@
+ #include "gsm-system.h"
+ #include "gsm-fail-whale.h"
+ 
+-#ifdef HAVE_SYSTEMD
+-#include <systemd/sd-journal.h>
+-#endif
+-
+ #define GSM_DBUS_NAME "org.gnome.SessionManager"
+ 
+ static gboolean failsafe = FALSE;
+@@ -318,17 +314,6 @@
+          * journald picks ups the nicer "gnome-session" as the program
+          * name instead of whatever shell script GDM happened to use.
+          */
+-#ifdef HAVE_SYSTEMD
+-        if (!debug) {
+-                int journalfd;
+-
+-                journalfd = sd_journal_stream_fd (PACKAGE, LOG_INFO, 0);
+-                if (journalfd >= 0) {
+-                        dup2(journalfd, 1);
+-                        dup2(journalfd, 2);
+-                }
+-        }
+-#endif
+ 
+         gdm_log_init ();
+         gdm_log_set_debug (debug);

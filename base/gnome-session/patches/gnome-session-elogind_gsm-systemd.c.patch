@@ -1,0 +1,11 @@
+--- a/gnome-session/gsm-systemd.c	2016-07-31 17:12:06.062086052 +0700
++++ b/gnome-session/gsm-systemd.c	2016-07-31 17:13:10.507149202 +0700
+@@ -30,7 +30,7 @@
+ #include <sys/types.h>
+ #include <pwd.h>
+ 
+-#include <systemd/sd-login.h>
++#include <elogind/sd-login.h>
+ 
+ #include <glib.h>
+ #include <glib-object.h>

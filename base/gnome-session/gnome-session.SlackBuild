@@ -70,6 +70,14 @@ cd $WRK
 rm -rf $PRGNAM-$VERSION
 tar xvf $CWD/$PRGNAM-$VERSION.tar.?z*
 cd $PRGNAM-$VERSION
+
+# Replace systemd with elogind
+cat $CWD/patches/gnome-session-elogind_configure.ac.patch | patch -p1
+cat $CWD/patches/gnome-session-elogind_gsm-systemd.c.patch | patch -p1
+cat $CWD/patches/gnome-session-elogind_gsm-manager.c.patch | patch -p1
+cat $CWD/patches/gnome-session-elogind_main.c.patch | patch -p1
+sed 's/systemd/elogind/g' -i configure
+
 chown -R root:root .
 find . \
  \( -perm 777 -o -perm 775 -o -perm 711 -o -perm 555 -o -perm 511 \) \
@@ -79,6 +87,8 @@ find . \
 
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
+SYSTEMD_CFLAGS="$(pkg-config --cflags libelogind)" \
+SYSTEMD_LIBS="$(pkg-config --libs libelogind)" \
 ./configure --build=$ARCH-slackware-linux \
   --program-prefix= --program-suffix= \
   --prefix=/usr --exec-prefix=/usr \
@@ -89,9 +99,8 @@ CXXFLAGS="$SLKCFLAGS" \
   --localstatedir=/var \
   --disable-static --enable-shared \
   --disable-docbook-docs \
-  --disable-systemd \
   --enable-session-selector \
-  --enable-consolekit
+  --enable-elogind
 
 make $NUMJOBS
 make DESTDIR=$PKG install

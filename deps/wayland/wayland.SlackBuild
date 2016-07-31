@@ -31,7 +31,7 @@ TAG=${TAG:-_wls}
 NUMJOBS=${NUMJOBS:" -j7 "}
 
 CWD=$(pwd)
-WRK=${WRK:-/tmp}
+WRK=${WRK:-/tmp/wlsbuild}
 PKG=$WRK/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 

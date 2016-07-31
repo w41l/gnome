@@ -1,4 +1,6 @@
 wayland
+xorg-server
+mesa
 upower
 libwacom
 libinput

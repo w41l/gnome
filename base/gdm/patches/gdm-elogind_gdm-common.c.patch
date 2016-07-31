@@ -1,0 +1,11 @@
+--- a/common/gdm-common.c	2016-07-31 17:48:55.633139726 +0700
++++ b/common/gdm-common.c	2016-07-31 17:49:48.239189455 +0700
+@@ -39,7 +39,7 @@
+ #include "mkdtemp.h"
+ #endif
+ 
+-#include <systemd/sd-login.h>
++#include <elogind/sd-login.h>
+ 
+ #define GDM_DBUS_NAME                            "org.gnome.DisplayManager"
+ #define GDM_DBUS_LOCAL_DISPLAY_FACTORY_PATH      "/org/gnome/DisplayManager/LocalDisplayFactory"

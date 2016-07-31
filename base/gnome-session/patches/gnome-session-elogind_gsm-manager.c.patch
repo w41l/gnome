@@ -1,0 +1,54 @@
+--- a/gnome-session/gsm-manager.c	2016-07-31 17:13:54.718190806 +0700
++++ b/gnome-session/gsm-manager.c	2016-07-31 17:23:07.661631935 +0700
+@@ -40,10 +40,6 @@
+ #include "gsm-manager.h"
+ #include "org.gnome.SessionManager.h"
+ 
+-#ifdef HAVE_SYSTEMD
+-#include <systemd/sd-journal.h>
+-#endif
+-
+ #include "gsm-store.h"
+ #include "gsm-inhibitor.h"
+ #include "gsm-presence.h"
+@@ -272,13 +268,6 @@
+                 allow_logout = !_log_out_is_locked_down (manager);
+         }
+ 
+-#ifdef HAVE_SYSTEMD
+-        sd_journal_send ("MESSAGE_ID=%s", GSM_MANAGER_UNRECOVERABLE_FAILURE_MSGID,
+-                         "PRIORITY=%d", 3,
+-                         "MESSAGE=Unrecoverable failure in required component %s", app_id,
+-                         NULL);
+-#endif
+-
+         gsm_fail_whale_dialog_we_failed (FALSE,
+                                          allow_logout,
+                                          extensions);
+@@ -302,13 +291,6 @@
+                 extensions = NULL;
+         }
+ 
+-#ifdef HAVE_SYSTEMD
+-        sd_journal_send ("MESSAGE_ID=%s", GSM_MANAGER_UNRECOVERABLE_FAILURE_MSGID,
+-                         "PRIORITY=%d", 3,
+-                         "MESSAGE=Unrecoverable failure in required component %s", app_id,
+-                         NULL);
+-#endif
+-
+         gsm_quit ();
+ }
+ 
+@@ -1339,12 +1321,6 @@
+                 do_phase_startup (manager);
+                 break;
+         case GSM_MANAGER_PHASE_RUNNING:
+-#ifdef HAVE_SYSTEMD                
+-                sd_journal_send ("MESSAGE_ID=%s", GSM_MANAGER_STARTUP_SUCCEEDED_MSGID,
+-                                 "PRIORITY=%d", 5,
+-                                 "MESSAGE=Entering running state",
+-                                 NULL);
+-#endif
+                 gsm_xsmp_server_start_accepting_new_clients (manager->priv->xsmp_server);
+                 if (manager->priv->pending_end_session_tasks != NULL)
+                         complete_end_session_tasks (manager);

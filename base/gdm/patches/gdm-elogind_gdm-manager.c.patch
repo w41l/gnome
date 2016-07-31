@@ -1,0 +1,11 @@
+--- a/daemon/gdm-manager.c	2016-07-31 18:03:28.743885266 +0700
++++ b/daemon/gdm-manager.c	2016-07-31 18:03:55.806906312 +0700
+@@ -34,7 +34,7 @@
+ #include <glib/gstdio.h>
+ #include <glib-object.h>
+ 
+-#include <systemd/sd-login.h>
++#include <elogind/sd-login.h>
+ 
+ #include "gdm-common.h"
+ 

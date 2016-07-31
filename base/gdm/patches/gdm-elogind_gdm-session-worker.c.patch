@@ -1,0 +1,14 @@
+--- a/daemon/gdm-session-worker.c	2016-07-31 17:51:07.044262513 +0700
++++ b/daemon/gdm-session-worker.c	2016-07-31 17:59:21.967688807 +0700
+@@ -49,10 +49,8 @@
+ 
+ #include <X11/Xauth.h>
+ 
+-#include <systemd/sd-daemon.h>
+-
+ #ifdef ENABLE_SYSTEMD_JOURNAL
+-#include <systemd/sd-journal.h>
++#include <elogind/sd-journal.h>
+ #endif
+ 
+ #ifdef HAVE_SELINUX

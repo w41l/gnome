@@ -1,0 +1,11 @@
+--- a/libgdm/gdm-user-switching.c	2016-07-31 18:04:30.467933128 +0700
++++ b/libgdm/gdm-user-switching.c	2016-07-31 18:04:44.079943620 +0700
+@@ -31,7 +31,7 @@
+ #include <glib-object.h>
+ #include <gio/gio.h>
+ 
+-#include <systemd/sd-login.h>
++#include <elogind/sd-login.h>
+ 
+ #include "common/gdm-common.h"
+ #include "gdm-user-switching.h"

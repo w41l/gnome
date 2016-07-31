@@ -1,0 +1,11 @@
+--- a/daemon/gdm-session-worker-job.c	2016-07-31 18:02:49.925854921 +0700
++++ b/daemon/gdm-session-worker-job.c	2016-07-31 18:03:03.852865830 +0700
+@@ -36,8 +36,6 @@
+ #include <sys/prctl.h>
+ #endif
+ 
+-#include <systemd/sd-daemon.h>
+-
+ #ifdef ENABLE_SYSTEMD_JOURNAL
+ #include <systemd/sd-journal.h>
+ #endif

@@ -1,0 +1,11 @@
+--- a/daemon/gdm-server.c	2016-07-31 17:56:18.830536800 +0700
++++ b/daemon/gdm-server.c	2016-07-31 17:57:01.599572836 +0700
+@@ -43,8 +43,6 @@
+ #include <linux/vt.h>
+ #endif
+ 
+-#include <systemd/sd-daemon.h>
+-
+ #ifdef ENABLE_SYSTEMD_JOURNAL
+ #include <systemd/sd-journal.h>
+ #endif
