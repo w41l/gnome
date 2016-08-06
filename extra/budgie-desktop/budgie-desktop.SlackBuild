@@ -24,7 +24,7 @@
 # YOUR DATA IS DESTROYED, YOUR HOUSE BURNS DOWN OR YOUR DOG RUNS OFF.
 
 PRGNAM=budgie-desktop
-VERSION=${VERSION:-10.2.5}
+VERSION=$(cat $PRGNAM.info | grep "VERSION" | cut -d = -f 2 | sed 's/"//g')
 BUILD=${BUILD:-1}
 TAG=${TAG:-_wls}
 NUMJOBS=${NUMJOBS:--j7}
@@ -41,7 +41,7 @@ CWD=$(pwd)
 WRK=${WRK:-/tmp/wlsbuild}
 PKG=$WRK/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
-DOCS="LICENSE README.md"
+DOCS="LICENSE* README* TODO*"
 
 if [ "$ARCH" = "i586" ]; then
   SLKCFLAGS="-O2 -pipe -march=i586 -mtune=i686"
@@ -58,6 +58,13 @@ else
 fi
 
 set -e
+
+MD5SUM=`cat $PRGNAM.info | grep "MD5SUM=" | cut -d = -f 2 | sed 's/"//g'`
+MD5SRC=`echo "$MD5SUM $(basename $PRGNAM-$VERSION.tar.?z*)" | md5sum -c | tr -d [:blank:] | cut -d : -f 2`
+if [ ! "$MD5SRC" = "OK" ]; then
+  rm -f $PRGNAM-$VERSION.tar.*
+  curl -#OLJ -C - $(cat $PRGNAM.info | grep "DOWNLOAD=" | cut -d = -f 2 | sed 's/"//g')
+fi
 
 rm -rf $PKG
 mkdir -p $WRK $PKG $OUTPUT
@@ -89,7 +96,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --disable-gtk-doc \
   || exit 1
 
-make
+make $NUMJOBS V=1
 make install DESTDIR=$PKG
 
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \

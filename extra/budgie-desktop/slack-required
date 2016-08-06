@@ -1,9 +1,8 @@
 upower (>= 0.99)
 mutter (>= 3.14.0)
-pulseaudio
 gnome-menus (>= 3.10.1)
 gnome-settings-daemon (>=3.14.0)
 libwnck3 (>= 3.4.7)
-libgee (not libgee1!)
+libgee
 libpeas
 vala
