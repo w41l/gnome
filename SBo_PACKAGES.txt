@@ -4,6 +4,9 @@ py3cairo
 krb5
 cracklib
 libpwquality
+libburn
+libisofs
+libisoburn
 avahi
 gssdp
 gupnp
@@ -20,21 +23,12 @@ colord
 colord-gtk
 glade
 gtksourceview3
-libburn
-libisofs
-libisoburn
 libgksu
 gksu
 gob2
-libchewing
 gnome-commmon
 libgee1
 json-glib
-libskk
-ibus-skk
-libsunpinyin
-ibus-sunpinyin
-ibus-unikey
 libnice
 farstream
 telepathy-glib
@@ -45,5 +39,3 @@ webkit2gtk
 yelp-xsl
 yelp-tools
 yelp
-evince
-seahorse

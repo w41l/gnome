@@ -1,11 +1,14 @@
 gnome-terminal
 file-roller
-## libgxps
-## evince
 gedit
 brasero
 eog
 eog-plugins
+epiphany
 gnome-screenshot
 gnome-system-monitor
-## seahorse
+libgxps
+gthumb
+## You can use SBo for these
+#evince
+#seahorse
