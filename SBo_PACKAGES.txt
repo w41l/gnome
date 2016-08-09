@@ -17,8 +17,12 @@ perl-xml-twig
 perl-net-dbus
 libunique3
 libgtop
+libpeas
+libwnck3
+pygobject3-python3
 vala
 vte3
+zenity
 colord
 colord-gtk
 glade
