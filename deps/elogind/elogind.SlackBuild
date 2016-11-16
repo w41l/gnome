@@ -98,7 +98,7 @@ cd $PRGNAM-$VERSION || exit 1
 # Launch elogind when called via DBus and make sure its rundir exists
 # (in Slackware, /run is mounted as a tmpfs):
 sed -i src/login/org.freedesktop.login1.service \
-    -e "s,/bin/false,/bin/bash -c \"[[ ! -d /run/systemd ]] \&\& mkdir /run/systemd;/usr/libexec/elogind/elogind\","
+    -e "s,/bin/false,/usr/libexec/elogind/elogind,"
 
 # Apply Gentoo patches:
 #cat $CWD/patches/elogind-219.12-session.patch | patch -p1 --verbose || exit 1
