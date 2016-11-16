@@ -23,10 +23,11 @@ if [ ! -d /run/systemd ]; then
 fi
 
 # Toplevel directory for runtime user session data:
-if [ ! -d /run/user ]; then
-  mkdir -p /run/user
-  chmod 1777 /run/user
-fi
+# I have to disable this. It's weird but it makes gdm runs :-P
+# if [ ! -d /run/user ]; then
+#   mkdir -p /run/user
+#   chmod 1777 /run/user
+# fi
 
 # Elogind uses cgroups to organize processes like mapping PIDs to sessions.
 #  Elogind's cgroup hierarchy isn't associated with any resource controller
