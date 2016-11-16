@@ -57,56 +57,8 @@ SBo Packages
 
 Some GNOME package need packages from SBo. Some of SBo packages has
 been imported, others still in testing. Maybe you can use ponce SBo git repo to
-get most current packages to satisfy GNOME dependency.
-
-* python3
-* py3cairo
-* krb5
-* cracklib
-* libpwquality
-* avahi
-* gssdp
-* gupnp
-* rarian
-* exempi
-* liboauth
-* perl-xml-twig
-* perl-net-dbus
-* libunique3
-* libgtop
-* vala
-* vte3
-* colord
-* colord-gtk
-* glade
-* gtksourceview3
-* libburn
-* libisofs
-* libisoburn
-* libgksu
-* gksu
-* gob2
-* libchewing
-* gnome-commmon
-* libgee1
-* json-glib
-* libskk
-* ibus-skk
-* libsunpinyin
-* ibus-sunpinyin
-* ibus-unikey
-* libnice
-* farstream
-* telepathy-glib
-* telepathy-farstream
-* cantarell-fonts
-* rest
-* webkit2gtk
-* yelp-xsl
-* yelp-tools
-* yelp
-* evince
-* seahorse
+get most current packages to satisfy GNOME dependency. Please read:
+<a href="SBo_PACKAGES.txt">SBo_PACKAGES.txt</a>
 
 WAYLAND
 =======

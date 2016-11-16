@@ -81,3 +81,5 @@ gksu
 yelp-xsl
 yelp-tools
 yelp
+evince
+seahorse
