@@ -90,12 +90,13 @@ CXXFLAGS="$SLKCFLAGS" \
   --sysconfdir=/etc --docdir=/usr/doc/$PRGNAM-$VERSION \
   --localstatedir=/var --sharedstatedir=/var/lib \
   --disable-static --enable-shared \
+  --disable-schemas-compile \
   --disable-uoa \
   --enable-introspection=yes \
   --enable-ipv6 \
   --enable-smime=yes \
   --with-openldap \
-  --with-krb5=/usr/kerberos \
+  --with-krb5=/usr \
   --disable-gtk-doc \
   || exit 1
 

@@ -1,3 +1,4 @@
+gnome-common
 MarkupSafe
 Mako
 json-glib

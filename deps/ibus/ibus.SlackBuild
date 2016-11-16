@@ -93,9 +93,11 @@ CXXFLAGS="$SLKCFLAGS" \
   --disable-debug \
   --disable-gtk-doc \
   --enable-introspection=yes \
+  --disable-schemas-compile \
+  || exit 1
 
-make $NUMJOBS
-make DESTDIR=$PKG install
+make $NUMJOBS || exit 1
+make DESTDIR=$PKG install || exit 1
 
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
@@ -106,6 +108,7 @@ cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
 /sbin/makepkg -p -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz

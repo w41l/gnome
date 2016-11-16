@@ -91,6 +91,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --sysconfdir=/etc --docdir=/usr/doc/$PRGNAM-$VERSION \
   --localstatedir=/var \
   --disable-static --enable-shared \
+  --disable-schemas-compile \
   --enable-introspection=yes \
   --disable-gtk-doc \
   || exit 1

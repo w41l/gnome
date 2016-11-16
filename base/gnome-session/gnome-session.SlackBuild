@@ -77,6 +77,9 @@ cat $CWD/patches/gnome-session-elogind_configure.ac.patch | patch -p1
 cat $CWD/patches/gnome-session-elogind_gsm-systemd.c.patch | patch -p1
 cat $CWD/patches/gnome-session-elogind_gsm-manager.c.patch | patch -p1
 cat $CWD/patches/gnome-session-elogind_main.c.patch | patch -p1
+
+gnome-autogen.sh
+
 sed 's/systemd/elogind/g' -i configure
 
 chown -R root:root .
@@ -101,9 +104,13 @@ SYSTEMD_LIBS="$(pkg-config --libs libelogind)" \
   --localstatedir=/var \
   --disable-static --enable-shared \
   --disable-docbook-docs \
+  --disable-schemas-compile \
   --enable-session-selector \
   --enable-elogind \
   --enable-consolekit \
+  --enable-compile-warnings=no \
+  --enable-deprecation-flags=yes \
+  --enable-gconf \
   || exit 1
 
 make $NUMJOBS || exit 1

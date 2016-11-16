@@ -96,10 +96,11 @@ CXXFLAGS="$SLKCFLAGS" \
   --disable-upower \
   --disable-schemas-compile \
   --enable-libaccounts-sso \
-  --with-connectivity=nm
+  --with-connectivity=nm \
+  || exit 1
 
 make $NUMJOBS || make || exit 1
-make install DESTDIR=$PKG
+make install DESTDIR=$PKG || exit 1
 
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

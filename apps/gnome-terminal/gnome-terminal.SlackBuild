@@ -90,6 +90,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --localstatedir=/var \
   --disable-static --enable-shared \
   --disable-gtk-doc \
+  --disable-schemas-compile \
   || exit 1
 
 make $NUMJOBS || exit 1

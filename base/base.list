@@ -1,4 +1,3 @@
-gdm
 gnome-online-accounts
 libgdata
 evolution-data-server
@@ -27,3 +26,4 @@ gnome-settings-daemon
 gnome-control-center
 gnome-shell
 gnome-shell-extensions
+gdm

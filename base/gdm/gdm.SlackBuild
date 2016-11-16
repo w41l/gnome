@@ -127,6 +127,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --with-lang-file=/etc/gdm/locale.conf \
   --with-dmconfdir=/usr/share/xsessions \
   --with-dbus-sys=/etc/dbus-1/system.d \
+  --with-dbus-services=/usr/share/dbus-1/services \
   --with-default-pam-config=lfs \
   --without-plymouth \
   || exit 1

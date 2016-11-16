@@ -173,6 +173,9 @@ cat $CWD/profile.d/elogind.sh > $PKG/etc/profile.d/elogind.sh
 cat $CWD/profile.d/elogind.csh > $PKG/etc/profile.d/elogind.csh
 chmod 755 $PKG/etc/profile.d/elogind.*
 
+# Use more permissive login1 policy for workaround on power management control
+cat $CWD/org.freedesktop.login1.policy >$PKG/usr/share/polkit-1/actions/org.freedesktop.login1.policy
+
 # Add a description:
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
