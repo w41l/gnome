@@ -19,22 +19,20 @@ echo -n "Setting up elogind... "
 if [ ! -d /run/systemd ]; then
   mkdir -p /run/systemd
   chmod 0755 /run/systemd
-  ( cd /run; ln -s systemd elogind; )
 fi
 
 # Toplevel directory for runtime user session data:
 # I have to disable this. It's weird but it makes gdm runs :-P
-# if [ ! -d /run/user ]; then
-#   mkdir -p /run/user
-#   chmod 1777 /run/user
-# fi
+if [ ! -d /run/user ]; then
+  mkdir -p /run/user
+  chmod 755 /run/user
+fi
 
 # Elogind uses cgroups to organize processes like mapping PIDs to sessions.
 #  Elogind's cgroup hierarchy isn't associated with any resource controller
 # ("subsystem") so we must create it manually:
 if [ ! -d /sys/fs/cgroup/elogind ]; then
   mkdir -p /sys/fs/cgroup/elogind
-  ( cd /sys/fs/cgroup; ln -s elogind systemd; )
   sleep 1
 fi
 

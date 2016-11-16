@@ -142,13 +142,6 @@ CXXFLAGS="$SLKCFLAGS" \
 make $NUMJOBS || exit 1
 make install DESTDIR=$PKG || exit 1
 
-# Add fake pam_systemd.so
-(
-  cd $PKG/usr/lib${LIBDIRSUFFIX}/security;
-  ln -s pam_elogind.so pam_systemd.so;
-  ln -s pam_elogind.la pam_systemd.la;
-)
-
 # Strip binaries:
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | \
   grep ELF | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
@@ -166,12 +159,6 @@ cp -a \
 mkdir -p $PKG/etc/rc.d
 cat $CWD/rc.elogind > $PKG/etc/rc.d/rc.elogind.new
 chmod +x $PKG/etc/rc.d/rc.elogind.new
-
-# Add elogind profile
-mkdir -p $PKG/etc/profile.d
-cat $CWD/profile.d/elogind.sh > $PKG/etc/profile.d/elogind.sh
-cat $CWD/profile.d/elogind.csh > $PKG/etc/profile.d/elogind.csh
-chmod 755 $PKG/etc/profile.d/elogind.*
 
 # Use more permissive login1 policy for workaround on power management control
 cat $CWD/org.freedesktop.login1.policy >$PKG/usr/share/polkit-1/actions/org.freedesktop.login1.policy

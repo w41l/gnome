@@ -42,25 +42,25 @@ if [ -f $usermodmap ]; then
 fi
 
 # Use ssh-agent if available
-if [ -x /usr/bin/ssh-agent ]; then
-  GNOME_SESSION_SETTINGS="$GNOME_SESSION_SETTINGS /usr/bin/ssh-agent"
-fi;
+# if [ -x /usr/bin/ssh-agent ]; then
+#   GNOME_SESSION_SETTINGS="$GNOME_SESSION_SETTINGS /usr/bin/ssh-agent"
+# fi;
 
 # Use seahorse-agent if available from seahorse-plugins
-if [ -x /usr/bin/seahorse-agent ]; then
-  GNOME_SESSION_SETTINGS="$GNOME_SESSION_SETTINGS /usr/bin/seahorse-agent --execute"
-fi;
+# if [ -x /usr/bin/seahorse-agent ]; then
+#   GNOME_SESSION_SETTINGS="$GNOME_SESSION_SETTINGS /usr/bin/seahorse-agent --execute"
+# fi;
 
-# Use ConsoleKit if available
+# dbus is required
 if [ -x /usr/bin/dbus-launch ]; then
   GNOME_SESSION_SETTINGS="$GNOME_SESSION_SETTINGS /usr/bin/dbus-launch --exit-with-session"
 fi;
 
-# Use ConsoleKit if available
-if [ -z "${XDG_SESSION_COOKIE}" -a -x /usr/bin/ck-launch-session ]; then
-  export DESKTOP_SESSION="gnome-session"
-  CK_SESSION="/usr/bin/ck-launch-session"
-fi;
+# Use ConsoleKit if available. Disable when using elogind
+# if [ -z "${XDG_SESSION_COOKIE}" -a -x /usr/bin/ck-launch-session ]; then
+#  export DESKTOP_SESSION="gnome-session"
+#  CK_SESSION="/usr/bin/ck-launch-session"
+# fi;
 
 # Start the window manager
 exec $CK_SESSION $GNOME_SESSION_SETTINGS gnome-session --session=gnome

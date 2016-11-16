@@ -122,10 +122,6 @@ cat $CWD/xinitrc.gnome | sed -e "s,@LIBDIR@,lib${LIBDIRSUFFIX},g" \
   > $PKG/etc/X11/xinit/xinitrc.gnome &&
 chmod 755 $PKG/etc/X11/xinit/xinitrc.gnome || exit 1
 
-# Until ConsoleKit is removed from Slackware, we still have to use
-# consolekit as session tracker, otherwise we're not able to shutdown/reboot
-cat $CWD/gnome.desktop >$PKG/usr/share/xsessions/gnome.desktop
-
 # Add GNOME XDG profiles
 mkdir -p $PKG/etc/profile.d
 cat $CWD/gnome-session.sh > $PKG/etc/profile.d/gnome-session.sh
