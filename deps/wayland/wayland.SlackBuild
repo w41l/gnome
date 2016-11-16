@@ -25,7 +25,7 @@
 # Modified 2016 by Widya Walesa for gnome3 wlsbuild
 
 PRGNAM=wayland
-VERSION=${VERSION:-1.9.0}
+VERSION=${VERSION:-1.12.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_wls}
 NUMJOBS=${NUMJOBS:" -j7 "}
@@ -74,11 +74,12 @@ case "$ARCH" in
     *)    TARGET=$ARCH-slackware-linux ;;
 esac
 
-MD5SUM=`cat $PRGNAM.info | grep "MD5SUM=" | cut -d = -f 2 | sed 's/"//g'`
-MD5SRC=`echo "$MD5SUM $(basename $PRGNAM-$VERSION.tar.?z*)" | md5sum -c | tr -d [:blank:] | cut -d : -f 2`
-if [ ! "$MD5SRC" = "OK" ]; then
+unset DOWNLOAD
+eval `cat $PRGNAM.info | grep "DOWNLOAD="`
+if [ ! -f `basename $DOWNLOAD` ]; then
+  echo "Downloading: $DOWNLOAD"
   rm -f $PRGNAM-$VERSION.tar.*
-  curl -#OLJ -C - $(cat $PRGNAM.info | grep "DOWNLOAD=" | cut -d = -f 2 | sed 's/"//g')
+  curl -OLJ -C - $DOWNLOAD
 fi
 
 rm -rf $PKG
@@ -108,7 +109,8 @@ CXXFLAGS="$SLKCFLAGS" \
   --docdir=/usr/doc/$PRGNAM-$VERSION \
   --enable-static=no \
   --disable-documentation \
-  --build=$TARGET
+  --build=$TARGET \
+  || exit 1
 
 # Build and install:
 make $NUMJOBS || make || exit 1

@@ -59,8 +59,12 @@ fi
 
 set -e
 
-if [ ! -f $CWD/$PRGNAM-$VERSION.tar.xz ]; then
-  wget $(cat $PRGNAM.info | grep "DOWNLOAD=" | cut -d = -f 2 | sed 's/"//g')
+unset DOWNLOAD
+eval `cat $PRGNAM.info | grep "DOWNLOAD="`
+if [ ! -f `basename $DOWNLOAD` ]; then
+  echo "Downloading: $DOWNLOAD"
+  rm -f $PRGNAM-$VERSION.tar.*
+  curl -OLJ -C - $DOWNLOAD
 fi
 
 rm -rf $PKG
@@ -99,7 +103,7 @@ CXXFLAGS="$SLKCFLAGS" \
   || exit 1
 
 make $NUMJOBS || exit 1
-make install DESTDIR=$PKG
+make install DESTDIR=$PKG || exit 1
 
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

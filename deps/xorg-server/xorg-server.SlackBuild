@@ -29,13 +29,14 @@
 # Modified 2016 by Widya Walesa for gnome3 wlsbuild
 
 PRGNAM=xorg-server
-VERSION=${VERSION:-1.18.4}
+VERSION=$(cat $PRGNAM.info | grep "VERSION" | cut -d = -f 2 | sed 's/"//g')
 BUILD=${BUILD:-1}
 TAG=${TAG:-_wls}
 CWD=$(pwd)
 WRK=${WRK:-/tmp/wlsbuild}
 PKG=$WRK/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
+NUMJOBS=${NUMJOBS:-"-j7"}
 
 if [ -e $CWD/machine.conf ]; then
   . $CWD/machine.conf ]
@@ -46,15 +47,15 @@ else
   MARCH=$( uname -m )
   if [ -z "$ARCH" ]; then
     case "$MARCH" in
-      i?86)    export ARCH=i486 ;;
+      i?86)    export ARCH=i586 ;;
       arm*) readelf /usr/bin/file -A | egrep -q "Tag_CPU.*[4,5]" && ARCH=arm || ARCH=armv7hl ;;
       # Unless $ARCH is already set, use uname -m for all other archs:
       *)       export ARCH=$MARCH ;;
     esac
   fi
   # Set CFLAGS/CXXFLAGS and LIBDIRSUFFIX:
-  if [ "$ARCH" = "i486" ]; then
-    SLKCFLAGS="-O2 -march=i486 -mtune=i686"
+  if [ "$ARCH" = "i586" ]; then
+    SLKCFLAGS="-O2 -march=i586 -mtune=i686"
     LIBDIRSUFFIX=""
   elif [ "$ARCH" = "s390" ]; then
     SLKCFLAGS="-O2"
@@ -79,11 +80,12 @@ case "$ARCH" in
     *)    TARGET=$ARCH-slackware-linux ;;
 esac
 
-MD5SUM=`cat $PRGNAM.info | grep "MD5SUM=" | cut -d = -f 2 | sed 's/"//g'`
-MD5SRC=`echo "$MD5SUM $(basename $PRGNAM-$VERSION.tar.?z*)" | md5sum -c | tr -d [:blank:] | cut -d : -f 2`
-if [ ! "$MD5SRC" = "OK" ]; then
+unset DOWNLOAD
+eval `cat $PRGNAM.info | grep "DOWNLOAD="`
+if [ ! -f `basename $DOWNLOAD` ]; then
+  echo "Downloading: $DOWNLOAD"
   rm -f $PRGNAM-$VERSION.tar.*
-  curl -#OLJ -C - $(cat $PRGNAM.info | grep "DOWNLOAD=" | cut -d = -f 2 | sed 's/"//g')
+  curl -OLJ -C - $DOWNLOAD
 fi
 
 rm -rf $PKG
@@ -141,6 +143,7 @@ CFLAGS="$SLKCFLAGS" \
   --mandir=/usr/man \
   --disable-static \
   --with-pic \
+  --enable-install-setuid \
   --enable-suid-wrapper \
   --with-int10=x86emu \
   --with-default-font-path="${DEF_FONTPATH}" \
@@ -150,7 +153,8 @@ CFLAGS="$SLKCFLAGS" \
   --with-xkb-path=/etc/X11/xkb \
   --with-xkb-output=/var/lib/xkb \
   $BUILD_SERVERS \
-  --build=$TARGET
+  --build=$TARGET \
+  || exit 1
 
 #  --with-dri-driver-path=/usr/lib${LIBDIRSUFFIX}/xorg/modules/dri
 
@@ -161,7 +165,7 @@ if [ "$ARCH" = "x86_64" ]; then
 fi
 
 # Build and install:
-make || exit 1
+make $NUMJOBS || exit 1
 make install DESTDIR=$PKG || exit 1
 
 # Fix suid setting, Makefile gets the order of install and chmod wrong:

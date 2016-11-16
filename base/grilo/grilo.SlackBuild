@@ -51,18 +51,19 @@ else
   LIBDIRSUFFIX=""
 fi
 
-MD5SUM=`cat $PRGNAM.info | grep "MD5SUM=" | cut -d = -f 2 | sed 's/"//g'`
-MD5SRC=`echo "$MD5SUM $(basename $PRGNAM-$VERSION.tar.?z*)" | md5sum -c | tr -d [:blank:] | cut -d : -f 2`
-if [ ! "$MD5SRC" = "OK" ]; then
-  rm -f $PRGNAM-$VERSION.tar.?z*
-  wget $(cat $PRGNAM.info | grep "DOWNLOAD=" | cut -d = -f 2 | sed 's/"//g')
-fi
-
 CWD=$(pwd)
 WRK=${WRK:-/tmp/wlsbuild}
 PKG=$WRK/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 DOCS="AUTHORS COPYING ChangeLog INSTALL NEWS README TODO"
+
+unset DOWNLOAD
+eval `cat $PRGNAM.info | grep "DOWNLOAD="`
+if [ ! -f `basename $DOWNLOAD` ]; then
+  echo "Downloading: $DOWNLOAD"
+  rm -f $PRGNAM-$VERSION.tar.*
+  curl -OLJ -C - $DOWNLOAD
+fi
 
 rm -rf $PKG
 mkdir -p $WRK $PKG $OUTPUT
@@ -93,8 +94,8 @@ CXXFLAGS="$SLKCFLAGS" \
   --disable-gtk-doc \
   || exit 1
 
-make $NUMJOBS
-make DESTDIR=$PKG install
+make $NUMJOBS || exit 1
+make DESTDIR=$PKG install || exit 1
 
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

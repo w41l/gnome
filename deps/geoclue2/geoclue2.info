@@ -5,6 +5,6 @@ DOWNLOAD="http://www.freedesktop.org/software/geoclue/releases/2.4/geoclue-2.4.3
 MD5SUM="86381eeff164a890eb2178ceb5823cfe"
 DOWNLOAD_x86_64=""
 MD5SUM_x86_64=""
-REQUIRES="json-glib"
+REQUIRES="json-glib avahi"
 MAINTAINER="Widya Walesa"
 EMAIL="walecha99@gmail.com"

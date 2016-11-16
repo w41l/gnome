@@ -21,10 +21,10 @@
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 PKGNAM=mesa
-GITVERSION="12.0.1"
-VERSION=12.0.1
+GITVERSION="12.0.3"
+VERSION=12.0.3
 DEMOVERS=8.3.0
-CLANGVERSION=3.9.0
+CLANGVERSION=3.8.0
 BUILD=${BUILD:-1}
 TAG=${TAG:-"_wls"}
 NUMJOBS=${NUMJOBS:--j7}
@@ -56,6 +56,14 @@ elif [ "$ARCH" = "x86_64" ]; then
 else
   SLKCFLAGS="-O2"
   LIBDIRSUFFIX=""
+fi
+
+unset DOWNLOAD
+eval `cat $PRGNAM.info | grep "DOWNLOAD="`
+if [ ! -f `basename $DOWNLOAD` ]; then
+  echo "Downloading: $DOWNLOAD"
+  rm -f $PRGNAM-$VERSION.tar.*
+  curl -OLJ -C - $DOWNLOAD
 fi
 
 rm -rf $PKG
@@ -133,27 +141,28 @@ LLVM_CXXFLAGS="$LLVM_CFLAGS -I/usr/lib$LIBDIRSUFFIX/clang/$CLANGVERSION/include"
   --enable-dri3 \
   --enable-driglx-direct \
   --enable-omx \
-  --enable-opencl --enable-opencl-icd \
   --with-clang-libdir=/usr/lib${LIBDIRSUFFIX} \
   --build=$ARCH-slackware-linux \
   || exit 1
+
+#   --enable-opencl --enable-opencl-icd \
 
 make $NUMJOBS || make || exit 1
 make install DESTDIR=$PKG || exit 1
 
 # Fix libva drivers
-( cd $PKG/usr/lib${LIBDIRSUFFIX}/dri;
-  ln -s gallium_drv_video.la r200_drv_video.la;
-  ln -s gallium_drv_video.so r200_drv_video.so;
-  ln -s gallium_drv_video.la r300_drv_video.la;
-  ln -s gallium_drv_video.so r300_drv_video.so;
-  ln -s gallium_drv_video.la r600_drv_video.la;
-  ln -s gallium_drv_video.so r600_drv_video.so;
-  ln -s gallium_drv_video.la radeon_drv_video.la;
-  ln -s gallium_drv_video.so radeon_drv_video.so;
-  ln -s gallium_drv_video.la radeonsi_drv_video.la;
-  ln -s gallium_drv_video.so radeonsi_drv_video.so;
-)
+# ( cd $PKG/usr/lib${LIBDIRSUFFIX}/dri;
+#   ln -s gallium_drv_video.la r200_drv_video.la;
+#   ln -s gallium_drv_video.so r200_drv_video.so;
+#   ln -s gallium_drv_video.la r300_drv_video.la;
+#   ln -s gallium_drv_video.so r300_drv_video.so;
+#   ln -s gallium_drv_video.la r600_drv_video.la;
+#   ln -s gallium_drv_video.so r600_drv_video.so;
+#   ln -s gallium_drv_video.la radeon_drv_video.la;
+#   ln -s gallium_drv_video.so radeon_drv_video.so;
+#   ln -s gallium_drv_video.la radeonsi_drv_video.la;
+#   ln -s gallium_drv_video.so radeonsi_drv_video.so;
+# )
 
 # Now install the demos
 ( cd $WRK

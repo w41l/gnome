@@ -59,11 +59,12 @@ fi
 
 set -e
 
-MD5SUM=`cat $PRGNAM.info | grep "MD5SUM=" | cut -d = -f 2 | sed 's/"//g'`
-MD5SRC=`echo "$MD5SUM $(basename $PRGNAM-$VERSION.tar.?z*)" | md5sum -c | tr -d [:blank:] | cut -d : -f 2`
-if [ ! "$MD5SRC" = "OK" ]; then
-  rm -f $PRGNAM-$VERSION.tar.?z*
-  wget $(cat $PRGNAM.info | grep "DOWNLOAD=" | cut -d = -f 2 | sed 's/"//g')
+unset DOWNLOAD
+eval `cat $PRGNAM.info | grep "DOWNLOAD="`
+if [ ! -f `basename $DOWNLOAD` ]; then
+  echo "Downloading: $DOWNLOAD"
+  rm -f $PRGNAM-$VERSION.tar.*
+  curl -OLJ -C - $DOWNLOAD
 fi
 
 rm -rf $PKG
@@ -117,7 +118,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --enable-more-warnings=no \
   --enable-console-helper=yes \
   --enable-gdm-xsession \
-  --enable-wayland-support=$WAYLAND_OPT \
+  --enable-wayland-support=yes \
   --enable-systemd-journal=no \
   --with-user=gdm \
   --with-group=gdm \
@@ -130,11 +131,12 @@ CXXFLAGS="$SLKCFLAGS" \
   --without-plymouth \
   || exit 1
 
-make $NUMJOBS V=1
-make install DESTDIR=$PKG
+make $NUMJOBS || exit 1
+make install DESTDIR=$PKG || exit 1
 
 # Fix gdm runtime directory permission
-chown -R gdm:gdm $PKG/var/{cache,lib,run,log}/gdm
+mkdir -p $PKG/var/state/gdm
+chown -R gdm:gdm $PKG/var/{cache,state,lib,run,log}/gdm
 
 # Use our own pam.d
 for P in $CWD/pam.d/*; do
@@ -142,6 +144,7 @@ for P in $CWD/pam.d/*; do
 done
 
 # Preserve old config
+cat $CWD/custom.conf >$PKG/etc/gdm/custom.conf
 mv $PKG/etc/gdm/custom.conf $PKG/etc/gdm/custom.conf.new
 cat $CWD/locale.conf.in > $PKG/etc/gdm/locale.conf.new
 

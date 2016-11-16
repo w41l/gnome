@@ -24,7 +24,7 @@
 # YOUR DATA IS DESTROYED, YOUR HOUSE BURNS DOWN OR YOUR DOG RUNS OFF.
 
 PRGNAM=gnome-settings-daemon
-VERSION=${VERSION:-3.18.1}
+VERSION=$(cat $PRGNAM.info | grep "VERSION" | cut -d = -f 2 | sed 's/"//g')
 BUILD=${BUILD:-1}
 TAG=${TAG:-_wls}
 NUMJOBS=${NUMJOBS:--j7}
@@ -34,12 +34,6 @@ WRK=${WRK:-/tmp/wlsbuild}
 PKG=$WRK/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 DOCS="AUTHORS COPYING COPYING.LIB ChangeLog INSTALL MAINTAINERS NEWS README"
-
-# Build with wayland support or not (highly experimental)
-WAYLAND_SUPPORT=${WAYLAND_SUPPORT:-"no"}
-if [ "$WAYLAND_SUPPORT" = "yes" ]; then
-  WAYLAND_OPT="--enable-wayland=yes"
-fi
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -65,8 +59,12 @@ fi
 
 set -e
 
-if [ ! -e "$PRGNAM-$VERSION.tar.xz" ]; then
-  wget -c http://download.gnome.org/sources/$PRGNAM/$(echo "$VERSION" | cut -d . -f -2)/$PRGNAM-$VERSION.tar.xz
+unset DOWNLOAD
+eval `cat $PRGNAM.info | grep "DOWNLOAD="`
+if [ ! -f `basename $DOWNLOAD` ]; then
+  echo "Downloading: $DOWNLOAD"
+  rm -f $PRGNAM-$VERSION.tar.*
+  curl -OLJ -C - $DOWNLOAD
 fi
 
 rm -rf $PKG
@@ -98,7 +96,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --disable-schemas-compile \
   --disable-rfkill \
   --disable-gtk-doc \
-  $WAYLAND_OPT \
+  --enable-wayland=yes \
   || exit 1
 
 make $NUMJOBS || exit 1

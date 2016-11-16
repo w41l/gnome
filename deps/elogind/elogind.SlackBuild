@@ -32,6 +32,11 @@ CWD=$(pwd)
 WRK=${WRK:-/tmp/wlsbuild}
 PKG=$WRK/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
+NUMJOBS=${NUMJOBS:-"-j7"}
+
+# We use PAM by default on GNOME:
+USE_PAM=${USE_PAM:-"YES"}
+[ "$USE_PAM" = "NO" -o "$USE_PAM" = "no" ] && DO_PAM="dis" || DO_PAM="en"
 
 if [ -e $CWD/machine.conf ]; then
   . $CWD/machine.conf ]
@@ -42,15 +47,15 @@ else
   MARCH=$( uname -m )
   if [ -z "$ARCH" ]; then
     case "$MARCH" in
-      i?86)    export ARCH=i486 ;;
+      i?86)    export ARCH=i586 ;;
       arm*) readelf /usr/bin/file -A | egrep -q "Tag_CPU.*[4,5]" && ARCH=arm || ARCH=armv7hl ;;
       # Unless $ARCH is already set, use uname -m for all other archs:
       *)       export ARCH=$MARCH ;;
     esac
   fi
   # Set CFLAGS/CXXFLAGS and LIBDIRSUFFIX:
-  if [ "$ARCH" = "i486" ]; then
-    SLKCFLAGS="-O2 -march=i486 -mtune=i686"
+  if [ "$ARCH" = "i586" ]; then
+    SLKCFLAGS="-O2 -march=i586 -mtune=i686"
     LIBDIRSUFFIX=""
   elif [ "$ARCH" = "s390" ]; then
     SLKCFLAGS="-O2"
@@ -75,11 +80,19 @@ case "$ARCH" in
     *)    TARGET=$ARCH-slackware-linux ;;
 esac
 
+unset DOWNLOAD
+eval `cat $PRGNAM.info | grep "DOWNLOAD="`
+if [ ! -f `basename $DOWNLOAD` ]; then
+  echo "Downloading: $DOWNLOAD"
+  rm -f $PRGNAM-$VERSION.tar.*
+  curl -OLJ -C - $DOWNLOAD
+fi
+
 rm -rf $PKG
 mkdir -p $WRK $PKG
 cd $WRK
 rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.gz || exit 1
+tar xvf $CWD/$PRGNAM-$VERSION.tar.xz || exit 1
 cd $PRGNAM-$VERSION || exit 1
 
 # Launch elogind when called via DBus and make sure its rundir exists
@@ -120,13 +133,21 @@ CXXFLAGS="$SLKCFLAGS" \
   --disable-apparmor \
   --disable-smack \
   --disable-tests \
-  --enable-pam \
+  --${DO_PAM}able-pam \
   --enable-split-usr \
-  --build=$TARGET
+  --build=$TARGET \
+  || exit 1
 
 # Build and install:
-make V=1 || exit 1
+make $NUMJOBS || exit 1
 make install DESTDIR=$PKG || exit 1
+
+# Add fake pam_systemd.so
+(
+  cd $PKG/usr/lib${LIBDIRSUFFIX}/security;
+  ln -s pam_elogind.so pam_systemd.so;
+  ln -s pam_elogind.la pam_systemd.la;
+)
 
 # Strip binaries:
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | \
@@ -141,10 +162,24 @@ cp -a \
   CODING_STYLE LICENSE* NEWS README TODO \
   $PKG/usr/doc/$PRGNAM-$VERSION
 
+# Add rc.elogind
+mkdir -p $PKG/etc/rc.d
+cat $CWD/rc.elogind > $PKG/etc/rc.d/rc.elogind.new
+chmod +x $PKG/etc/rc.d/rc.elogind.new
+
+# Add elogind profile
+mkdir -p $PKG/etc/profile.d
+cat $CWD/profile.d/elogind.sh > $PKG/etc/profile.d/elogind.sh
+cat $CWD/profile.d/elogind.csh > $PKG/etc/profile.d/elogind.csh
+chmod 755 $PKG/etc/profile.d/elogind.*
+
 # Add a description:
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
 cat $CWD/doinst.sh > $PKG/install/doinst.sh
+if [ "$USE_PAM" == "YES" ]; then
+  cat $CWD/doinst_pam_entry.sh >> $PKG/install/doinst.sh
+fi
 
 # Create the package:
 cd $PKG
@@ -152,5 +187,3 @@ cd $PKG
 
 echo "Cleaning up build directory"
 cd $WRK; rm -rf $PRGNAM-$VERSION $PKG
-
-

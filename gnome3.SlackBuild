@@ -31,28 +31,62 @@ GNOMEROOT=$(pwd)
 #UPGRADE_PACKAGES="always"
 UPGRADE_PACKAGES=${UPGRADE_PACKAGES:-"yes"}
 
-_build() {
+_failed()
+{
+  echo "ERROR: $PRGNAM-$VERSION" | tee -a $WRK/$PRGNAM.failed
+  exit 1
+}
+
+_check_md5sum()
+{
+  eval `cat $PRGNAM.info | grep "MD5SUM="`
+  MD5SRC=`echo "$MD5SUM $PRGSRC" | md5sum -c | awk '{print $2}'`
+  if [ ! "$MD5SRC" = "OK" ]; then
+    echo "ERROR: checksum mismatch for tarball $PRGSRC";
+    _failed;
+  fi
+}
+
+_download_src()
+{
+  echo "Downloading: `basename $DOWNLOAD`"
+  SIZE=`curl -sI "$DOWNLOAD" | grep 'Content-Length' | awk '{ print $2 }'`
+  echo "Size: $SIZE"
+  rm -f $PRGSRC
+  curl -#OLJ -C - "$DOWNLOAD" || _failed
+}
+
+_build()
+{
   set -e
   # Clearing environment
-  unset ARCH VERSION BUILD TAG;
+  unset ARCH VERSION BUILD TAG DOWNLOAD MD5SUM MD5SRC;
   # Create package build state
   mkdir -p $WRK $OUTPUT;
   rm -f $WRK/${PRGNAM}.failed;
-  touch $WRK/${PRGNAM}.failed;
   # Build the package
   cd $GNOMEROOT/$MODULES/$PRGNAM;
-  . ./${PRGNAM}.SlackBuild;
-  # Delete package build state
-  rm -f $WRK/${PRGNAM}.failed;
+  eval `cat $PRGNAM.info | grep "DOWNLOAD="`
+  PRGSRC=`basename $DOWNLOAD`
+  if [ ! -f $PRGSRC ]; then
+    _download_src;
+  else
+    _check_md5sum;  
+  fi
+  . ./${PRGNAM}.SlackBuild || _failed;
 }
 
 _install() {
-  # Installing the package
-  if [ "$UPGRADE_PACKAGES" = "yes" ]; then
-    upgradepkg --install-new $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz || exit 1
-  elif [ "$UPGRADE_PACKAGES" = "always" ]; then
-    upgradepkg --install-new --reinstall $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz || exit 1
-  fi;
+  if [ -f $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz ]; then
+    # Installing the package
+    if [ "$UPGRADE_PACKAGES" = "yes" ]; then
+      upgradepkg --install-new $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz || _failed
+    elif [ "$UPGRADE_PACKAGES" = "always" ]; then
+      upgradepkg --install-new --reinstall $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz || _failed
+    else
+      echo "PACKAGE: $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz"
+    fi;
+  fi
 }
 
 _postbuild() {
@@ -110,4 +144,4 @@ else
 fi
 
 # Clearing environment
-unset WRK OUTPUT GNOMEROOT UPGRADE_PACKAGES MODULES PRGNAM ARCH VERSION BUILD TAG
+unset WRK OUTPUT GNOMEROOT UPGRADE_PACKAGES MODULES PRGNAM ARCH VERSION BUILD TAG MD5SUM DOWNLOAD

@@ -1,9 +1,11 @@
 pam
 pam_unix2
 elogind
+libomxil-bellagio
 wayland
-xorg-server
+wayland-protocols
 mesa
+xorg-server
 upower
 libwacom
 libinput
