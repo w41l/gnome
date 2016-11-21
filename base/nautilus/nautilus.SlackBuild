@@ -94,6 +94,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --disable-debug \
   --disable-tracker \
   --enable-introspection=yes \
+  --enable-selinux=no \
   || exit 1
 
 make $NUMJOBS || exit 1
