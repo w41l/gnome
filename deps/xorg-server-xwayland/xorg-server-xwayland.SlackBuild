@@ -28,7 +28,7 @@
 #
 # Modified 2016 by Widya Walesa for gnome3 wlsbuild
 
-PRGNAM=xorg-server
+PRGNAM=xorg-server-xwayland
 VERSION=$(cat $PRGNAM.info | grep "VERSION" | cut -d = -f 2 | sed 's/"//g')
 BUILD=${BUILD:-1}
 TAG=${TAG:-_wls}
@@ -80,20 +80,21 @@ case "$ARCH" in
     *)    TARGET=$ARCH-slackware-linux ;;
 esac
 
+SRCNAM="xorg-server"
 unset DOWNLOAD
 eval `cat $PRGNAM.info | grep "DOWNLOAD="`
 if [ ! -f `basename $DOWNLOAD` ]; then
   echo "Downloading: $DOWNLOAD"
-  rm -f $PRGNAM-$VERSION.tar.*
+  rm -f $SRCNAM-$VERSION.tar.*
   curl -OLJ -C - $DOWNLOAD
 fi
 
 rm -rf $PKG
 mkdir -p $WRK $PKG
 cd $WRK
-rm -rf $PRGNAM-$VERSION
-tar xvf $CWD/$PRGNAM-$VERSION.tar.?z* || exit 1
-cd $PRGNAM-$VERSION || exit 1
+rm -rf $SRCNAM-$VERSION
+tar xvf $CWD/$SRCNAM-$VERSION.tar.?z* || exit 1
+cd $SRCNAM-$VERSION || exit 1
 
 # Apply patches:
 cat $CWD/patches/x11.startwithblackscreen.diff | patch -p1 --verbose || exit 1
@@ -166,74 +167,9 @@ fi
 
 # Build and install:
 make $NUMJOBS || exit 1
-make install DESTDIR=$PKG || exit 1
 
-# Fix suid setting, Makefile gets the order of install and chmod wrong:
-chmod u+s $PKG/usr/libexec/Xorg.wrap
-
-# Create the configuration directories for xorg-server 1.9.x
-mkdir -p $PKG/etc/X11/xorg.conf.d $PKG/usr/share/X11/xorg.conf.d
-
-# Create a sample keyboard layout 
-# Enable zapping by default
-cat << EOF > $PKG/usr/share/X11/xorg.conf.d/90-keyboard-layout.conf
-Section "InputClass"
-	Identifier "keyboard-all"
-	MatchIsKeyboard "on"
-	MatchDevicePath "/dev/input/event*"
-	Driver "evdev"
-	Option "XkbLayout" "us"
-	#Option "XkbVariant" ""
-	Option "XkbOptions" "terminate:ctrl_alt_bksp"
-EndSection
-
-# READ THIS FOR CUSTOM KEYBOARD INFORMATION
-#
-#  If you want to add a custom model/layout/variant to X, you will need to COPY
-#  this file to /etc/X11/xorg.conf.d/ and edit that copy.  After editing it to
-#  suit, you will need to restart X.
-#
-#  Here's an example of the lines from above:
-#
-# Section "InputClass"
-#	Identifier "keyboard-all"
-#	MatchIsKeyboard "on"
-#	MatchDevicePath "/dev/input/event*"
-#	Driver "evdev"
-#	Option "XkbLayout" "us"
-#	Option "XkbVariant" "intl"
-#	Option "XkbOptions" "compose:rwin,terminate:ctrl_alt_bksp"
-# EndSection
-#
-#  Many desktop environments, including KDE and Xfce, have their own methods to
-#  configure keyboard layouts and such if you'd like to use them.
-#
-#  If you prefer to use the "old" way of configuring keyboards (without input 
-#  device hotplugging), then you'll need to add the following lines to the 
-#  ServerFlags section of /etc/X11/xorg.conf:
-#    Option   "AllowEmptyInput"     "false"
-#    Option   "AutoAddDevices"      "false"
-#    Option   "AutoEnableDevices"   "false"
-#  Alternatively, you can break this up into separate "stubs" in the xorg.conf.d/
-#  directory, but that's your call.  Assuming you elect to keep a monolithic 
-#  /etc/X11/xorg.conf file, you can now edit the Keyboard section as usual.
-
-EOF
-
-# Don't mess with my /var/log/ permissions:
-rmdir $PKG/var/log 2>/dev/null
-rmdir $PKG/var 2>/dev/null
-
-# While I hate to have X11 take over another generic-sounding
-# piece of prime filesystem real estate, this symlink will
-# direct (for now) proprietary X drivers into the corrent
-# location:
-
-( cd $PKG/usr/lib${LIBDIRSUFFIX}
-  rm -rf modules
-  ln -sf xorg/modules .
-)
-
+mkdir -p $PKG/usr/bin
+install -m0755 
 # Strip binaries:
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | \
   grep ELF | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
@@ -268,4 +204,4 @@ cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz
 
 echo "Cleaning up build directory"
-cd $WRK; rm -rf $PRGNAM-$VERSION $PKG
+cd $WRK; rm -rf $SRCNAM-$VERSION $PKG

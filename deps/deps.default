@@ -1,10 +1,10 @@
 pam
 elogind
-##libomxil-bellagio
-##wayland
-##wayland-protocols
-##mesa
-##xorg-server
+libomxil-bellagio
+wayland
+wayland-protocols
+mesa
+xorg-server-xwayland
 upower
 zenity
 json-glib
