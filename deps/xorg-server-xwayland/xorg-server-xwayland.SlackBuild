@@ -168,9 +168,10 @@ fi
 
 # Build and install:
 make $NUMJOBS || exit 1
+cd ./hw/xwayland
+make install DESTDIR=$PKG || exit 1
+cd ../..
 
-mkdir -p $PKG/usr/bin
-install -m0755 
 # Strip binaries:
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | \
   grep ELF | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
