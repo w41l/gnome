@@ -13,7 +13,6 @@ avahi
 libgusb
 colord
 colord-gtk
-libwacom
 mozjs
 uhttpmock
 geoclue2
