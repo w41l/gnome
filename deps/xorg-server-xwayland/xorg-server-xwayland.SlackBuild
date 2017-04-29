@@ -1,5 +1,6 @@
 #!/bin/sh
 # Copyright 2007-2016  Patrick J. Volkerding, Sebeka, MN, USA
+# Copyright 2017       Widya Walesa, Malang, JATIM, ID
 # All rights reserved.
 #
 #   Permission to use, copy, modify, and distribute this software for
@@ -93,7 +94,7 @@ rm -rf $PKG
 mkdir -p $WRK $PKG
 cd $WRK
 rm -rf $SRCNAM-$VERSION
-tar xvf $CWD/$SRCNAM-$VERSION.tar.?z* || exit 1
+tar xvf $CWD/$SRCNAM-$VERSION.tar.bz2 || exit 1
 cd $SRCNAM-$VERSION || exit 1
 
 # Apply patches:
