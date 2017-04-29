@@ -1,0 +1,29 @@
+gnome-online-accounts
+libgdata
+evolution-data-server
+gnome-desktop
+nautilus
+nautilus-sendto
+gnome-bluetooth
+gnome-color-manager
+gnome-tweak-tool
+gnome-backgrounds
+gnome-power-manager
+gnome-icon-theme-symbolic
+totem-pl-parser
+grilo
+gnome-video-effects
+cheese
+gnome-session
+mutter
+mousetweaks
+## PackageKit
+## gnome-packagekit
+caribou
+orca
+## yelp
+gnome-settings-daemon
+gnome-control-center
+gnome-shell
+gnome-shell-extensions
+gdm

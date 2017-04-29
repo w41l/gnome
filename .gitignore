@@ -21,3 +21,4 @@
 *.exe
 testing/*
 cracklib-words-*
+*.list
