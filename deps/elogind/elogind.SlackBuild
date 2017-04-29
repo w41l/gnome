@@ -103,10 +103,10 @@ sed -i src/login/org.freedesktop.login1.service \
 
 # Apply Gentoo patches:
 #cat $CWD/patches/elogind-219.12-session.patch | patch -p1 --verbose || exit 1
-cat $CWD/patches/elogind-lrt.patch | patch -p1 --verbose || exit 1
-cat $CWD/patches/elogind-docs.patch | patch -p1 --verbose || exit 1
+# cat $CWD/patches/elogind-lrt.patch | patch -p1 --verbose || exit 1
+# cat $CWD/patches/elogind-docs.patch | patch -p1 --verbose || exit 1
 # Merge a pull request for an upstream fix:
-cat $CWD/patches/elogind-polkit.patch | patch -p1 --verbose || exit 1
+# cat $CWD/patches/elogind-polkit.patch | patch -p1 --verbose || exit 1
 
 # Make sure ownerships and permissions are sane:
 chown -R root:root .
