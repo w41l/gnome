@@ -83,7 +83,7 @@ esac
 
 unset DOWNLOAD
 eval `cat $PRGNAM.info | grep "DOWNLOAD="`
-if [ ! -f `basename $DOWNLOAD` ]; then
+if [ ! -f $PRGNAM-$VERSION.tar.gz ]; then
   echo "Downloading: $DOWNLOAD"
   rm -f $PRGNAM-$VERSION.tar.*
   curl -OLJ -C - $DOWNLOAD
