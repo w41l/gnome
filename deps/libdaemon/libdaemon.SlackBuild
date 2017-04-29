@@ -25,7 +25,7 @@
 # Maintained by David Spencer <baildon.research@googlemail.com>
 
 PRGNAM=libdaemon
-VERSION=${VERSION:-0.14}
+VERSION=$(cat $PRGNAM.info | grep "VERSION" | cut -d = -f 2 | sed 's/"//g')
 BUILD=${BUILD:-1}
 TAG=${TAG:-_wls}
 
