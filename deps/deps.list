@@ -1,17 +1,13 @@
 pam
-pam_unix2
 elogind
-libomxil-bellagio
-wayland
-wayland-protocols
-mesa
-xorg-server
-upower
+##libomxil-bellagio
+##wayland
+##wayland-protocols
+##mesa
+##xorg-server
+##upower
 libwacom
-libinput
-## gupnp
 mozjs
-## PackageKit
 uhttpmock
 geoclue2
 geocode-glib

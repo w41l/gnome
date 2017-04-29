@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Copyright 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2014, 2015  Patrick J. Volkerding, Sebeka, MN, USA
+# Copyright 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2014, 2015, 2016  Patrick J. Volkerding, Sebeka, MN, USA
 # All rights reserved.
 #
 # Redistribution and use of this script, with or without modification, is
@@ -21,18 +21,17 @@
 #  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 PKGNAM=mesa
-GITVERSION="12.0.3"
-VERSION=12.0.3
-DEMOVERS=8.3.0
-CLANGVERSION=3.8.0
+VERSION=${VERSION:-17.0.4}
+DEMOVERS=${DEMOVERS:-8.3.0}
 BUILD=${BUILD:-1}
 TAG=${TAG:-"_wls"}
+
 NUMJOBS=${NUMJOBS:--j7}
 
 # Be sure this list is up-to-date:
 DRI_DRIVERS="i915,i965,nouveau,r200,radeon,swrast"
-GALLIUM_DRIVERS="nouveau,r300,r600,svga,radeonsi,swrast,i915,ilo"
-EGL_PLATFORMS="drm,x11,wayland"
+GALLIUM_DRIVERS="nouveau,r300,r600,svga,radeonsi,swrast,virgl"
+EGL_PLATFORMS="drm,x11"
 
 if [ -z "$ARCH" ]; then
   case "$( uname -m )" in
@@ -48,34 +47,26 @@ PKG=$WRK/package-mesa
 OUTPUT=${OUTPUT:-/tmp}
 
 if [ "$ARCH" = "i586" ]; then
-  SLKCFLAGS="-O2 -march=i586 -mtune=i686 -pipe"
+  SLKCFLAGS="-O2 -march=i586 -mtune=i686"
   LIBDIRSUFFIX=""
 elif [ "$ARCH" = "x86_64" ]; then
-  SLKCFLAGS="-O2 -fPIC -pipe"
+  SLKCFLAGS="-O2 -fPIC"
   LIBDIRSUFFIX="64"
 else
   SLKCFLAGS="-O2"
   LIBDIRSUFFIX=""
 fi
 
-unset DOWNLOAD
-eval `cat $PRGNAM.info | grep "DOWNLOAD="`
-if [ ! -f `basename $DOWNLOAD` ]; then
-  echo "Downloading: $DOWNLOAD"
-  rm -f $PRGNAM-$VERSION.tar.*
-  curl -OLJ -C - $DOWNLOAD
-fi
-
 rm -rf $PKG
 mkdir -p $WRK $PKG
 cd $WRK
-rm -rf ${PKGNAM}-${GITVERSION}* ${PKGNAM}-demos-${DEMOVERS}
+rm -rf ${PKGNAM}-${VERSION}
 
-tar xvf $CWD/${PKGNAM}-${GITVERSION}.tar.?z* || exit 1
-cd ${PKGNAM}-${GITVERSION}*
+tar xvf $CWD/${PKGNAM}-${VERSION}.tar.xz || exit 1
+cd ${PKGNAM}-$VERSION
 
 # Let's kill the warning about operating on a dangling symlink:
-# rm -f src/gallium/state_trackers/d3d1x/w32api
+rm -f src/gallium/state_trackers/d3d1x/w32api
 
 # Make sure ownerships and permissions are sane:
 chown -R root:root .
@@ -87,8 +78,8 @@ find . \
 
 # Apply patches from git (and maybe elsewhere):
 # Patches obtained by:
-#   git checkout origin/10.6
-#   git format-patch e3e2a3e0e581da39dcd9268951edb52f68916940 # 10.6.6 release
+#   git checkout origin/13.0
+#   git format-patch 6bfc352f5a35ab21f012d6d501821ffbf767aab3 # 13.0.4 release
 if /bin/ls $CWD/patches/*.patch 1> /dev/null 2> /dev/null ; then
   for patch in $CWD/patches/*.patch ; do
     patch -p1 < $patch || exit 1 ;
@@ -97,10 +88,10 @@ fi
 
 # Don't worry if Mako is not present:
 #sed -i "s,AX_CHECK_PYTHON_MAKO_MODULE(\$PYTHON_MAKO_REQUIRED),,g" configure.ac
-# zcat $CWD/mesa.no.mako.diff.gz | patch -p1 --verbose || exit 1
+zcat $CWD/mesa.no.mako.diff.gz | patch -p1 --verbose || exit 1
 
 # This doesn't fully do the trick.  See below.  ;-)
-# ./autogen.sh
+#./autogen.sh
 
 # Fix detection of libLLVM when built with CMake
 sed -i 's/LLVM_SO_NAME=.*/LLVM_SO_NAME=LLVM/' configure.ac
@@ -108,11 +99,7 @@ sed -i 's/LLVM_SO_NAME=.*/LLVM_SO_NAME=LLVM/' configure.ac
 # Seems to need this to avoid tripping over a different libtool version:
 autoreconf -fi
 
-LDFLAGS="-L/lib${LIBDIRSUFFIX} -L/usr/lib${LIBDIRSUFFIX} -L/usr/local/lib${LIBDIRSUFFIX}" \
 CFLAGS="$SLKCFLAGS" \
-CXXFLAGS="$SLKCFLAGS" \
-LLVM_CFLAGS="$LLVM_CFLAGS -I/usr/lib$LIBDIRSUFFIX/clang/$CLANGVERSION/include" \
-LLVM_CXXFLAGS="$LLVM_CFLAGS -I/usr/lib$LIBDIRSUFFIX/clang/$CLANGVERSION/include" \
 ./configure \
   --prefix=/usr \
   --sysconfdir=/etc \
@@ -132,37 +119,22 @@ LLVM_CXXFLAGS="$LLVM_CFLAGS -I/usr/lib$LIBDIRSUFFIX/clang/$CLANGVERSION/include"
   --enable-nine \
   --enable-osmesa \
   --enable-dri \
+  --enable-dri3 \
   --enable-gbm \
   --enable-glx \
   --enable-glx-tls \
   --enable-gles1 \
   --enable-gles2 \
   --enable-vdpau \
-  --enable-dri3 \
-  --enable-driglx-direct \
-  --enable-omx \
-  --with-clang-libdir=/usr/lib${LIBDIRSUFFIX} \
-  --build=$ARCH-slackware-linux \
-  || exit 1
+  --enable-opencl \
+  --enable-opencl-icd \
+  --build=$ARCH-slackware-linux || exit 1
 
-#   --enable-opencl --enable-opencl-icd \
+# This is autodetected anyway:
+#  --enable-va \
 
 make $NUMJOBS || make || exit 1
 make install DESTDIR=$PKG || exit 1
-
-# Fix libva drivers
-# ( cd $PKG/usr/lib${LIBDIRSUFFIX}/dri;
-#   ln -s gallium_drv_video.la r200_drv_video.la;
-#   ln -s gallium_drv_video.so r200_drv_video.so;
-#   ln -s gallium_drv_video.la r300_drv_video.la;
-#   ln -s gallium_drv_video.so r300_drv_video.so;
-#   ln -s gallium_drv_video.la r600_drv_video.la;
-#   ln -s gallium_drv_video.so r600_drv_video.so;
-#   ln -s gallium_drv_video.la radeon_drv_video.la;
-#   ln -s gallium_drv_video.so radeon_drv_video.so;
-#   ln -s gallium_drv_video.la radeonsi_drv_video.la;
-#   ln -s gallium_drv_video.so radeonsi_drv_video.so;
-# )
 
 # Now install the demos
 ( cd $WRK
@@ -205,12 +177,12 @@ if [ -d $PKG/usr/info ]; then
   gzip -9 $PKG/usr/info/*
 fi
 
-mkdir -p $PKG/usr/doc/Mesa-$VERSION/html
+mkdir -p $PKG/usr/doc/$PKGNAM-$VERSION/html
 cp -a \
   docs/COPYING* docs/relnotes/relnotes-${VERSION}*.html docs/README* docs/GL* \
-  $PKG/usr/doc/Mesa-$VERSION
-cp -a docs/*.html $PKG/usr/doc/Mesa-$VERSION/html
-rm -f $PKG/usr/doc/Mesa-$VERSION/html/relnotes*.html
+  $PKG/usr/doc/$PKGNAM-$VERSION
+cp -a docs/*.html $PKG/usr/doc/$PKGNAM-$VERSION/html
+rm -f $PKG/usr/doc/$PKGNAM-$VERSION/html/relnotes*.html
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
@@ -219,4 +191,5 @@ cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/${PKGNAM}-$VERSION-$ARCH-${BUILD}${TAG}.txz
 
 echo "Cleaning up build directory"
-cd $WRK; rm -rf $PKG $PKGNAM-${GITVERSION}* $PKGNAM-demos-$DEMOVERS
+cd $WRK; rm -rf $PRGNAM* $PKG
+
