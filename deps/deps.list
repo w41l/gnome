@@ -10,6 +10,9 @@ zenity
 json-glib
 libdaemon
 avahi
+libgusb
+colord
+colord-gtk
 libwacom
 mozjs
 uhttpmock

@@ -58,6 +58,14 @@ fi
 
 set -e
 
+unset DOWNLOAD
+eval `cat $PRGNAM.info | grep "DOWNLOAD="`
+if [ ! -f `basename $DOWNLOAD` ]; then
+  echo "Downloading: $DOWNLOAD"
+  rm -f $PRGNAM-$VERSION.tar.*
+  curl -OLJ -C - $DOWNLOAD
+fi
+
 rm -rf $PKG
 mkdir -p $WRK $PKG $OUTPUT
 cd $WRK
