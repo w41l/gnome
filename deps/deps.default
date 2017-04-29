@@ -25,9 +25,9 @@ clutter-gtk
 clutter-gst
 gjs
 libchamplain
-liboobs
 perl-net-dbus
 system-tools-backends
+liboobs
 liboobs
 libaccounts-glib
 telepathy-mission-control
