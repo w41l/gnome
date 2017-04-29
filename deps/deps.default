@@ -5,7 +5,7 @@ elogind
 ##wayland-protocols
 ##mesa
 ##xorg-server
-##upower
+upower
 zenity
 json-glib
 libdaemon
