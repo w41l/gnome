@@ -6,6 +6,10 @@ elogind
 ##mesa
 ##xorg-server
 ##upower
+zenity
+json-glib
+libdaemon
+avahi
 libwacom
 mozjs
 uhttpmock
@@ -18,6 +22,8 @@ clutter-gtk
 clutter-gst
 gjs
 libchamplain
+liboobs
+perl-net-dbus
 system-tools-backends
 liboobs
 libaccounts-glib
