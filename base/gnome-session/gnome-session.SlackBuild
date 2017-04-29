@@ -73,10 +73,10 @@ tar xvf $CWD/$PRGNAM-$VERSION.tar.?z*
 cd $PRGNAM-$VERSION
 
 # Replace systemd with elogind
-cat $CWD/patches/gnome-session-elogind_configure.ac.patch | patch -p1
-cat $CWD/patches/gnome-session-elogind_gsm-systemd.c.patch | patch -p1
-cat $CWD/patches/gnome-session-elogind_gsm-manager.c.patch | patch -p1
-cat $CWD/patches/gnome-session-elogind_main.c.patch | patch -p1
+for P in $CWD/patches/*.patch; do
+    cat $P | patch -p1 --verbose
+    sleep 1
+done
 
 gnome-autogen.sh
 
