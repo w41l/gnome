@@ -3,10 +3,9 @@ elogind
 libomxil-bellagio
 wayland
 wayland-protocols
-mesa
-xorg-server-xwayland
+##mesa
+##xorg-server-xwayland
 upower
-zenity
 mozjs
 uhttpmock
 geoclue2
@@ -26,5 +25,4 @@ telepathy-mission-control
 telepathy-logger
 accountsservice
 ibus
-gnome-autoar
 pygobject3-python3

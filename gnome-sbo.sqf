@@ -1,4 +1,5 @@
 gnome-common
+zenity
 MarkupSafe
 Mako
 json-glib
@@ -56,7 +57,6 @@ libmpeg2
 libdvdcss
 texi2html
 libavc1394
-speex
 gst-plugins-ugly
 gst-plugins-bad
 libxkbcommon

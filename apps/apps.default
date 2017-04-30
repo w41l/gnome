@@ -1,13 +1,14 @@
 gnome-terminal
 file-roller
 gedit
-brasero
 eog
 eog-plugins
 epiphany
 gnome-screenshot
 gnome-system-monitor
 libgxps
+totem-pl-parser
+brasero
 gthumb
 ## You can use SBo for these
 #evince
