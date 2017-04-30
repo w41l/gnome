@@ -67,7 +67,12 @@ _build()
   # Build the package
   cd $GNOMEROOT/$MODULES/$PRGNAM;
   eval `cat $PRGNAM.info | grep "DOWNLOAD="`
-  PRGSRC=`basename $DOWNLOAD`
+  eval `cat $PRGNAM.SlackBuild | grep 'SRCNAM='`
+  if [ -n "$SRCNAM" ]; then
+    PRGSRC="$SRCNAM"
+  else
+    PRGSRC=$(basename $DOWNLOAD)
+  fi
   if [ ! -f $PRGSRC ]; then
     _download_src;
   else
@@ -104,44 +109,38 @@ if [ ! -z "$1" ]; then
   for MODULES in `cat /tmp/GNOME_MODULES.txt`; do
     if [ ! -z "$2" ]; then
       echo "$2" | sed 's/:/ /g' > /tmp/GNOME_PACKAGES.txt
-      for PRGNAM in `cat /tmp/GNOME_PACKAGES.txt`; do
-        echo "Building: $MODULES/$PRGNAM";
-        _build;
-        _install;
-        _postbuild;
-      done
-      rm -f /tmp/GNOME_PACKAGES.txt
-    else
-      for PRGNAM in `cat $GNOMEROOT/$MODULES/$MODULES.list | sed '/#/d'`; do
-        echo "Building: $MODULES/$PRGNAM";
-        _build;
-        _install;
-        _postbuild;
-      done
+    elif [ -z "$2" ] && [ -e $GNOMEROOT/$MODULES/$MODULES.list ]; then
+      cat $GNOMEROOT/$MODULES/$MODULES.list | sed '/#/d' >/tmp/GNOME_PACKAGES.txt
+    elif [ -z "$2" ] && [ ! -e $GNOMEROOT/$MODULES/$MODULES.list ]; then
+      cat $GNOMEROOT/$MODULES/$MODULES.default | sed '/#/d' >/tmp/GNOME_PACKAGES.txt
     fi
+    for PRGNAM in `cat /tmp/GNOME_PACKAGES.txt`; do
+      echo "Building: $MODULES/$PRGNAM";
+      _build;
+      _install;
+      _postbuild;
+    done
+    rm -f /tmp/GNOME_PACKAGES.txt
   done
   rm -f /tmp/GNOME_MODULES.txt
 else
   for MODULES in deps base flashback apps; do
     if [ ! -z "$2" ]; then
       echo "$2" | sed 's/:/ /g' > /tmp/GNOME_PACKAGES.txt
-      for PRGNAM in `cat /tmp/GNOME_PACKAGES.txt`; do
-        echo "Building: $MODULES/$PRGNAM";
-        _build;
-        _install;
-        _postbuild;
-      done
-      rm -f /tmp/GNOME_PACKAGES.txt
-    else
-      for PRGNAM in `cat $GNOMEROOT/$MODULES/$MODULES.list | sed '/#/d'`; do
-        echo "Building: $MODULES/$PRGNAM";
-        _build;
-        _install;
-        _postbuild;
-      done
+    elif [ -z "$2" ] && [ -e $GNOMEROOT/$MODULES/$MODULES.list ]; then
+      cat $GNOMEROOT/$MODULES/$MODULES.list | sed '/#/d' >/tmp/GNOME_PACKAGES.txt
+    elif [ -z "$2" ] && [ ! -e $GNOMEROOT/$MODULES/$MODULES.list ]; then
+      cat $GNOMEROOT/$MODULES/$MODULES.default | sed '/#/d' >/tmp/GNOME_PACKAGES.txt
     fi
+    for PRGNAM in `cat /tmp/GNOME_PACKAGES.txt`; do
+      echo "Building: $MODULES/$PRGNAM";
+      _build;
+      _install;
+      _postbuild;
+    done
+    rm -f /tmp/GNOME_PACKAGES.txt
   done
 fi
 
 # Clearing environment
-unset WRK OUTPUT GNOMEROOT UPGRADE_PACKAGES MODULES PRGNAM ARCH VERSION BUILD TAG MD5SUM DOWNLOAD
+unset WRK OUTPUT GNOMEROOT UPGRADE_PACKAGES MODULES PRGSRC PRGNAM SRCNAM ARCH VERSION BUILD TAG MD5SUM DOWNLOAD

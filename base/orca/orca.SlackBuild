@@ -88,10 +88,6 @@ CXXFLAGS="$SLKCFLAGS" \
   --mandir=/usr/man --infodir=/usr/info \
   --sysconfdir=/etc --docdir=/usr/doc/$PRGNAM-$VERSION \
   --localstatedir=/var \
-  --disable-static --enable-shared \
-  --disable-schemas-compile \
-  --disable-liblouise \
-  --disable-gtk-doc \
   || exit 1
 
 make $NUMJOBS || exit 1

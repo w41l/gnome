@@ -78,7 +78,7 @@ for P in $CWD/patches/*.patch; do
     sleep 1
 done
 
-gnome-autogen.sh
+autoreconf -ivsf
 
 sed 's/systemd/elogind/g' -i configure
 

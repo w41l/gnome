@@ -14,6 +14,7 @@ webkit2gtk
 rest
 krb5
 liboauth
+perl-net-dbus
 exempi
 libgusb
 colord
@@ -56,14 +57,11 @@ libdvdcss
 texi2html
 libavc1394
 speex
-ffmpeg
-gst-plugins-bad
 gst-plugins-ugly
+gst-plugins-bad
 libxkbcommon
-zenity
 python3
 py3cairo
-pygobject3-python3
 cracklib
 libpwquality
 gnome-menus

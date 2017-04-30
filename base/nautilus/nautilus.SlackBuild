@@ -89,10 +89,10 @@ CXXFLAGS="$SLKCFLAGS" \
   --sysconfdir=/etc --docdir=/usr/doc/$PRGNAM-$VERSION \
   --localstatedir=/var \
   --disable-static --enable-shared \
+  --disable-selinux \
   --disable-update-mimedb \
   --disable-packagekit \
   --disable-gtk-doc \
-  --disable-debug \
   --disable-tracker \
   --disable-schemas-compile \
   --enable-introspection=yes \

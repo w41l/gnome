@@ -1,0 +1,127 @@
+--- gnome-screensaver-3.6.1/src/gs-listener-dbus.c.orig	2017-04-30 15:01:21.589072811 +0700
++++ gnome-screensaver-3.6.1/src/gs-listener-dbus.c	2017-04-30 15:04:27.833076312 +0700
+@@ -32,9 +32,8 @@
+ #include <dbus/dbus-glib.h>
+ #include <dbus/dbus-glib-lowlevel.h>
+ 
+-#ifdef WITH_SYSTEMD
+-#include <systemd/sd-daemon.h>
+-#include <systemd/sd-login.h>
++#ifdef WITH_ELOGIND
++#include <elogind/sd-login.h>
+ #endif
+ 
+ #include "gs-listener-dbus.h"
+@@ -76,8 +75,8 @@
+         time_t          session_idle_start;
+         char           *session_id;
+ 
+-#ifdef WITH_SYSTEMD
+-        gboolean        have_systemd;
++#ifdef WITH_ELOGIND
++        gboolean        have_elogind;
+ #endif
+ };
+ 
+@@ -748,12 +747,12 @@
+         if (listener->priv->session_id == NULL)
+                 return FALSE;
+ 
+-#ifdef WITH_SYSTEMD
++#ifdef WITH_ELOGIND
+         /* The bus object path is simply the actual session ID
+          * prefixed to make it a bus path */
+-        if (listener->priv->have_systemd)
+-                return g_str_has_prefix (ssid, SYSTEMD_LOGIND_SESSION_PATH "/")
+-                        && strcmp (ssid + sizeof (SYSTEMD_LOGIND_SESSION_PATH),
++        if (listener->priv->have_elogind)
++                return g_str_has_prefix (ssid, ELOGIND_LOGIND_SESSION_PATH "/")
++                        && strcmp (ssid + sizeof (ELOGIND_LOGIND_SESSION_PATH),
+                                    listener->priv->session_id) == 0;
+ #endif
+ 
+@@ -765,7 +764,7 @@
+         return FALSE;
+ }
+ 
+-#ifdef WITH_SYSTEMD
++#ifdef WITH_ELOGIND
+ static gboolean
+ properties_changed_match (DBusMessage *message,
+                           const char  *property)
+@@ -854,18 +853,18 @@
+                   dbus_message_get_destination (message));
+ #endif
+ 
+-#ifdef WITH_SYSTEMD
++#ifdef WITH_ELOGIND
+ 
+-        if (listener->priv->have_systemd) {
++        if (listener->priv->have_elogind) {
+ 
+-                if (dbus_message_is_signal (message, SYSTEMD_LOGIND_SESSION_INTERFACE, "Unlock")) {
++                if (dbus_message_is_signal (message, ELOGIND_LOGIND_SESSION_INTERFACE, "Unlock")) {
+                         if (_listener_message_path_is_our_session (listener, message)) {
+                                 gs_debug ("systemd requested session unlock");
+                                 gs_listener_set_active (listener, FALSE);
+                         }
+ 
+                         return DBUS_HANDLER_RESULT_HANDLED;
+-                } else if (dbus_message_is_signal (message, SYSTEMD_LOGIND_SESSION_INTERFACE, "Lock")) {
++                } else if (dbus_message_is_signal (message, ELOGIND_LOGIND_SESSION_INTERFACE, "Lock")) {
+                         if (_listener_message_path_is_our_session (listener, message)) {
+                                 gs_debug ("systemd requested session lock");
+                                 g_signal_emit (listener, signals [LOCK], 0);
+@@ -1351,23 +1350,23 @@
+                                             listener_dbus_system_filter_function,
+                                             listener,
+                                             NULL);
+-#ifdef WITH_SYSTEMD
+-                if (listener->priv->have_systemd) {
++#ifdef WITH_ELOGIND
++                if (listener->priv->have_elogind) {
+                         dbus_bus_add_match (listener->priv->system_connection,
+                                             "type='signal'"
+-                                            ",sender='"SYSTEMD_LOGIND_SERVICE"'"
+-                                            ",interface='"SYSTEMD_LOGIND_SESSION_INTERFACE"'"
++                                            ",sender='"ELOGIND_LOGIND_SERVICE"'"
++                                            ",interface='"ELOGIND_LOGIND_SESSION_INTERFACE"'"
+                                             ",member='Unlock'",
+                                             NULL);
+                         dbus_bus_add_match (listener->priv->system_connection,
+                                             "type='signal'"
+-                                            ",sender='"SYSTEMD_LOGIND_SERVICE"'"
+-                                            ",interface='"SYSTEMD_LOGIND_SESSION_INTERFACE"'"
++                                            ",sender='"ELOGIND_LOGIND_SERVICE"'"
++                                            ",interface='"ELOGIND_LOGIND_SESSION_INTERFACE"'"
+                                             ",member='Lock'",
+                                             NULL);
+                         dbus_bus_add_match (listener->priv->system_connection,
+                                             "type='signal'"
+-                                            ",sender='"SYSTEMD_LOGIND_SERVICE"'"
++                                            ",sender='"ELOGIND_LOGIND_SERVICE"'"
+                                             ",interface='"DBUS_INTERFACE_PROPERTIES"'"
+                                             ",member='PropertiesChanged'",
+                                             NULL);
+@@ -1416,8 +1415,8 @@
+ 
+         dbus_error_init (&error);
+ 
+-#ifdef WITH_SYSTEMD
+-        if (listener->priv->have_systemd) {
++#ifdef WITH_ELOGIND
++        if (listener->priv->have_elogind) {
+                 char *t;
+                 int r;
+ 
+@@ -1478,8 +1477,8 @@
+ {
+         listener->priv = GS_LISTENER_GET_PRIVATE (listener);
+ 
+-#ifdef WITH_SYSTEMD
+-        listener->priv->have_systemd = sd_booted () > 0;
++#ifdef WITH_ELOGIND
++        listener->priv->have_elogind = sd_booted () > 0;
+ #endif
+ 
+         gs_listener_dbus_init (listener);

@@ -6,4 +6,3 @@ else
   XDG_CONFIG_DIRS=/etc/xdg:/etc/gnome/xdg
 fi
 export XDG_CONFIG_DIRS
-

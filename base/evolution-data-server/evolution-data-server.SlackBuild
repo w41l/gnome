@@ -98,6 +98,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --with-openldap \
   --with-krb5=/usr \
   --disable-gtk-doc \
+  --disable-examples \
   || exit 1
 
 make $NUMJOBS || exit 1

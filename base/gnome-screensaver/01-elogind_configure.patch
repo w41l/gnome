@@ -1,0 +1,61 @@
+--- gnome-screensaver-3.6.1/configure.ac.orig	2017-04-30 14:56:50.743067718 +0700
++++ gnome-screensaver-3.6.1/configure.ac	2017-04-30 14:59:20.020070525 +0700
+@@ -592,37 +592,37 @@
+ AC_SUBST(WITH_CONSOLE_KIT)
+ 
+ dnl ---------------------------------------------------------------------------
+-dnl systemd
++dnl elogind
+ dnl ---------------------------------------------------------------------------
+ 
+-AC_ARG_WITH(systemd,
+-            AS_HELP_STRING([--with-systemd],
+-                           [Add systemd support]),
+-            [with_systemd=$withval], [with_systemd=auto])
+-
+-PKG_CHECK_MODULES(SYSTEMD,
+-                  [libsystemd-login libsystemd-daemon],
+-                  [have_systemd=yes], [have_systemd=no])
+-
+-if test "x$with_systemd" = "xauto" ; then
+-        if test x$have_systemd = xno ; then
+-                use_systemd=no
++AC_ARG_WITH(elogind,
++            AS_HELP_STRING([--with-elogind],
++                           [Add elogind support]),
++            [with_elogind=$withval], [with_elogind=auto])
++
++PKG_CHECK_MODULES(ELOGIND,
++                  [libelogind],
++                  [have_elogind=yes], [have_elogind=no])
++
++if test "x$with_elogind" = "xauto" ; then
++        if test x$have_elogind = xno ; then
++                use_elogind=no
+         else
+-                use_systemd=yes
++                use_elogind=yes
+         fi
+ else
+-	use_systemd=$with_systemd
++	use_elogind=$with_elogind
+ fi
+ 
+-if test "x$use_systemd" = "xyes"; then
+-        if test "x$have_systemd" = "xno"; then
+-                AC_MSG_ERROR([Systemd support explicitly required, but systemd not found])
++if test "x$use_elogind" = "xyes"; then
++        if test "x$have_elogind" = "xno"; then
++                AC_MSG_ERROR([elogind support explicitly required, but elogind not found])
+         fi
+ 
+-        AC_DEFINE(WITH_SYSTEMD, 1, [systemd support])
++        AC_DEFINE(WITH_ELOGIND, 1, [elogind support])
+ fi
+-AC_SUBST(SYSTEMD_CFLAGS)
+-AC_SUBST(SYSTEMD_LIBS)
++AC_SUBST(ELOGIND_CFLAGS)
++AC_SUBST(ELOGIND_LIBS)
+ 
+ dnl ---------------------------------------------------------------------------
+ dnl libgnomekbd
