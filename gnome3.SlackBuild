@@ -26,6 +26,8 @@
 WRK=/tmp/wlsbuild
 OUTPUT=${OUTPUT:-/tmp}
 GNOMEROOT=$(pwd)
+NUMCPU=$(cat /proc/cpuinfo | grep "processor" | tail -n1 | awk '{print $3}')
+export MAKEFLAGS="-j${NUMCPU}"
 
 # To always upgrade package, use
 #UPGRADE_PACKAGES="always"
@@ -40,6 +42,7 @@ _failed()
 _check_md5sum()
 {
   eval `cat $PRGNAM.info | grep "MD5SUM="`
+  echo "Checking $PRGSRC using MD5: $MD5SUM"
   MD5SRC=`echo "$MD5SUM $PRGSRC" | md5sum -c | awk '{print $2}'`
   if [ ! "$MD5SRC" = "OK" ]; then
     echo "ERROR: checksum mismatch for tarball $PRGSRC";
@@ -49,9 +52,8 @@ _check_md5sum()
 
 _download_src()
 {
-  echo "Downloading: `basename $DOWNLOAD`"
-  SIZE=`curl -sI "$DOWNLOAD" | grep 'Content-Length' | awk '{ print $2 }'`
-  echo "Size: $SIZE"
+  eval `cat $PRGNAM.info | grep "DOWNLOAD="`
+  echo "Downloading $PRGSRC: $DOWNLOAD"
   rm -f $PRGSRC
   curl -#OLJ -C - "$DOWNLOAD" || _failed
 }
@@ -60,24 +62,26 @@ _build()
 {
   set -e
   # Clearing environment
-  unset ARCH VERSION BUILD TAG DOWNLOAD MD5SUM MD5SRC;
+  unset ARCH VERSION BUILD TAG MD5SUM MD5SRC SRCNAM PRGSRC DOWNLOAD;
   # Create package build state
   mkdir -p $WRK $OUTPUT;
   rm -f $WRK/${PRGNAM}.failed;
   # Build the package
   cd $GNOMEROOT/$MODULES/$PRGNAM;
-  eval `cat $PRGNAM.info | grep "DOWNLOAD="`
-  eval `cat $PRGNAM.SlackBuild | grep 'SRCNAM='`
-  if [ -n "$SRCNAM" ]; then
-    PRGSRC="$SRCNAM"
+  eval $(cat $PRGNAM.info)
+  eval $(cat $PRGNAM.SlackBuild | grep "SRCNAM=")
+  if [ ! -z "$SRCNAM" ]; then
+    export PRGSRC="$(ls $SRCNAM-$VERSION.*)"
   else
-    PRGSRC=$(basename $DOWNLOAD)
+    export PRGSRC=$(basename $DOWNLOAD)
   fi
-  if [ ! -f $PRGSRC ]; then
-    _download_src;
-  else
+  if [ -e $PRGSRC ]; then
     _check_md5sum;  
+  else
+    echo "$PRGSRC is not available"
+    _download_src;
   fi
+  echo "Building $PRGNAM using $PRGSRC"
   . ./${PRGNAM}.SlackBuild || _failed;
 }
 
@@ -96,7 +100,7 @@ _install() {
 
 _postbuild() {
   # Clearing environment
-  unset ARCH VERSION BUILD TAG;
+  unset ARCH VERSION BUILD TAG PRGNAM;
   # Update libraries links
   /sbin/ldconfig;
   # Back to SlackBuild ROOT directory
@@ -124,12 +128,12 @@ if [ ! -z "$1" ]; then
   done
   rm -f /tmp/GNOME_MODULES.txt
 else
-  for MODULES in deps base flashback apps; do
+  for MODULES in deps base flashback apps extra; do
     if [ ! -z "$2" ]; then
       echo "$2" | sed 's/:/ /g' > /tmp/GNOME_PACKAGES.txt
-    elif [ -z "$2" ] && [ -e $GNOMEROOT/$MODULES/$MODULES.list ]; then
+    elif [ -z "$2" ] && [ -f $GNOMEROOT/$MODULES/$MODULES.list ]; then
       cat $GNOMEROOT/$MODULES/$MODULES.list | sed '/#/d' >/tmp/GNOME_PACKAGES.txt
-    elif [ -z "$2" ] && [ ! -e $GNOMEROOT/$MODULES/$MODULES.list ]; then
+    elif [ -z "$2" ] && [ ! -f $GNOMEROOT/$MODULES/$MODULES.list ]; then
       cat $GNOMEROOT/$MODULES/$MODULES.default | sed '/#/d' >/tmp/GNOME_PACKAGES.txt
     fi
     for PRGNAM in `cat /tmp/GNOME_PACKAGES.txt`; do
@@ -143,4 +147,4 @@ else
 fi
 
 # Clearing environment
-unset WRK OUTPUT GNOMEROOT UPGRADE_PACKAGES MODULES PRGSRC PRGNAM SRCNAM ARCH VERSION BUILD TAG MD5SUM DOWNLOAD
+unset WRK OUTPUT GNOMEROOT UPGRADE_PACKAGES MODULES PRGSRC PRGNAM SRCNAM ARCH VERSION BUILD TAG MD5SUM DOWNLOAD MAKEFLAGS

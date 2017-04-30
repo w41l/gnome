@@ -1,6 +1,5 @@
 pam
 elogind
-libomxil-bellagio
 wayland
 wayland-protocols
 ##mesa

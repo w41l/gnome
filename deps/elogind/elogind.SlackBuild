@@ -26,6 +26,7 @@
 # Modified July 2016 by Widya Walesa for gnome3 wlsbuild
 
 PRGNAM=elogind
+SRCNAM=$PRGNAM
 VERSION=${VERSION:-$(cat $PRGNAM.info | grep "VERSION=" | cut -f 2 -d = | sed 's/"//g')}
 BUILD=${BUILD:-1}
 TAG=${TAG:-_wls}

@@ -62,7 +62,7 @@ set -e
 
 unset DOWNLOAD
 eval `cat $PRGNAM.info | grep "DOWNLOAD="`
-if [ ! -f `basename $DOWNLOAD` ]; then
+if [ ! -e $(basename $DOWNLOAD) ]; then
   echo "Downloading: $DOWNLOAD"
   rm -f $PRGNAM-$VERSION.tar.*
   curl -OLJ -C - $DOWNLOAD
@@ -108,6 +108,8 @@ chmod g+s $PKG/sbin/unix_chkpwd
 # Add default pam.d config
 mkdir -p $PKG/etc/pam.d
 cp $CWD/pam.d/* $PKG/etc/pam.d/
+chown -R root:root $PKG/etc/pam.d
+chmod 644 $PKG/etc/pam.d/*
 
 find $PKG -print0 | xargs -0 file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
