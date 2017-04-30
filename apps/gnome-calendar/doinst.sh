@@ -1,14 +1,6 @@
 
-if [ -d usr/share/help ]; then
-  /usr/bin/rarian-sk-update 1> /dev/null 2> /dev/null
-fi
-
 if [ -d usr/share/applications ]; then
   /usr/bin/update-desktop-database -q /usr/share/applications >/dev/null 2>&1
-fi
-
-if [ -d usr/share/mime ]; then
-  /usr/bin/update-mime-database /usr/share/mime >/dev/null 2>&1
 fi
 
 if [ -e usr/share/icons/hicolor/icon-theme.cache ]; then

@@ -24,6 +24,7 @@ vala
 libgee
 opencore-amr
 numpy
+libcue
 libcuefile
 libreplaygain
 libass
@@ -73,6 +74,7 @@ libburn
 libisofs
 libisoburn
 cantarell-fonts
+libseccomp
 libgtop
 libgksu
 gksu
@@ -81,3 +83,4 @@ yelp-tools
 yelp
 evince
 seahorse
+gcalctool

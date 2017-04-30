@@ -33,11 +33,35 @@ export MAKEFLAGS="-j${NUMCPU}"
 #UPGRADE_PACKAGES="always"
 UPGRADE_PACKAGES=${UPGRADE_PACKAGES:-"yes"}
 
+if [ -z "$ARCH" ]; then
+  case "$( uname -m )" in
+    i?86) ARCH=i586 ;;
+    arm*) ARCH=arm ;;
+       *) ARCH=$( uname -m ) ;;
+  esac
+fi
+
+if [ "$ARCH" = "i586" ]; then
+  SLKCFLAGS="-O2 -pipe -march=i586 -mtune=i686"
+  LIBDIRSUFFIX=""
+elif [ "$ARCH" = "i686" ]; then
+  SLKCFLAGS="-O2 -pipe -march=i686 -mtune=i686"
+  LIBDIRSUFFIX=""
+elif [ "$ARCH" = "x86_64" ]; then
+  SLKCFLAGS="-O2 -m64 -pipe -fPIC"
+  LIBDIRSUFFIX="64"
+else
+  SLKCFLAGS="-O2"
+  LIBDIRSUFFIX=""
+fi
+
+set -e
+
 _failed()
 {
   echo "ERROR: $PRGNAM-$VERSION" > $WRK/$PRGNAM.failed
   echo ""
-  echo "==> Failed building $PRGNAM-$VERSION"
+  echo "==> Failed on $MODULES/$PRGNAM"
   echo ""
   read -t 3
   exit 1
@@ -49,8 +73,9 @@ _check_md5sum()
   echo "Checking $PRGSRC using MD5: $MD5SUM"
   MD5SRC=`echo "$MD5SUM $PRGSRC" | md5sum -c | awk '{print $2}'`
   if [ ! "$MD5SRC" = "OK" ]; then
+    trap '_failed' ERR;
     echo "ERROR: checksum mismatch for tarball $PRGSRC";
-    _failed;
+    exit 1;
   fi
 }
 
@@ -59,22 +84,22 @@ _download_src()
   eval `cat $PRGNAM.info | grep "DOWNLOAD="`
   echo "Downloading $PRGSRC: $DOWNLOAD"
   rm -f $PRGSRC
-  curl -#OLJ -C - "$DOWNLOAD" || _failed;
+  trap '_failed' ERR;
+  curl -#OLJ -C - "$DOWNLOAD";
 }
 
 _build()
 {
-  set -e
   # Clearing environment
-  unset ARCH VERSION BUILD TAG MD5SUM MD5SRC SRCNAM PRGSRC DOWNLOAD;
+  unset VERSION BUILD TAG MD5SUM MD5SRC SRCNAM PRGSRC DOWNLOAD;
   # Create package build state
   mkdir -p $WRK $OUTPUT;
   rm -f $WRK/${PRGNAM}.failed;
   # Build the package
   cd $GNOMEROOT/$MODULES/$PRGNAM;
   eval $(cat $PRGNAM.info)
-  eval $(cat $PRGNAM.SlackBuild | grep "SRCNAM=")
-  if [ ! -z "$SRCNAM" ]; then
+  if grep -q "SRCNAM" $PRGNAM.SlackBuild 2>/dev/null; then
+    eval $(cat $PRGNAM.SlackBuild | grep "SRCNAM=")
     export PRGSRC="$(ls $SRCNAM-$VERSION.*)"
   else
     export PRGSRC=$(basename $DOWNLOAD)
@@ -86,7 +111,7 @@ _build()
     _download_src;
   fi
   echo "Building $PRGNAM using $PRGSRC"
-  trap '_failed' EXIT ERR;
+  trap '_failed' ERR;
   . ./${PRGNAM}.SlackBuild;
 }
 
@@ -94,9 +119,11 @@ _install() {
   if [ -f $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz ]; then
     # Installing the package
     if [ "$UPGRADE_PACKAGES" = "yes" ]; then
-      upgradepkg --install-new $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz || _failed
+      trap '_failed' ERR;
+      upgradepkg --install-new $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz
     elif [ "$UPGRADE_PACKAGES" = "always" ]; then
-      upgradepkg --install-new --reinstall $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz || _failed
+      trap '_failed' ERR;
+      upgradepkg --install-new --reinstall $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz
     else
       echo "PACKAGE: $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.txz"
     fi;
