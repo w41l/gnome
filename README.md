@@ -51,6 +51,13 @@ already installed:
 * sane
 * bash-completion
 * itstool
+* libinput
+* libwacom
+* libepoxy
+
+Hint:
+* Install all packages from these directories: a, ap, d, l, n, t, x
+* Then some X-based apps from xap like firefox, thunderbird, gimp, etc
 
 SBo Packages
 ============

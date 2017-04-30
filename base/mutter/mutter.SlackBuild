@@ -94,7 +94,9 @@ CXXFLAGS="$SLKCFLAGS" \
   --enable-compile-warnings=no \
   --disable-schemas-compile \
   --disable-gtk-doc \
-  --enable-wayland \
+  --disable-wayland \
+  --disable-native-backend \
+  --without-libwacom \
   || exit 1
 
 make $NUMJOBS || exit 1

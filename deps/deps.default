@@ -16,7 +16,6 @@ cogl
 clutter
 clutter-gtk
 clutter-gst
-gjs
 libchamplain
 perl-net-dbus
 system-tools-backends
