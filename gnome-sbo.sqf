@@ -24,7 +24,6 @@ vala
 libgee
 opencore-amr
 numpy
-libbluray
 libcuefile
 libreplaygain
 libass
