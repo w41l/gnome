@@ -55,18 +55,24 @@ already installed:
 * libwacom
 * libepoxy
 * gpgme
+* openldap
 
-Hint:
-* Install all packages from these directories: a, ap, d, l, n, t, x
-* Then some X-based apps from xap like firefox, thunderbird, gimp, etc
+OR the quick way:
+
+* Install all packages from these directories:
+  slackpkg install a/* ap/* d/* l/* n/* t/* x/*
+
+* Then install some X-based apps from xap like:
+  firefox, thunderbird, gimp, audacious, imagemagick, etc
 
 SBo Packages
 ============
 
 Some GNOME package need packages from SBo. Some of SBo packages has
-been imported, others still in testing. Maybe you can use ponce SBo git repo to
-get most current packages to satisfy GNOME dependency. Please read:
-<a href="SBo_PACKAGES.txt">SBo_PACKAGES.txt</a>
+been imported, others still in testing. Maybe you can use ponce SBo
+git repo to get most current packages to satisfy GNOME dependency.
+
+Please read: <a href="SBo_PACKAGES.txt">SBo_PACKAGES.txt</a>
 
 WAYLAND
 =======

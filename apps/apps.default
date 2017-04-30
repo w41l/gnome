@@ -1,16 +1,21 @@
 gnome-terminal
 file-roller
 gspell
+evolution
+libgxps
+libmediaart
+totem-pl-parser
+tracker
 gedit
 eog
 eog-plugins
 epiphany
+gnome-calendar
+gnome-music
 gnome-screenshot
 gnome-system-monitor
-libgxps
-totem-pl-parser
 brasero
-gthumb
 ## You can use SBo for these
 #evince
 #seahorse
+#gthumb

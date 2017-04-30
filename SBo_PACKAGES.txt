@@ -1,3 +1,5 @@
+lua
+highlight
 gnome-common
 zenity
 MarkupSafe
@@ -65,6 +67,7 @@ py3cairo
 cracklib
 libpwquality
 gnome-menus
+gtkspell3
 libwnck3
 vte3
 glade
@@ -84,3 +87,6 @@ yelp
 evince
 seahorse
 gcalctool
+libpst
+libcryptui
+bogofilter
