@@ -79,25 +79,19 @@ find . \
  \( -perm 666 -o -perm 664 -o -perm 600 -o -perm 444 -o -perm 440 -o -perm 400 \) \
  -exec chmod 644 {} \;
 
-LDFLAGS="$LDFLAGS -L/lib${LIBDIRSUFFIX} -L/usr/lib${LIBDIRSUFFIX}" \
-CFLAGS="$SLKCFLAGS" \
-CXXFLAGS="$SLKCFLAGS" \
-./configure --build=$ARCH-slackware-linux \
-  --program-prefix= --program-suffix= \
-  --prefix=/usr --exec-prefix=/usr \
-  --bindir=/usr/bin --sbindir=/usr/sbin \
-  --libdir=/usr/lib$LIBDIRSUFFIX --includedir=/usr/include \
-  --mandir=/usr/man --infodir=/usr/info \
-  --sysconfdir=/etc --docdir=/usr/doc/$PRGNAM-$VERSION \
-  --localstatedir=/var \
-  --disable-static --enable-shared \
-  --enable-introspection=yes \
-  --disable-schemas-compile \
-  --disable-gtk-doc \
-  || exit 1
+meson build \
+    --prefix /usr \
+    --libdir /usr/lib${LIBDIRSUFFIX} \
+    --sysconfdir /etc \
+    --mandir /usr/man \
+    --buildtype release \
+    --strip \
+    || exit 1
 
-make $NUMJOBS V=1
-make install DESTDIR=$PKG
+cd build
+ninja
+DESTDIR=$PKG ninja install
+cd ..
 
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true

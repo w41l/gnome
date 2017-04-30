@@ -92,10 +92,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --disable-static --enable-shared \
   --enable-docs=no \
   --enable-introspection=yes \
-  --enable-evdev-input \
   --disable-gtk-doc \
-  --enable-wayland-backend=yes \
-  --enable-wayland-compositor=yes \
   || exit 1
 
 make $NUMJOBS || exit 1

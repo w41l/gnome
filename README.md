@@ -54,6 +54,7 @@ already installed:
 * libinput
 * libwacom
 * libepoxy
+* gpgme
 
 Hint:
 * Install all packages from these directories: a, ap, d, l, n, t, x

@@ -1,4 +1,4 @@
-PRGNAM="oeg-plugins"
+PRGNAM="eog-plugins"
 VERSION="3.16.6"
 HOMEPAGE="https://wiki.gnome.org/Apps/EyeOfGnome/Plugins"
 DOWNLOAD="http://download.gnome.org/sources/eog-plugins/3.16/eog-plugins-3.16.6.tar.xz"

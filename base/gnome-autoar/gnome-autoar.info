@@ -1,4 +1,4 @@
-PRGNAM="mutter"
+PRGNAM="gnome-autoar"
 VERSION="0.2.2"
 HOMEPAGE="https://gnome.org/"
 DOWNLOAD="http://download.gnome.org/sources/gnome-autoar/0.2/gnome-autoar-0.2.2.tar.xz"

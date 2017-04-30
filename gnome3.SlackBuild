@@ -35,7 +35,11 @@ UPGRADE_PACKAGES=${UPGRADE_PACKAGES:-"yes"}
 
 _failed()
 {
-  echo "ERROR: $PRGNAM-$VERSION" | tee -a $WRK/$PRGNAM.failed
+  echo "ERROR: $PRGNAM-$VERSION" > $WRK/$PRGNAM.failed
+  echo ""
+  echo "==> Failed building $PRGNAM-$VERSION"
+  echo ""
+  read -t 3
   exit 1
 }
 
@@ -55,7 +59,7 @@ _download_src()
   eval `cat $PRGNAM.info | grep "DOWNLOAD="`
   echo "Downloading $PRGSRC: $DOWNLOAD"
   rm -f $PRGSRC
-  curl -#OLJ -C - "$DOWNLOAD" || _failed
+  curl -#OLJ -C - "$DOWNLOAD" || _failed;
 }
 
 _build()
@@ -82,7 +86,8 @@ _build()
     _download_src;
   fi
   echo "Building $PRGNAM using $PRGSRC"
-  . ./${PRGNAM}.SlackBuild || _failed;
+  trap '_failed' EXIT ERR;
+  . ./${PRGNAM}.SlackBuild;
 }
 
 _install() {

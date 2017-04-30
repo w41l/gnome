@@ -94,11 +94,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --disable-debug \
   --disable-gtk-doc \
   --enable-introspection=yes \
-  --enable-gles1 \
-  --enable-gles2 \
-  --enable-cogl-gles2=yes \
-  --enable-cogl-gst=yes \
-  --enable-wayland-egl-platform=yes \
+  --enable-wayland-egl-platform=no \
   --enable-wayland-egl-server=yes \
   || exit 1
 
