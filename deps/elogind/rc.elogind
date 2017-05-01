@@ -14,18 +14,17 @@
 #     Slackware has a tmpfs mounted on /run (see rc.S).
 #
 
-echo -n "Setting up elogind... "
 # The systemd/elogind state directory:
 if [ ! -d /run/systemd ]; then
   mkdir -p /run/systemd
-  chmod 0755 /run/systemd
+  chmod 755 /run/systemd
   ( cd /run; ln -s systemd elogind; )
 fi
 
 # Toplevel directory for runtime user session data:
 if [ ! -d /run/user ]; then
   mkdir -p /run/user
-  chmod 1777 /run/user
+  chmod 755 /run/user
 fi
 
 # Elogind uses cgroups to organize processes like mapping PIDs to sessions.
@@ -41,4 +40,8 @@ if ! df /sys/fs/cgroup/elogind | grep -q elogind >/dev/null; then
   mount -t cgroup -o none,name=elogind elogind /sys/fs/cgroup/elogind
 fi
 
-echo "DONE"
+if [ -x /usr/libexec/elogind/elogind ]; then
+    echo -n "Starting up elogind: "
+    /usr/libexec/elogind/elogind &
+    echo "/usr/libexec/elogind/elogind &"
+fi

@@ -36,10 +36,6 @@ PKG=$WRK/package-$PRGNAM
 OUTPUT=${OUTPUT:-/tmp}
 NUMJOBS=${NUMJOBS:-"-j7"}
 
-# We use PAM by default on GNOME:
-USE_PAM=${USE_PAM:-"YES"}
-[ "$USE_PAM" = "NO" -o "$USE_PAM" = "no" ] && DO_PAM="dis" || DO_PAM="en"
-
 if [ -e $CWD/machine.conf ]; then
   . $CWD/machine.conf ]
 elif [ -e /etc/slackbuild/machine.conf ]; then
@@ -103,11 +99,10 @@ sed -i src/login/org.freedesktop.login1.service \
     -e "s,/bin/false,/usr/libexec/elogind/elogind,"
 
 # Apply Gentoo patches:
-#cat $CWD/patches/elogind-219.12-session.patch | patch -p1 --verbose || exit 1
-# cat $CWD/patches/elogind-lrt.patch | patch -p1 --verbose || exit 1
-# cat $CWD/patches/elogind-docs.patch | patch -p1 --verbose || exit 1
-# Merge a pull request for an upstream fix:
-# cat $CWD/patches/elogind-polkit.patch | patch -p1 --verbose || exit 1
+echo "===> Apply patch: elogind-226.4-docs.patch"
+cat $CWD/patches/elogind-226.4-docs.patch | patch -p1 || exit 1
+echo "===> Apply patch: elogind-226.4-glibc.patch"
+cat $CWD/patches/elogind-226.4-glibc.patch | patch -p1 || exit 1
 
 # Make sure ownerships and permissions are sane:
 chown -R root:root .
@@ -120,6 +115,7 @@ find . \
 # Configure:
 autoreconf -vif
 intltoolize
+
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
 ./configure \
@@ -130,13 +126,13 @@ CXXFLAGS="$SLKCFLAGS" \
   --localstatedir=/var \
   --mandir=/usr/man \
   --docdir=/usr/doc/$PRGNAM-$VERSION \
-  --disable-seccomp \
   --disable-selinux \
-  --disable-apparmor \
-  --disable-smack \
   --disable-tests \
-  --${DO_PAM}able-pam \
-  --enable-split-usr \
+  --disable-kdbus \
+  --enable-smack \
+  --enable-pam \
+  --with-pamlibdir=/usr/lib${LIBDIRSUFFIX}/security \
+  --with-udevrulesdir=/lib/udev/rules.d \
   --build=$TARGET \
   || exit 1
 
@@ -161,9 +157,6 @@ cp -a \
 mkdir -p $PKG/etc/rc.d
 cat $CWD/rc.elogind > $PKG/etc/rc.d/rc.elogind.new
 chmod +x $PKG/etc/rc.d/rc.elogind.new
-
-# Use more permissive login1 policy for workaround on power management control
-cat $CWD/org.freedesktop.login1.policy >$PKG/usr/share/polkit-1/actions/org.freedesktop.login1.policy
 
 # Add a description:
 mkdir -p $PKG/install
