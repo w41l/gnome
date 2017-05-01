@@ -1,0 +1,12 @@
+      |-----handy-ruler------------------------------------------------------|
+gsound: gsound
+gsound:
+gsound: GSound is a small library for playing system sounds. It's designed
+gsound: to be used via GObject Introspection, and is a thin wrapper around
+gsound: the libcanberra C library. 
+gsound:
+gsound:
+gsound:
+gsound:
+gsound:
+gsound:
