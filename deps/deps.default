@@ -1,5 +1,6 @@
 pam
 elogind
+polkit
 wayland
 wayland-protocols
 ##mesa

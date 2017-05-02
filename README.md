@@ -19,7 +19,6 @@ already installed:
 * gstreamer
 * gst-plugins-base
 * gst-plugins-good
-* polkit
 * polkit-gnome
 * gobject-introspection
 * pygobject
@@ -64,6 +63,18 @@ OR the quick way:
 
 * Then install some X-based apps from xap like:
   firefox, thunderbird, gimp, audacious, imagemagick, etc
+
+WARNING WARNING WARNING WARNING WARNING WARNING WARNING WARNING
+===============================================================
+
+This build will replace/upgrade Slackware:
+
+* upower with newer version.
+* polkit with pam and elogind support
+
+If you uninstall this GNOME build, you *MUST* reinstall those packages
+
+You have been warned.
 
 SBo Packages
 ============
@@ -131,13 +142,6 @@ cd deps/pkg1 && ./pkg1.SlackBuild
 Use 'xwmconfig' to use GNOME session for startx.
 
 After that you should reboot your system, and try login to GNOME.
-
-WARNING
-=======
-
-The build will replace/upgrade Slackware upower with newer version.
-
-You have been warned.
 
 GNOME 3 WLSBuild is still in heavy development stage. Feel free to
 contact me if you have problem on building GNOME3 using my
