@@ -13,16 +13,18 @@ telepathy-glib
 telepathy-farstream
 libwebp
 hyphen
+geoclue
 webkit2gtk
 rest
 krb5
 liboauth
+perl-xml-twig
 perl-net-dbus
 exempi
 libgusb
+vala
 colord
 colord-gtk
-vala
 libgee
 opencore-amr
 numpy
@@ -69,6 +71,7 @@ libpwquality
 gnome-menus
 gtkspell3
 libwnck3
+pcre2
 vte3
 glade
 gtksourceview3
