@@ -133,6 +133,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --enable-pam \
   --with-pamlibdir=/usr/lib${LIBDIRSUFFIX}/security \
   --with-udevrulesdir=/lib/udev/rules.d \
+  --without-python \
   --build=$TARGET \
   || exit 1
 

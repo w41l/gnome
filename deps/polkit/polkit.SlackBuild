@@ -74,13 +74,6 @@ find . \
  \( -perm 666 -o -perm 664 -o -perm 600 -o -perm 444 -o -perm 440 -o -perm 400 \) \
  -exec chmod 644 {} \;
 
-for P in $CWD/patches/*.patch; do
-    echo "===> Apply patch: $P"
-    cat $P | patch -p1 || exit 1
-done
-
-autoreconf -ivsf
-
 # If we get here and don't have a polkitd user/group, add one.
 # Otherwise a few directories in the package will have wrong permissions.
 if ! grep -q "^polkitd:" /etc/passwd ; then
@@ -88,6 +81,15 @@ if ! grep -q "^polkitd:" /etc/passwd ; then
   useradd -c "PolicyKit daemon owner" -d /var/lib/polkit -u 87 -g polkitd -s /bin/false polkitd
 fi
 
+for P in $CWD/patches/*.patch; do
+    echo "===> Apply patch: $P"
+    cat $P | patch -p1 || exit 1
+done
+
+autoreconf -ivsf
+
+LIBELOGIND_CFLAGS="$(pkg-config --cflags libelogind)" \
+LIBELOGIND_LIBS="$(pkg-config --libs libelogind)" \
 CFLAGS="$SLKCFLAGS" \
 CXXFLAGS="$SLKCFLAGS" \
 ./configure \
@@ -107,6 +109,7 @@ CXXFLAGS="$SLKCFLAGS" \
   --enable-verbose-mode \
   --with-os-type=Slackware \
   --build=$ARCH-slackware-linux \
+  --disable-libsystemd-login \
   --enable-libelogind \
   --with-mozjs=mozjs185 \
 
@@ -161,7 +164,7 @@ if [ -r ChangeLog ]; then
 fi
 
 mkdir -p $PKG/install
-zcat $CWD/doinst.sh > $PKG/install/doinst.sh
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
 cat $CWD/slack-desc > $PKG/install/slack-desc
 
 cd $PKG
