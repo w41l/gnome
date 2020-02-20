@@ -1,12 +1,6 @@
-pam
 elogind
 polkit
-wayland
-wayland-protocols
-##mesa
-##xorg-server-xwayland
 upower
-mozjs
 uhttpmock
 geoclue2
 geocode-glib
@@ -23,4 +17,5 @@ telepathy-mission-control
 telepathy-logger
 accountsservice
 ibus
-pygobject3-python3
+colord
+colord-gtk
